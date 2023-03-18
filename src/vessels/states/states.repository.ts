@@ -3,7 +3,7 @@ import { Prisma, State } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
-export class RepositoryService {
+export class StatesRepositoryService {
   constructor(private prisma: PrismaService) {}
   async state(stateWhereUniqueInput: Prisma.StateWhereUniqueInput) {
     return this.prisma.state.findUnique({

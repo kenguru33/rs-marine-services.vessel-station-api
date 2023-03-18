@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { RepositoryService } from './repository.service';
+import { StatesRepositoryService } from './states.repository';
 import { CreateStateDto } from './dto/createState.dto';
 
 @Injectable()
 export class StatesService {
-  constructor(private repo: RepositoryService) {}
+  constructor(private repo: StatesRepositoryService) {}
 
   async state(id: number) {
     return this.repo.state({ id });
@@ -22,12 +22,14 @@ export class StatesService {
     return this.repo.deleteState({ id });
   }
 
-  async updateState(id: number, data: {
-    name?: string;
-    description?: string;
-    inUse?: boolean;
-  }) {
+  async updateState(
+    id: number,
+    data: {
+      name?: string;
+      description?: string;
+      inUse?: boolean;
+    },
+  ) {
     return this.repo.updateState({ id, data });
   }
-
 }

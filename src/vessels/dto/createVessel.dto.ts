@@ -6,7 +6,6 @@ import {
   IsString,
 } from 'class-validator';
 import { CreateCapabilityDto } from 'src/vessels/capabilities/dto/createCapability.dto';
-import { CreateStationDto } from 'src/stations/createStation.dto';
 
 export class CreateVesselDto {
   @IsString()
@@ -20,7 +19,8 @@ export class CreateVesselDto {
   vesselClassId: number; 
 
   @IsArray()
-  capabilityIds: number[];
+  @IsOptional()
+  capabilityIds?: number[];
   
   @IsOptional()
   stationId?: number;

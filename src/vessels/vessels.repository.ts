@@ -11,6 +11,8 @@ export class VesselsRepository {
       where: vesselWhereUniqueInput,
       include: {
         capabilities: true,
+        vesselClass: true,
+        station: true,
       },
     });
   }
@@ -21,6 +23,7 @@ export class VesselsRepository {
     cursor?: Prisma.VesselWhereUniqueInput;
     where?: Prisma.VesselWhereInput;
     orderBy?: Prisma.VesselOrderByWithRelationInput;
+    include?: Prisma.VesselInclude;
   }): Promise<Vessel[]> {
     return this.prisma.vessel.findMany(params);
   }
@@ -36,8 +39,8 @@ export class VesselsRepository {
   }
 
   async updateVessel(params: {
-    where: { id: number },
-    data: Prisma.VesselUpdateInput,
+    where: { id: number };
+    data: Prisma.VesselUpdateInput;
   }): Promise<Vessel> {
     return this.prisma.vessel.update({
       data: params.data,
@@ -49,10 +52,10 @@ export class VesselsRepository {
     });
   }
 
-  async deleteVessel(params: { id: number }): Promise<Vessel> {
+  async deleteVessel(id: number): Promise<Vessel> {
     return this.prisma.vessel.delete({
       where: {
-        id: params.id,
+        id,
       },
     });
   }

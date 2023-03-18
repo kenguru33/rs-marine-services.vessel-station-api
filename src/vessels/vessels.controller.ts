@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -37,6 +38,11 @@ export class VesselsController {
   @UsePipes(new ValidationPipe({ transform: true }))
   updateVessel(@Body() data: UpdateVesselDto, @Param('id') id: number) {
     return this.vesselsService.updateVessel(id, data);
+  }
+
+  @Delete(':id/delete')
+  deleteVessel(@Param('id', ParseIntPipe) id: number) {
+    return this.vesselsService.deleteVessel(id);
   }
 
   // createVessel(@Body() data: CreateVesselDto) {

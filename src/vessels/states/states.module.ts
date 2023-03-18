@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { StatesService } from './states.service';
 import { StatesController } from './states.controller';
-import { RepositoryService } from './repository.service';
+import { StatesRepositoryService } from './states.repository';
 import { PrismaService } from 'src/prisma.service';
 
 @Module({
-  providers: [PrismaService, StatesService, RepositoryService],
-  controllers: [StatesController]
+  providers: [PrismaService, StatesService, StatesRepositoryService],
+  controllers: [StatesController],
 })
 export class StatesModule {}

@@ -14,7 +14,9 @@ export class VesselsService {
   }
 
   async vessels(): Promise<Vessel[]> {
-    return this.vesselsRepository.vessels({});
+    return this.vesselsRepository.vessels({
+      include: { vesselClass: true, capabilities: true },
+    });
   }
 
   async createVessel(data: CreateVesselDto): Promise<Vessel> {
@@ -23,7 +25,9 @@ export class VesselsService {
       name,
       rs,
       vesselClass: { connect: { id: vesselClassId } },
-      capabilities: { connect: capabilityIds.map((id) => ({ id })) },
+      capabilities: {
+        connect: capabilityIds ? capabilityIds.map((id) => ({ id })) : [],
+      },
     });
   }
 
@@ -43,7 +47,7 @@ export class VesselsService {
   }
 
   async deleteVessel(id: number): Promise<Vessel> {
-    return this.vesselsRepository.deleteVessel({ id });
+    return this.vesselsRepository.deleteVessel(id);
   }
 
   async addCapability(params: {
