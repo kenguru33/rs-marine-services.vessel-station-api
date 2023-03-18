@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vessel {
+  id            Int          @id @default(autoincrement())
+  name          String       @unique
+  rs            Int          @unique
+  station       Station?     @relation(fields: [stationId], references: [id])
+  stationId     Int?
+  capabilities  Capability[]
+  vesselClass   VesselClass  @relation(fields: [vesselClassId], references: [id])
+  vesselClassId Int
+  State         State?       @relation(fields: [stateId], references: [id])
+  stateId       Int?
+}
+
+model State {
+  id            Int      @id @default(autoincrement())
+  name          String   @unique
+  description   String?
+  Vessels       Vessel[]
+  legacyStateId Int?     @unique
+  inUse         Boolean  @default(true)
+}
+
+model Capability {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  vessels     Vessel[]
+}
+
+model VesselClass {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  range   Int
+  speed   Int
+  vessels Vessel[]
+}
+
+model Station {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  vessels Vessel[]
+}
