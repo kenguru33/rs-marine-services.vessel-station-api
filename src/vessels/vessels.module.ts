@@ -1,15 +1,19 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
 import { VesselsService } from './vessels.service';
 import { VesselsController } from './vessels.controller';
-import { StatesModule } from './states/states.module';
-import { CapabilitiesModule } from './capabilities/capabilities.module';
-import { VesselClassesModule } from './vessel-classes/vessel-classes.module';
-import { VesselsRepository } from './vessels.repository';
+import { VesselStatesModule } from '../vessel-states/VesselStates.module';
+import { VesselCapabilitiesModule } from '../vessel-capabilities/vessel-capabilities.module';
+import { VesselClassesModule } from '../vessel-classes/vessel-classes.module';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  providers: [PrismaService, VesselsService, VesselsRepository],
+  providers: [VesselsService],
   controllers: [VesselsController],
-  imports: [StatesModule, VesselClassesModule, CapabilitiesModule],
+  imports: [
+    DatabaseModule,
+    VesselStatesModule,
+    VesselClassesModule,
+    VesselCapabilitiesModule,
+  ],
 })
 export class VesselsModule {}

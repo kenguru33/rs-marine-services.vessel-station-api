@@ -5,23 +5,24 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { CreateCapabilityDto } from 'src/vessels/capabilities/dto/createCapability.dto';
+import { CreateVesselCapabilityDto } from 'src/vessel-capabilities/dto/createVesselCapability.dto';
 
 export class CreateVesselDto {
   @IsString()
   @IsNotEmpty()
   name: string;
-  
+
   @IsNumber()
   rs: number;
 
   @IsNumber()
-  vesselClassId: number; 
+  vesselClassId: number;
 
   @IsArray()
   @IsOptional()
   capabilityIds?: number[];
-  
+
+  @IsNumber()
   @IsOptional()
   stationId?: number;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/database/prisma.service';
 import { CreateStationDto } from './dto/createStation.dto';
 
 @Injectable()
@@ -18,14 +18,13 @@ export class StationsRepository {
     return this.prisma.station.findMany({
       include: {
         vessels: {
-          include: { vesselClass: true, capabilities: true, state: true },
+          include: { class: true, capabilities: true, state: true },
         },
       },
     });
   }
 
   async createStation(data: Prisma.StationCreateInput) {
-    console.log('data', data);
     return this.prisma.station.create({
       data,
       include: { vessels: true },
