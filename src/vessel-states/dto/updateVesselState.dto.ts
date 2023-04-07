@@ -1,29 +1,26 @@
 import {
-  IsString,
-  IsNotEmpty,
   IsBoolean,
-  IsOptional,
+  IsNotEmpty,
   IsNumber,
-  IsArray,
+  IsOptional,
+  IsString,
 } from 'class-validator';
 
-export class CreateVesselStateDto {
+export class UpdateVesselStateDto {
   @IsString()
+  @IsOptional()
   @IsNotEmpty()
-  name: string;
+  name?: string;
 
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
   description?: string;
 
   @IsBoolean()
-  @IsNotEmpty()
   @IsOptional()
   inUse?: boolean;
 
-  @IsNumber()
-  @IsNotEmpty()
   @IsOptional()
+  @IsNumber()
   legacyStateId?: number;
 }

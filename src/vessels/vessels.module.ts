@@ -11,9 +11,9 @@ import { DatabaseModule } from 'src/database/database.module';
   controllers: [VesselsController],
   imports: [
     DatabaseModule,
-    VesselStatesModule,
-    VesselClassesModule,
-    VesselCapabilitiesModule,
+    // VesselStatesModule,
+    // VesselClassesModule,
+    // VesselCapabilitiesModule,
   ],
 })
 export class VesselsModule {}

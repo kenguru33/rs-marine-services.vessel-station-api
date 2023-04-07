@@ -3,25 +3,20 @@ import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, isValidationOption
 export class UpdateVesselDto {
   @IsString()
   @IsNotEmpty()
-  @IsOptional()
-  name?: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  description?: string;
+  name: string;
 
   @IsNumber()
-  @IsNotEmpty()
-  @IsOptional()
-  rs?: number;
-  inUse?: boolean;
+  rs: number;
 
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   vesselClassId: number;
 
   @IsArray()
   @IsOptional()
   capabilityIds?: number[];
+
+  @IsNumber()
+  @IsOptional()
+  stationId?: number;
 }

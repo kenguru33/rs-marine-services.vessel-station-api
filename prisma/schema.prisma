@@ -45,7 +45,7 @@ model VesselSubState {
   legacyStateId Int?         @unique
   inUse         Boolean      @default(true)
   parentState   VesselState? @relation(fields: [parentStateId], references: [id])
-  parentStateId Int?         @unique
+  parentStateId Int?         
 }
 
 model VesselCapability {

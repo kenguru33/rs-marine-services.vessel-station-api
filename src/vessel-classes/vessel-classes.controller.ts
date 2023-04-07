@@ -1,16 +1,18 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
   Post,
+  Put,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { CreateVesselClassDto } from './dto/createVesselClass.dto';
 import { VesselClassesService } from './vessel-classes.service';
+import { UpdateVesselClassDto } from './dto/updateVesselClass.dto';
 
 @Controller('vessel-classes')
 export class VesselClassesController {
@@ -30,5 +32,16 @@ export class VesselClassesController {
   @UsePipes(new ValidationPipe({ transform: true }))
   createVesselClass(@Body() data: CreateVesselClassDto) {
     return this.vesselClassService.createVesselClass(data);
+  }
+
+  @Put(':id/update')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  updateVesselClass(@Body() data: UpdateVesselClassDto, @Param('id') id: number) {
+    return this.vesselClassService.updateVesselClass(id, data);
+  }
+
+  @Delete(':id/delete')
+  deleteVesselClass(@Param('id', ParseIntPipe) id: number) {
+    return this.vesselClassService.deleteVesselClass(id);
   }
 }

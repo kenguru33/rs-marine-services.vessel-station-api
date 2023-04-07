@@ -25,4 +25,8 @@ export class CreateVesselDto {
   @IsNumber()
   @IsOptional()
   stationId?: number;
+
+  @IsNumber()
+  stateId: number;
+  
 }

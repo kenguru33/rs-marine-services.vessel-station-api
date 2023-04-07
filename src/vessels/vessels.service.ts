@@ -75,9 +75,11 @@ export class VesselsService {
     return this.prisma.vessel.update({
       where: { id },
       data: {
-        name,
-        rs,
-        class: { connect: { id: vesselClassId } },
+        name: name || undefined,
+        rs: rs || undefined,
+        class: {
+          connect: vesselClassId ? { id: vesselClassId } : undefined,
+        },
         capabilities: {
           set: capabilityIds && capabilityIds.map((id) => ({ id })),
         },

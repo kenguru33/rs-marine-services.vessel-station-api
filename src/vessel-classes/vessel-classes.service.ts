@@ -1,20 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVesselClassDto } from './dto/createVesselClass.dto';
-import { VesselClassesRepository } from './vesselClasses.repository';
+import { UpdateVesselClassDto } from './dto/updateVesselClass.dto';
+import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
 export class VesselClassesService {
-  constructor(private vesselClassesRepository: VesselClassesRepository) {}
+  constructor(private prisma: PrismaService) {}
 
   async vesselClass(id: number): Promise<CreateVesselClassDto> {
-    return this.vesselClassesRepository.vesselClass(id);
+    return this.prisma.vesselClass.findUnique({
+      where: { id },
+      include: { vessels: true },
+    });
   }
 
   async vesselClasses(): Promise<CreateVesselClassDto[]> {
-    return this.vesselClassesRepository.vesselClasses();
+    return this.prisma.vesselClass.findMany({
+      include: { vessels: true },
+    });
   }
 
   async createVesselClass(data: CreateVesselClassDto) {
-    return this.vesselClassesRepository.createVesselClass(data);
+    return this.prisma.vesselClass.create({
+      data,
+    });
+  }
+
+  async updateVesselClass(id: number, data: UpdateVesselClassDto) {
+    return this.prisma.vesselClass.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async deleteVesselClass(id: number) {
+    return this.prisma.vesselClass.delete({
+      where: { id },
+    });
   }
 }
