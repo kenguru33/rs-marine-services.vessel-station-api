@@ -16,21 +16,24 @@ export class PrismaClientExceptionsFilter
   extends BaseExceptionFilter
   implements BaseExceptionFilter
 {
-  constructor(private httpAdapter: AbstractHttpAdapter, private readonly logger: Logger) {
+  constructor(
+    private httpAdapter: AbstractHttpAdapter,
+    private readonly logger: Logger,
+  ) {
     super();
   }
 
   catch(exception: PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    
+
     this.logger.error(exception.message);
 
     const target = exception.meta?.target;
     if (exception.code === 'P2002') {
       response.status(HttpStatus.CONFLICT).json({
         statusCode: HttpStatus.CONFLICT,
-        message: `A record with [${target}] already exists.`,
+        message: `A record with this ${target} already exists.`,
       });
     } else if (exception.code === 'P2025') {
       response.status(HttpStatus.NOT_FOUND).json({
@@ -40,7 +43,7 @@ export class PrismaClientExceptionsFilter
     } else {
       response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: exception.message,
+        message: `Prisma internal server error.`,
       });
       super.catch(exception, host);
     }
