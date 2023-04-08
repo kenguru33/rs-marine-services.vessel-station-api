@@ -9,7 +9,7 @@ export class VesselsService {
   constructor(private prisma: PrismaService) {}
 
   async vessel(id: number): Promise<Vessel> {
-    return this.prisma.vessel.findUnique({
+    return this.prisma.vessel.findUniqueOrThrow({
       where: { id },
       include: { capabilities: true, class: true, station: true },
     });
