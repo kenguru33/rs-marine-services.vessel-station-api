@@ -1,9 +1,7 @@
 import {
   ArgumentsHost,
   Catch,
-  ExceptionFilter,
   HttpStatus,
-  Inject,
   Logger,
 } from '@nestjs/common';
 import { AbstractHttpAdapter, BaseExceptionFilter } from '@nestjs/core';
@@ -20,30 +18,46 @@ export class PrismaClientExceptionsFilter
     private httpAdapter: AbstractHttpAdapter,
     private readonly logger: Logger,
   ) {
-    super();
+    super(httpAdapter);
+  }
+
+  private exceptionShortMessage(message: string): string {
+    const shortMessage = message.substring(message.indexOf('→'));
+    return shortMessage
+      .substring(shortMessage.indexOf('\n'))
+      .replace(/\n/g, '')
+      .trim();
   }
 
   catch(exception: PrismaClientKnownRequestError, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
 
-    this.logger.error(exception.message);
+    const message = `${exception.code} - ${this.exceptionShortMessage(
+      exception.message,
+    )}`;
 
-    const target = exception.meta?.target;
+    this.logger.error(message);
+
     if (exception.code === 'P2002') {
       response.status(HttpStatus.CONFLICT).json({
         statusCode: HttpStatus.CONFLICT,
-        message: `A record with this ${target} already exists.`,
+        message,
+      });
+    } else if (exception.code === 'P2003') {
+      response.status(HttpStatus.CONFLICT).json({
+        statusCode: HttpStatus.CONFLICT,
+        message,
       });
     } else if (exception.code === 'P2025') {
       response.status(HttpStatus.NOT_FOUND).json({
         statusCode: HttpStatus.NOT_FOUND,
-        message: `Record not found.`,
+        message,
       });
     } else {
       response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: `Prisma internal server error.`,
+        message,
       });
       super.catch(exception, host);
     }

@@ -24,8 +24,8 @@ model Vessel {
   capabilities VesselCapability[]
   class        VesselClass        @relation(fields: [classId], references: [id])
   classId      Int
-  state        VesselState?       @relation(fields: [stateId], references: [id])
-  stateId      Int?
+  state        VesselState        @relation(fields: [stateId], references: [id])
+  stateId      Int
 }
 
 model VesselState {
@@ -45,7 +45,7 @@ model VesselSubState {
   legacyStateId Int?         @unique
   inUse         Boolean      @default(true)
   parentState   VesselState? @relation(fields: [parentStateId], references: [id])
-  parentStateId Int?         
+  parentStateId Int?
 }
 
 model VesselCapability {

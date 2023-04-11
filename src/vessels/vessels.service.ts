@@ -22,44 +22,12 @@ export class VesselsService {
   }
 
   async createVessel(data: CreateVesselDto): Promise<Vessel> {
-    const { name, rs, capabilityIds, vesselClassId, stationId } = data;
-
-    for await (const id of capabilityIds) {
-      const capability = await this.prisma.vesselCapability.findUnique({
-        where: { id },
-      });
-      if (!capability) {
-        throw new HttpException(`Capability with id ${id} does not exist`, 400);
-      }
-    }
-
-    const vesselClass = await this.prisma.vesselClass.findUnique({
-      where: { id: vesselClassId },
-    });
-
-    if (stationId) {
-      const station = await this.prisma.station.findUnique({
-        where: { id: stationId },
-      });
-      if (!station) {
-        throw new HttpException(
-          `Station with id ${stationId} does not exist`,
-          400,
-        );
-      }
-    }
-
-    if (!vesselClass) {
-      throw new HttpException(
-        `Vessel class with id ${vesselClassId} does not exist`,
-        400,
-      );
-    }
-
+    const { name, rs, capabilityIds, vesselClassId, stationId, stateId } = data;
     const vessel = this.prisma.vessel.create({
       data: {
         name,
         rs,
+        state: { connect: { id: stateId } },
         station: stationId ? { connect: { id: stationId } } : undefined,
         class: { connect: { id: vesselClassId } },
         capabilities: {
