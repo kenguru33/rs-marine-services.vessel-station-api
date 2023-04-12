@@ -11,13 +11,13 @@ export class VesselsService {
   async vessel(id: number): Promise<Vessel> {
     return this.prisma.vessel.findUniqueOrThrow({
       where: { id },
-      include: { capabilities: true, class: true, station: true },
+      include: { capabilities: true, class: true, station: true, state: true },
     });
   }
 
   async vessels(): Promise<Vessel[]> {
     return this.prisma.vessel.findMany({
-      include: { capabilities: true, class: true, station: true },
+      include: { capabilities: true, class: true, station: true, state: true },
     });
   }
 
