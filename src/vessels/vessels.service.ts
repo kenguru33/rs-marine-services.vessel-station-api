@@ -34,7 +34,7 @@ export class VesselsService {
           connect: capabilityIds ? capabilityIds.map((id) => ({ id })) : [],
         },
       },
-      include: { capabilities: true, class: true, station: true },
+      include: { capabilities: true, class: true, station: true, state: true },
     });
     return vessel;
   }
@@ -52,7 +52,7 @@ export class VesselsService {
           set: capabilityIds && capabilityIds.map((id) => ({ id })),
         },
       },
-      include: { capabilities: true, class: true, station: true },
+      include: { capabilities: true, class: true, station: true, state: true },
     });
   }
 
