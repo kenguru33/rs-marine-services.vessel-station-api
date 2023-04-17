@@ -28,19 +28,19 @@ export class VesselClassesController {
     return this.vesselClassService.vesselClasses();
   }
 
-  @Post('create')
+  @Post('')
   @UsePipes(new ValidationPipe({ transform: true }))
   createVesselClass(@Body() data: CreateVesselClassDto) {
     return this.vesselClassService.createVesselClass(data);
   }
 
-  @Put(':id/update')
+  @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
   updateVesselClass(@Body() data: UpdateVesselClassDto, @Param('id') id: number) {
     return this.vesselClassService.updateVesselClass(id, data);
   }
 
-  @Delete(':id/delete')
+  @Delete(':id')
   deleteVesselClass(@Param('id', ParseIntPipe) id: number) {
     return this.vesselClassService.deleteVesselClass(id);
   }

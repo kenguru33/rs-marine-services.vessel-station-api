@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -31,19 +32,13 @@ export class VesselStatesController {
     return this.statesService.states();
   }
 
-  @Post('create')
+  @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async createState(@Body() data: CreateVesselStateDto) {
     return this.statesService.createState(data);
   }
 
-  @Post('create-substate')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  async createSubState(@Body() data: CreateVesselSubStateDto) {
-    return this.statesService.createSubState(data);
-  }
-
-  @Put(':id/update')
+  @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateState(
     @Body() data: UpdateVesselStateDto,
@@ -53,13 +48,8 @@ export class VesselStatesController {
     return this.statesService.updateState(id, data);
   }
 
-  @Put(':id/update-substate')
-  @UsePipes(new ValidationPipe({ transform: true }))
-  async updateSubState(
-    @Body() data: UpdateVesselSubStateDto,
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    console.log('hit update substate');
-    return this.statesService.updateSubState(id, data);
+  @Delete(':id')
+  async deleteState(@Param('id', ParseIntPipe) id: number) {
+    return this.statesService.deleteState(id);
   }
 }

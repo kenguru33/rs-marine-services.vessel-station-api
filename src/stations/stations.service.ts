@@ -12,7 +12,9 @@ export class StationsService {
       where: { id },
       include: {
         vessels: {
-          include: { class: true, capabilities: true, state: true },
+          include: { class: true, capabilities: true, subState: {
+            include: { parentState: true },
+          }, },
         },
       },
     });
@@ -21,7 +23,9 @@ export class StationsService {
     return this.prisma.station.findMany({
       include: {
         vessels: {
-          include: { class: true, capabilities: true, state: true },
+          include: { class: true, capabilities: true, subState: {
+            include: { parentState: true },
+          }, },
         },
       },
     });
@@ -32,7 +36,9 @@ export class StationsService {
       data,
       include: {
         vessels: {
-          include: { class: true, capabilities: true, state: true },
+          include: { class: true, capabilities: true, subState: {
+            include: { parentState: true },
+          }, },
         },
       },
     });
@@ -43,7 +49,9 @@ export class StationsService {
       where: { id },
       include: {
         vessels: {
-          include: { class: true, capabilities: true, state: true },
+          include: { class: true, capabilities: true, subState: {
+            include: { parentState: true },
+          }, },
         },
       },
     });
@@ -55,7 +63,13 @@ export class StationsService {
       data,
       include: {
         vessels: {
-          include: { class: true, capabilities: true, state: true },
+          include: {
+            class: true,
+            capabilities: true,
+            subState: {
+              include: { parentState: true },
+            },
+          },
         },
       },
     });

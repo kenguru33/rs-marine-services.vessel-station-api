@@ -17,7 +17,6 @@ import { DatabaseModule } from './database/database.module';
     VesselStatesModule,
     VesselClassesModule,
     VesselCapabilitiesModule,
-    DatabaseModule,
   ],
   controllers: [],
   providers: [],

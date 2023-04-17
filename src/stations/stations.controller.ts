@@ -27,19 +27,19 @@ export class StationsController {
     return this.stationsService.stations();
   }
 
-  @Post('create')
+  @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async createStation(@Body() data: CreateStationDto) {
     return this.stationsService.createStation(data);
   }
 
-  @Put(':id/update')
+  @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateStation(@Body() data: CreateStationDto, @Param('id') id: number) {
     return this.stationsService.updateStation(id, data);
   }
 
-  @Delete(':id/delete')
+  @Delete(':id')
   async deleteStation(@Param('id', ParseIntPipe) id: number) {
     return this.stationsService.deleteStation(id);
   }

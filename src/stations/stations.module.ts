@@ -7,5 +7,6 @@ import { StationsService } from './stations.service';
   imports: [DatabaseModule],
   providers: [StationsService],
   controllers: [StationsController],
+  exports: [StationsService],
 })
 export class StationsModule {}

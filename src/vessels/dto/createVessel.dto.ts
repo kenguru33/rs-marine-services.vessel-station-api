@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import {
   IsArray,
   IsNotEmpty,
@@ -27,6 +28,5 @@ export class CreateVesselDto {
   stationId?: number;
 
   @IsNumber()
-  stateId: number;
-  
+  subStateId: number;
 }

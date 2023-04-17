@@ -3,75 +3,50 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   ParseIntPipe,
   Post,
   Put,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateVesselDto } from './dto/createVessel.dto';
 import { UpdateVesselDto } from './dto/updateVessel.dto';
 import { VesselsService } from './vessels.service';
+import { VesselTransformInterceptor } from './interceptors/vesselTransform.interceptor';
+import { VesselResponseDto } from './dto/vesselResponse.dto';
 
 @Controller('vessels')
+@UseInterceptors(VesselTransformInterceptor)
 export class VesselsController {
   constructor(private vesselsService: VesselsService) {}
 
   @Get(':id')
   vessel(@Param('id', ParseIntPipe) id: number) {
-    return this.vesselsService.vessel(id);
+    return this.vesselsService.findOne(id);
   }
 
   @Get()
   vessels() {
-    return this.vesselsService.vessels();
+    return this.vesselsService.findAll();
   }
 
-  @Post('create')
+  @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   createVessel(@Body() data: CreateVesselDto) {
-    return this.vesselsService.createVessel(data);
+    return this.vesselsService.create(data);
   }
 
-  @Put(':id/update')
+  @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
   updateVessel(@Body() data: UpdateVesselDto, @Param('id') id: number) {
-    return this.vesselsService.updateVessel(id, data);
+    return this.vesselsService.update(id, data);
   }
 
-  @Delete(':id/delete')
+  @Delete(':id')
   deleteVessel(@Param('id', ParseIntPipe) id: number) {
-    return this.vesselsService.deleteVessel(id);
+    return this.vesselsService.delete(id);
   }
-
-  // createVessel(@Body() data: CreateVesselDto) {
-  //   const { name, rs, capabilityIds, vesselClassId } = data;
-  //   return this.vesselsService.createVessel({
-  //     name,
-  //     rs,
-  //     vesselClass: { connect: { id: vesselClassId } },
-  //     capabilities: { connect: capabilityIds.map((id) => ({ id })) },
-  //   });
-  //  }
-
-  // @Put(':id/add-capability')
-  // @UsePipes(new ValidationPipe({ transform: true }))
-  // addCapability(
-  //   @Param('id') id: number,
-  //   @Body() data: { capabilityId: number },
-  // ) {
-  //   const { capabilityId } = data;
-  //   return this.vesselsService.addCapability({ vesselId: id, capabilityId });
-  // }
-
-  // @Put(':id/remove-capability')
-  // @UsePipes(new ValidationPipe({ transform: true }))
-  // removeCapability(
-  //   @Param('id') id: number,
-  //   @Body() data: { capabilityId: number },
-  // ) {
-  //   const { capabilityId } = data;
-  //   return this.vesselsService.removeCapability({ vesselId: id, capabilityId });
-  // }
 }

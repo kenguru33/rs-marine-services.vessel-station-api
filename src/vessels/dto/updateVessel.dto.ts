@@ -19,4 +19,7 @@ export class UpdateVesselDto {
   @IsNumber()
   @IsOptional()
   stationId?: number;
+
+  @IsNumber()
+  subStateId: number;
 }

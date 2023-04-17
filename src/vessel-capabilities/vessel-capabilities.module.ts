@@ -7,5 +7,6 @@ import { DatabaseModule } from 'src/database/database.module';
   imports: [DatabaseModule],
   providers: [VesselCapabilitiesService],
   controllers: [VesselCapabilitiesController],
+  exports: [VesselCapabilitiesService],
 })
 export class VesselCapabilitiesModule {}

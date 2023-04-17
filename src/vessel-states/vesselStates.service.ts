@@ -35,20 +35,6 @@ export class VesselStatesService {
     });
   }
 
-  async createSubState(data: CreateVesselSubStateDto) {
-    const { name, description, parentStateId, legacyStateId } = data;
-    return this.prisma.vesselSubState.create({
-      data: {
-        name,
-        description,
-        parentState: { connect: { id: parentStateId } },
-      },
-      include: {
-        parentState: true,
-      },
-    });
-  }
-
   async deleteState(id: number) {
     return this.prisma.vesselState.delete({
       where: {
@@ -56,14 +42,6 @@ export class VesselStatesService {
       },
       include: {
         subStates: true,
-      },
-    });
-  }
-
-  async deleteSubState(id: number) {
-    return this.prisma.vesselSubState.delete({
-      where: {
-        id,
       },
     });
   }
@@ -86,19 +64,5 @@ export class VesselStatesService {
     });
   }
 
-  async updateSubState(id: number, data: UpdateVesselSubStateDto) {
-    const { description, inUse, legacyStateId, name, parentStateId } = data;
-    return this.prisma.vesselSubState.update({
-      where: {
-        id,
-      },
-      data: {
-        name: name || undefined,
-        description: description || undefined,
-        inUse: inUse || undefined,
-        legacyStateId: legacyStateId || undefined,
-        parentState: { connect: { id: parentStateId } },
-      },
-    });
-  }
+  
 }

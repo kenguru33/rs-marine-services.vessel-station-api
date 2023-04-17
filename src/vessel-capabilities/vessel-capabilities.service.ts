@@ -6,30 +6,42 @@ import { PrismaService } from 'src/database/prisma.service';
 export class VesselCapabilitiesService {
   constructor(private prisma: PrismaService) {}
 
-  async capability(
-    capabilityWhereUniqueInput: Prisma.VesselCapabilityWhereUniqueInput,
-  ) {
+  async capability(id: number): Promise<VesselCapability> {
     return this.prisma.vesselCapability.findUnique({
-      where: capabilityWhereUniqueInput,
+      where: { id },
+      include: { vessels: true },
     });
   }
 
-  async capabilities(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.VesselCapabilityWhereUniqueInput;
-    where?: Prisma.VesselCapabilityWhereInput;
-    orderBy?: Prisma.VesselCapabilityOrderByWithRelationInput;
-  }): Promise<VesselCapability[]> {
-    const { skip, take, cursor, where, orderBy } = params;
+  // async capability(
+  //   capabilityWhereUniqueInput: Prisma.VesselCapabilityWhereUniqueInput,
+  // ) {
+  //   return this.prisma.vesselCapability.findUnique({
+  //     where: capabilityWhereUniqueInput,
+  //   });
+  // }
+
+  async capabilities(): Promise<VesselCapability[]> {
     return this.prisma.vesselCapability.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
+      include: { vessels: true },
     });
   }
+  // async capabilities(params: {
+  //   skip?: number;
+  //   take?: number;
+  //   cursor?: Prisma.VesselCapabilityWhereUniqueInput;
+  //   where?: Prisma.VesselCapabilityWhereInput;
+  //   orderBy?: Prisma.VesselCapabilityOrderByWithRelationInput;
+  // }): Promise<VesselCapability[]> {
+  //   const { skip, take, cursor, where, orderBy } = params;
+  //   return this.prisma.vesselCapability.findMany({
+  //     skip,
+  //     take,
+  //     cursor,
+  //     where,
+  //     orderBy,
+  //   });
+  // }
 
   async createCapability(data: Prisma.VesselCapabilityCreateInput) {
     return this.prisma.vesselCapability.create({
