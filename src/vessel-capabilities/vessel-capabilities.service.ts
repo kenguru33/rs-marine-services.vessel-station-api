@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { VesselCapability, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/database/prisma.service';
+import { CreateVesselCapabilityDto } from './dto/createVesselCapability.dto';
 
 @Injectable()
 export class VesselCapabilitiesService {
@@ -26,24 +27,9 @@ export class VesselCapabilitiesService {
       include: { vessels: true },
     });
   }
-  // async capabilities(params: {
-  //   skip?: number;
-  //   take?: number;
-  //   cursor?: Prisma.VesselCapabilityWhereUniqueInput;
-  //   where?: Prisma.VesselCapabilityWhereInput;
-  //   orderBy?: Prisma.VesselCapabilityOrderByWithRelationInput;
-  // }): Promise<VesselCapability[]> {
-  //   const { skip, take, cursor, where, orderBy } = params;
-  //   return this.prisma.vesselCapability.findMany({
-  //     skip,
-  //     take,
-  //     cursor,
-  //     where,
-  //     orderBy,
-  //   });
-  // }
+  
 
-  async createCapability(data: Prisma.VesselCapabilityCreateInput) {
+  async createCapability(data: CreateVesselCapabilityDto) {
     return this.prisma.vesselCapability.create({
       data,
     });

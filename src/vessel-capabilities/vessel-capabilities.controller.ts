@@ -21,8 +21,7 @@ export class VesselCapabilitiesController {
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  async createCapability(@Body() data: CreateVesselCapabilityDto) {
-    const { name, description } = data;
-    return this.capabilitiesService.createCapability({ name, description });
+  async createCapability(@Body() dto: CreateVesselCapabilityDto) {
+    return this.capabilitiesService.createCapability(dto);
   }
 }
