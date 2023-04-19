@@ -20,7 +20,12 @@ export class VesselSubStatesController {
 
   @Get(':id')
   async subState(@Param('id', ParseIntPipe) id: number) {
-    return this.vesselSubStateService
+    return this.vesselSubStateService.subState(id);
+  }
+
+  @Get()
+  async subStates() {
+    return this.vesselSubStateService.subStates();
   }
 
   @Post()

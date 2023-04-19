@@ -14,6 +14,12 @@ export class VesselSubStatesService {
     });
   }
 
+  async subStates() {
+    return this.prisma.vesselSubState.findMany({
+      include: { parentState: true },
+    });
+  }
+  
   async createSubState(data: CreateVesselSubStateDto) {
     const { name, description, parentStateId, legacyStateId } = data;
     return this.prisma.vesselSubState.create({
