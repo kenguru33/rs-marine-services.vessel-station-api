@@ -5,9 +5,10 @@ import { DatabaseModule } from 'src/database/database.module';
 import { VesselCapabilitiesModule } from 'src/vessel-capabilities/vessel-capabilities.module';
 import { VesselClassesModule } from 'src/vessel-classes/vessel-classes.module';
 import { VesselStatesModule } from 'src/vessel-states/VesselStates.module';
+import { VesselResolver } from './resolver';
 
 @Module({
-  providers: [VesselsService],
+  providers: [VesselsService, VesselResolver],
   controllers: [VesselsController],
   imports: [
     DatabaseModule,

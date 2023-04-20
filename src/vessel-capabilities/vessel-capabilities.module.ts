@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { VesselCapabilitiesService } from './vessel-capabilities.service';
 import { VesselCapabilitiesController } from './vessel-capabilities.controller';
 import { DatabaseModule } from 'src/database/database.module';
+import { VesselCapabilitiesResolver } from './resolver';
 
 @Module({
   imports: [DatabaseModule],
-  providers: [VesselCapabilitiesService],
+  providers: [VesselCapabilitiesService, VesselCapabilitiesResolver],
   controllers: [VesselCapabilitiesController],
   exports: [VesselCapabilitiesService],
 })
