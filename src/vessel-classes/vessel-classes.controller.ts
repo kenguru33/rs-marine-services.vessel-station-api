@@ -13,13 +13,14 @@ import {
 import { CreateVesselClassDto } from './dto/createVesselClass.dto';
 import { VesselClassesService } from './vessel-classes.service';
 import { UpdateVesselClassDto } from './dto/updateVesselClass.dto';
+import { VesselClass } from '@prisma/client';
 
 @Controller('vessel-classes')
 export class VesselClassesController {
   constructor(private vesselClassService: VesselClassesService) {}
 
   @Get(':id')
-  vesselClass(@Param('id', ParseIntPipe) id: number) {
+  vesselClass(@Param('id', ParseIntPipe) id: number): Promise<VesselClass> {
     return this.vesselClassService.vesselClass(id);
   }
 

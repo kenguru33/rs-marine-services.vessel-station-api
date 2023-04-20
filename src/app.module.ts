@@ -13,10 +13,7 @@ import { DatabaseModule } from './database/database.module';
       http: process.env.NODE_ENV !== 'production',
     }),
     VesselsModule,
-    StationsModule,
-    VesselStatesModule,
-    VesselClassesModule,
-    VesselCapabilitiesModule,
+    StationsModule
   ],
   controllers: [],
   providers: [],

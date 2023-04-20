@@ -1,13 +1,10 @@
 import { Station, Vessel } from "@prisma/client";
 
-export class StationResponseDto implements Station {
+export class StationResponseDto {
   id: number;
   name: string;
   Vessels: {
     id: number;
     name: string;
   }
-
-  
-
 }

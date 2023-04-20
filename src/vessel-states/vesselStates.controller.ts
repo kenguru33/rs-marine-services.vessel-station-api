@@ -12,29 +12,28 @@ import {
 } from '@nestjs/common';
 import { CreateVesselStateDto } from './dto/createVesselState.dto';
 import { CreateVesselSubStateDto } from './dto/createVesselSubState.dto';
-import { VesselStatesService } from './vesselStates.service';
+import { VesselStateWithRelation, VesselStatesService } from './vesselStates.service';
 import { UpdateVesselStateDto } from './dto/updateVesselState.dto';
 import { UpdateVesselSubStateDto } from './dto/updateVesselSubState.dto';
+import { VesselState } from '@prisma/client';
 
 @Controller('vessel-states')
 export class VesselStatesController {
   constructor(private statesService: VesselStatesService) {}
 
   @Get(':id')
-  async state(@Param('id', ParseIntPipe) id: number) {
-    console.log('states');
+  async state(@Param('id', ParseIntPipe) id: number): Promise<VesselStateWithRelation> {
     return this.statesService.state(id);
   }
 
   @Get()
-  async states() {
-    console.log('states');
+  async states(): Promise<VesselStateWithRelation[]> {
     return this.statesService.states();
   }
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
-  async createState(@Body() data: CreateVesselStateDto) {
+  async createState(@Body() data: CreateVesselStateDto): Promise<VesselState> {
     return this.statesService.createState(data);
   }
 
@@ -43,8 +42,7 @@ export class VesselStatesController {
   async updateState(
     @Body() data: UpdateVesselStateDto,
     @Param('id', ParseIntPipe) id: number,
-  ) {
-    console.log('hit update state');
+  ): Promise<VesselStateWithRelation> {
     return this.statesService.updateState(id, data);
   }
 

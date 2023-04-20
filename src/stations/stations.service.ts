@@ -2,12 +2,25 @@ import { Injectable } from '@nestjs/common';
 import { CreateStationDto } from './dto/createStation.dto';
 import { UpdateStationDto } from './dto/updateStation.dto';
 import { PrismaService } from 'src/database/prisma.service';
+import { Prisma } from '@prisma/client';
+
+
+export type StationWithRelation = Prisma.StationGetPayload<{
+  include: {
+    vessels: {
+      include: { class: true, capabilities: true, subState: {
+        include: { parentState: true },
+      }, },
+    },
+  },
+}>;
+
 
 @Injectable()
 export class StationsService {
   constructor(private prisma: PrismaService) {}
 
-  async station(id: number) {
+  async station(id: number): Promise<StationWithRelation> {
     return this.prisma.station.findUnique({
       where: { id },
       include: {
@@ -19,7 +32,7 @@ export class StationsService {
       },
     });
   }
-  async stations() {
+  async stations(): Promise<StationWithRelation[]> {
     return this.prisma.station.findMany({
       include: {
         vessels: {
@@ -31,7 +44,7 @@ export class StationsService {
     });
   }
 
-  async createStation(data: CreateStationDto) {
+  async createStation(data: CreateStationDto): Promise<StationWithRelation> {
     return this.prisma.station.create({
       data,
       include: {
@@ -44,7 +57,7 @@ export class StationsService {
     });
   }
 
-  async deleteStation(id: number) {
+  async deleteStation(id: number): Promise<StationWithRelation> {
     return this.prisma.station.delete({
       where: { id },
       include: {
