@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { VesselResponseDto } from '../dto/vesselResponse.dto';
-import { Vessel } from '../models/vessel';
 import { plainToInstance } from 'class-transformer';
+import { VesselWithRelation } from '../vessels.service';
 
 @Injectable()
 export class VesselTransformInterceptor implements NestInterceptor {
@@ -17,7 +17,7 @@ export class VesselTransformInterceptor implements NestInterceptor {
   ): Observable<VesselResponseDto | VesselResponseDto[]> {
     console.log(context.switchToHttp().getRequest().body);
     return next.handle().pipe(
-      map((data: Vessel) => {
+      map((data: VesselWithRelation) => {
         if (data instanceof Array) {
           return plainToInstance(VesselResponseDto, data, {
             excludeExtraneousValues: true,

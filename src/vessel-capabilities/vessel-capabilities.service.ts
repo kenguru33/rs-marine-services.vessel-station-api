@@ -4,6 +4,12 @@ import { PrismaService } from 'src/database/prisma.service';
 import { CreateVesselCapabilityDto } from './dto/createVesselCapability.dto';
 import { UpdateVesselCapabilityDto } from './dto/updateVesselCapability.dto';
 
+export type VesselCapabilityWithRelation = Prisma.VesselCapabilityGetPayload<{
+  include: {
+    vessels: true;
+  };
+}>;
+
 @Injectable()
 export class VesselCapabilitiesService {
   constructor(private prisma: PrismaService) {}
@@ -22,17 +28,17 @@ export class VesselCapabilitiesService {
   }
   
 
-  async createCapability(data: CreateVesselCapabilityDto) {
+  async createCapability(data: CreateVesselCapabilityDto): Promise<VesselCapability> {
     return this.prisma.vesselCapability.create({
-      data,
+      data
     });
   }
 
-  async updateCapability(id: number, data: UpdateVesselCapabilityDto) {
+  async updateCapability(id: number, data: UpdateVesselCapabilityDto): Promise<VesselCapability> {
     return this.prisma.vesselCapability.update({data, where: {id}});
   }
 
-  async deleteCapability(id: number) {
+  async deleteCapability(id: number): Promise<VesselCapability> {
     return this.prisma.vesselCapability.delete({
       where: { id },
     });

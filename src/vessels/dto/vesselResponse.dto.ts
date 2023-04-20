@@ -1,4 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
+import { VesselWithRelation } from '../vessels.service';
 
 export class VesselResponseDto {
   @Expose()
@@ -18,7 +19,7 @@ export class VesselResponseDto {
     name: string;
   };
   @Expose()
-  @Transform(({ obj }) => {
+  @Transform(({ obj }: { obj: VesselWithRelation }) => {
     const state = {
       id: obj.subState.parentState.id,
       name: obj.subState.parentState.name,

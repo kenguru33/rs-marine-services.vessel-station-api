@@ -11,19 +11,19 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateStationDto } from './dto/createStation.dto';
-import { StationsService } from './stations.service';
+import { StationWithRelation, StationsService } from './stations.service';
 
 @Controller('stations')
 export class StationsController {
   constructor(private stationsService: StationsService) {}
 
   @Get(':id')
-  async station(@Param('id', ParseIntPipe) id: number) {
+  async station(@Param('id', ParseIntPipe) id: number): Promise<StationWithRelation> {
     return this.stationsService.station(id);
   }
 
   @Get()
-  async stations() {
+  async stations() : Promise<StationWithRelation[]> {
     return this.stationsService.stations();
   }
 

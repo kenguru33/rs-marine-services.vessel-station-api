@@ -2,25 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateVesselSubStateDto } from './dto/createVesselSubState.dto';
 import { UpdateVesselSubStateDto } from './dto/updateVesselSubState.dto';
+import { Prisma, VesselState } from '@prisma/client';
+
+export type VesselSubStateWithRelation = Prisma.VesselSubStateGetPayload<{
+  include: {
+    parentState: {
+      include: {
+        subStates: true;
+      };
+    };
+  };
+}>;
 
 @Injectable()
 export class VesselSubStatesService {
   constructor(private prisma: PrismaService) {}
 
-  async subState(id: number) {
+  async subState(id: number): Promise<VesselSubStateWithRelation> {
     return this.prisma.vesselSubState.findUnique({
       where: { id },
-      include: { parentState: true },
+      include: { parentState: { include: { subStates: true } } },
     });
   }
 
-  async subStates() {
+  async subStates(): Promise<VesselSubStateWithRelation[]> {
     return this.prisma.vesselSubState.findMany({
-      include: { parentState: true },
+      include: { parentState: { include: { subStates: true } } },
     });
   }
-  
-  async createSubState(data: CreateVesselSubStateDto) {
+
+  async createSubState(
+    data: CreateVesselSubStateDto,
+  ): Promise<VesselSubStateWithRelation> {
     const { name, description, parentStateId, legacyStateId } = data;
     return this.prisma.vesselSubState.create({
       data: {
@@ -29,12 +42,15 @@ export class VesselSubStatesService {
         parentState: { connect: { id: parentStateId } },
       },
       include: {
-        parentState: true,
+        parentState: { include: { subStates: true } },
       },
     });
   }
 
-  async updateSubState(id: number, data: UpdateVesselSubStateDto) {
+  async updateSubState(
+    id: number,
+    data: UpdateVesselSubStateDto,
+  ): Promise<VesselSubStateWithRelation> {
     const { description, inUse, legacyStateId, name, parentStateId } = data;
     return this.prisma.vesselSubState.update({
       where: {
@@ -47,15 +63,17 @@ export class VesselSubStatesService {
         legacyStateId: legacyStateId || undefined,
         parentState: { connect: { id: parentStateId } },
       },
+      include: {
+        parentState: { include: { subStates: true } },
+      },
     });
   }
 
-  async deleteSubState(id: number) {
+  async deleteSubState(id: number): Promise<VesselState> {
     return this.prisma.vesselSubState.delete({
       where: {
         id,
       },
     });
   }
-
 }
