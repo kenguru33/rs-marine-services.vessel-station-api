@@ -24,28 +24,26 @@ model Vessel {
   capabilities VesselCapability[]
   class        VesselClass        @relation(fields: [classId], references: [id])
   classId      Int
-  subState     VesselSubState     @relation(fields: [subStateId], references: [id])
-  subStateId   Int
+  state        VesselState        @relation(fields: [stateId], references: [id])
+  stateId      Int
+}
+
+model VesselStateCategory {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  description String?
+  inUse       Boolean       @default(true)
+  states      VesselState[]
 }
 
 model VesselState {
-  id            Int              @id @default(autoincrement())
-  name          String           @unique
-  description   String?
-  legacyStateId Int?             @unique
-  inUse         Boolean          @default(true)
-  subStates     VesselSubState[]
-}
-
-model VesselSubState {
-  id            Int         @id @default(autoincrement())
-  name          String      @unique
-  description   String?
-  legacyStateId Int?        @unique
-  inUse         Boolean     @default(true)
-  parentState   VesselState @relation(fields: [parentStateId], references: [id])
-  parentStateId Int
-  Vessels       Vessel[]
+  id              Int                 @id @default(autoincrement())
+  name            String              @unique
+  description     String?
+  inUse           Boolean             @default(true)
+  stateCategory   VesselStateCategory @relation(fields: [stateCategoryId], references: [id])
+  stateCategoryId Int
+  Vessels         Vessel[]
 }
 
 model VesselCapability {

@@ -1,17 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 async function main() {
-  const operativ = await prisma.vesselState.upsert({
+  const operativ = await prisma.vesselStateCategory.upsert({
     where: { name: 'Operativ' },
     update: {},
     create: {
       description: 'Status hovedkategori',
       name: 'Operativ',
-      subStates: {
+      states: {
         create: [
           {
             description: 'Operativ status underkategori',
-            name: 'Ledig på base',
+            name: 'Ledig på basen',
           },
           {
             description: 'Operativ status underkategori',
@@ -22,83 +22,67 @@ async function main() {
     },
   });
 
-  const operativSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: operativ.id } },
-  });
-
-  const uad = await prisma.vesselState.upsert({
+  const uad = await prisma.vesselStateCategory.upsert({
     where: { name: 'UAD' },
     update: {},
     create: {
       description: 'Status hovedkategori',
       name: 'UAD',
-      subStates: {
+      states: {
         create: [
           {
             description: 'UAD status underkategori',
-            name: 'Verksted',
+            name: 'På Verksted',
           },
           {
             description: 'UAD status underkategori',
-            name: 'Mannskap',
+            name: 'Mansnkapsmangel',
           },
         ],
       },
     },
   });
 
-  const uadSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: uad.id } },
-  });
-
-  const beredskap = await prisma.vesselState.upsert({
+  const beredskap = await prisma.vesselStateCategory.upsert({
     where: { name: 'Beredskap' },
     update: {},
     create: {
       description: 'Status hovedkategori',
       name: 'Beredskap',
-      subStates: {
+      states: {
         create: [
           {
             description: 'Beredskap status underkategori',
-            name: '30 min. forberedelsestid',
+            name: '30 min. forsinket',
           },
           {
             description: 'Beredskap status underkategori',
-            name: '60 min. forberedelsestid',
+            name: '60 min. forsinket',
           },
         ],
       },
     },
   });
 
-  const beredskaoSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: beredskap.id } },
-  });
-
-  const historisk = await prisma.vesselState.upsert({
+  const historisk = await prisma.vesselStateCategory.upsert({
     where: { name: 'Historisk' },
     update: {},
     create: {
       description: 'Status hovedkategori',
       name: 'Historisk',
-      subStates: {
+      states: {
         create: [
           {
             description: 'Historisk status underkategori',
-            name: 'Solg',
+            name: 'Solgt',
           },
           {
-            description: 'Status underkategori',
-            name: 'Makulert/utgått',
+            description: 'Historisk status underkategori',
+            name: 'Opplag/Annet',
           },
         ],
       },
     },
-  });
-
-  const historiskSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: historisk.id } },
   });
 
   console.log({ operativ, uad, beredskap, historisk });
@@ -180,7 +164,7 @@ async function main() {
       name: 'RS Bernt Anker',
       classId: ankerClass.id,
       stationId: stationStavern.id,
-      subStateId: operativSubStates[0].id,
+      stateId: 1,
       capabilities: {
         connect: [{ id: capabilityDykker.id }, { id: capabilitySøk.id }],
       },
@@ -195,7 +179,7 @@ async function main() {
       name: 'RS Elias',
       classId: staffClass.id,
       stationId: stationHorten.id,
-      subStateId: uadSubStates[0].id,
+      stateId: 2,
       capabilities: {
         connect: [{ id: capabilityDykker.id }, { id: capabilityDrone.id }],
       },
@@ -210,14 +194,14 @@ async function main() {
       name: 'RS Hvaler',
       classId: staffClass.id,
       stationId: stationHorten.id,
-      subStateId: beredskaoSubStates[1].id,
+      stateId: 3,
       capabilities: {
         connect: [{ id: capabilityDykker.id }],
       },
     },
   });
 
-  console.log({ vessel1, vessel2 });
+  console.log({ vessel1, vessel2, vessel3 });
 }
 
 main()
