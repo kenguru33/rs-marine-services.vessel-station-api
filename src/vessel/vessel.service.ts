@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/database/prisma.service';
 import { CreateVesselDto } from './dto/createVessel.dto';
 import { UpdateVesselDto } from './dto/updateVessel.dto';
 import { Prisma, Vessel } from '@prisma/client';
+import { PrismaService } from 'src/database/prisma.service';
 
 export type VesselWithRelation = Prisma.VesselGetPayload<{
   include: {
-    capabilities: true;
-    class: true;
-    station: true;
-    subState: {
-      include: { parentState: true };
+    capabilities?: true;
+    class?: true;
+    station?: true;
+    state?: {
+      include: {
+        stateCategory?: true;
+      };
     };
   };
 }>;
@@ -25,14 +27,23 @@ export class VesselService {
     });
   }
 
-  async getVessel(id: number): Promise<Vessel> {
+  async getVessel(id: number, include?: string): Promise<Vessel> {
+    const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
+      include,
+    );
     return this.prisma.vessel.findUniqueOrThrow({
       where: { id },
+      include: vesselInclude,
     });
   }
 
-  async getVessels(): Promise<Vessel[]> {
-    return this.prisma.vessel.findMany();
+  async getVessels(include?: string): Promise<Vessel[] | VesselWithRelation[]> {
+    const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
+      include,
+    );
+    return this.prisma.vessel.findMany({
+      include: vesselInclude,
+    });
   }
 
   create(data: CreateVesselDto): Promise<Vessel> {
@@ -57,8 +68,8 @@ export class VesselService {
     return this.prisma.vessel.update({
       where: { id },
       data: {
-        name: name, 
-        rs: rs, 
+        name: name,
+        rs: rs,
         class: {
           connect: vesselClassId ? { id: vesselClassId } : undefined,
         },

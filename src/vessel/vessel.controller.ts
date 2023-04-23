@@ -8,6 +8,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -25,13 +26,14 @@ export class VesselController {
   constructor(private vesselService: VesselService) {}
 
   @Get(':id')
-  vessel(@Param('id', ParseIntPipe) id: number): Promise<Vessel> {
-    return this.vesselService.getVessel(id);
+  vessel(@Param('id', ParseIntPipe) id: number, @Query('include') include: string): Promise<Vessel> {
+    console.log('include: ', include)
+    return this.vesselService.getVessel(id, include);
   }
 
   @Get()
-  vessels(): Promise<Vessel[]> {
-    return this.vesselService.getVessels();
+  vessels(@Query('include') include: string): Promise<Vessel[] | VesselWithRelation[] > {
+    return this.vesselService.getVessels(include);
   }
 
   @Post()

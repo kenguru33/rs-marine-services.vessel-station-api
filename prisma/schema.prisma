@@ -15,6 +15,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator nestgraphql {
+    provider = "node node_modules/prisma-nestjs-graphql"
+    // for yarn monorepos
+    // provider = "prisma-nestjs-graphql"
+    output = "../src/@generated"
+}
+
 model Vessel {
   id           Int                @id @default(autoincrement())
   name         String             @unique

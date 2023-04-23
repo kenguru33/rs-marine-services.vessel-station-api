@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateVesselStateDto } from './dto/createVesselState.dto';
 import { UpdateVesselStateDto } from './dto/updateVesselState.dto';
-import { Prisma, VesselState } from '@prisma/client';
+import { VesselState, VesselStateCategory } from '@prisma/client';
+
+export type VesselStateWithStateCategory = Partial<VesselStateCategory> & {
+  stateCategory?: Partial<VesselStateCategory>;
+};
 
 @Injectable()
 export class VesselStateService {

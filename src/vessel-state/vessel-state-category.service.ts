@@ -4,6 +4,10 @@ import { VesselStateCategory } from '@prisma/client';
 import { PrismaService } from 'src/database/prisma.service';
 import { UpdateVesselStateCategoryDto } from './dto/updateVesselStateCategory.dto';
 
+export type VesselStateCategoryWithStates = Partial<VesselStateCategory> & {
+  states?: Partial<VesselStateCategory>;
+};
+
 @Injectable()
 export class VesselStateCategoryService {
   constructor(private prisma: PrismaService) {}
