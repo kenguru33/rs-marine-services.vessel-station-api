@@ -20,16 +20,14 @@ export class VesselResponseDto {
     name: string;
   };
   @Expose()
-  @Transform(({ obj }: { obj: Vessel }) => {
-    console.log('empty interceptor')
-    return obj
-  })
   state: {
     id: number;
     name: string;
-    subState: {
+    description: string;
+    stateCategory: {
       id: number;
       name: string;
+      description: string;
     };
   };
   @Expose()

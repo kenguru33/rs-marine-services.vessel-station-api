@@ -34,7 +34,7 @@ export class VesselService {
     return this.prisma.vessel.findUniqueOrThrow({
       where: { id },
       include: vesselInclude,
-    });
+    });''
   }
 
   async getVessels(include?: string): Promise<Vessel[] | VesselWithRelation[]> {

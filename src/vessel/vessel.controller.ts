@@ -19,6 +19,7 @@ import { VesselWithRelation, VesselService } from './vessel.service';
 import { VesselTransformInterceptor } from './interceptors/vesselTransform.interceptor';
 import { VesselResponseDto } from './dto/vesselResponse.dto';
 import { Vessel } from '@prisma/client';
+import { VesselIncludeValidatorPipe } from './pipes/vessel-include-validator.pipe';
 
 @Controller('vessel')
 //@UseInterceptors(VesselTransformInterceptor)
@@ -26,13 +27,20 @@ export class VesselController {
   constructor(private vesselService: VesselService) {}
 
   @Get(':id')
-  vessel(@Param('id', ParseIntPipe) id: number, @Query('include') include: string): Promise<Vessel> {
-    console.log('include: ', include)
+  getVessel(
+    @Param('id', ParseIntPipe) id: number,
+    @Query('include') include: string,
+  ): Promise<Vessel> {
+    console.log('include: ', include);
     return this.vesselService.getVessel(id, include);
   }
 
   @Get()
-  vessels(@Query('include') include: string): Promise<Vessel[] | VesselWithRelation[] > {
+  @UsePipes(new VesselIncludeValidatorPipe())
+  @UseInterceptors(VesselTransformInterceptor)
+  getVessels(
+    @Query('include') include: string,
+  ): Promise<Vessel[] | VesselWithRelation[]> {
     return this.vesselService.getVessels(include);
   }
 
@@ -52,9 +60,7 @@ export class VesselController {
   }
 
   @Delete(':id')
-  deleteVessel(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<Vessel> {
+  deleteVessel(@Param('id', ParseIntPipe) id: number): Promise<Vessel> {
     return this.vesselService.delete(id);
   }
 }
