@@ -15,13 +15,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator nestgraphql {
-    provider = "node node_modules/prisma-nestjs-graphql"
-    // for yarn monorepos
-    // provider = "prisma-nestjs-graphql"
-    output = "../src/@generated"
-}
-
 model Vessel {
   id           Int                @id @default(autoincrement())
   name         String             @unique
@@ -69,7 +62,35 @@ model VesselClass {
 }
 
 model Station {
+  id       Int              @id @default(autoincrement())
+  name     String           @unique
+  address  StationAddress?
+  location StationLocation?
+
+  vessels Vessel[]
+}
+
+model StationAddress {
+  id          Int     @id @default(autoincrement())
+  address     String
+  zipCode     String
+  zipLocation String
+  station     Station @relation(fields: [stationId], references: [id])
+  stationId   Int     @unique
+  type        StationAddressType @relation(fields: [typeId], references: [id])
+  typeId      Int
+}
+
+model StationAddressType {
   id      Int      @id @default(autoincrement())
   name    String   @unique
-  vessels Vessel[]
+  address StationAddress[]
+}
+
+model StationLocation {
+  id        Int     @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+  station   Station @relation(fields: [stationId], references: [id])
+  stationId Int     @unique
 }
