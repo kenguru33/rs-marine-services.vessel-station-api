@@ -322,6 +322,10 @@ const vessels = [
   },
 ];
 
+const randdomVesselClassId = function (classes: Array<VesselClass>) {
+  return classes[Math.floor(Math.random() * classes.length)];
+};
+
 const randdomStationId = function (stations: Array<Station>) {
   return stations[Math.floor(Math.random() * stations.length)];
 };
@@ -345,6 +349,7 @@ const randdomCapabilityArray = function (
 export const seedVessels = async function (
   capabilities: Array<VesselCapability>,
   stations: Array<Station>,
+  classes: Array<VesselClass>,
 ) {
   const vesselModels: Array<Vessel> = [];
   for (const vessel of vessels) {
@@ -354,7 +359,7 @@ export const seedVessels = async function (
       create: {
         rs: +vessel.rs,
         name: vessel.name,
-        classId: 1,
+        classId: randdomVesselClassId(classes).id,
         stationId: randdomStationId(stations).id,
         stateId: 1,
         capabilities: {

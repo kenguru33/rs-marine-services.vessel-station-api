@@ -13,7 +13,7 @@ async function main() {
   const classes = await seedVesselClasses();
   const stateCategories = await seedStateCategories();
   const stations = await seedStations();
-  const vesels = await seedVessels(capabilities, stations);
+  const vesels = await seedVessels(capabilities, stations, classes);
 
   console.log({ capabilities, classes, stateCategories, stations, vesels });
   
