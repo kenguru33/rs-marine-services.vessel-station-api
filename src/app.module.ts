@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { VesselsModule } from './vessel/vessel.module';
-import { StationsModule } from './station/station.module';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
+import { VesselModule } from './vessel/vessel.module';
+import { StationModule } from './station/station.module';
 
 
 @Module({
@@ -11,8 +11,8 @@ import { GraphQLModule } from '@nestjs/graphql';
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
-    VesselsModule,
-    StationsModule,
+    VesselModule,
+    StationModule,
     // GraphQLModule.forRoot<ApolloDriverConfig>({
     //   driver: ApolloDriver,
     //   playground: true,

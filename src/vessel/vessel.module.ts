@@ -33,4 +33,4 @@ import { VesselStateCategoryController } from './vesste-state-category/vessel-st
   imports: [DatabaseModule],
   exports: [],
 })
-export class VesselsModule {}
+export class VesselModule {}

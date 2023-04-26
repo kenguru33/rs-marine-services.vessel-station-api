@@ -14,7 +14,13 @@ export class StationService {
     });
   }
   async getStations(): Promise<Station[]> {
-    return this.prisma.station.findMany({});
+    return this.prisma.station.findMany({
+      include: {
+        StationAccommodation: true,
+        type: true,
+        vessels: true,
+      },
+    });
   }
 
   async createStation(data: CreateStationDto): Promise<Station> {

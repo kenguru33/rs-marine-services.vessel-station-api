@@ -7,38 +7,37 @@ import {
   IsString,
 } from 'class-validator';
 
-export class UpdateStationApartmentDto {
-  
+export class UpdateStationAccommodationDto {
   @IsOptional()
   @IsString()
   description?: string;
 
-  @IsString()
   @IsOptional()
-  address?: string;
 
   @IsString()
+  address?: string;
+
   @IsOptional()
+  @IsString()
   postalLocation?: string;
 
   @IsOptional()
   @IsPostalCode('NO')
   postalCode?: string;
 
-  @IsNumber()
   @IsOptional()
+  @IsNumber()
   postalBox?: number;
 
-  @IsLatitude()
   @IsOptional()
+  @IsLatitude()
   latitude?: number;
 
-  @IsLongitude()
   @IsOptional()
+  @IsLongitude()
   longitude?: number;
 
-  @IsNumber()
   @IsOptional()
+  @IsNumber()
   stationId?: number;
-
 }

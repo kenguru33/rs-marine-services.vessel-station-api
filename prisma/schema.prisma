@@ -71,34 +71,21 @@ model VesselClass {
 }
 
 model Station {
-  id             Int                 @id @default(autoincrement())
-  name           String              @unique
-  vessels        Vessel[]
-  tilFelt        String?
-  address        String
-  postalCode     String
-  postalLocation String
-  postalBox      Int?
-  postalDelivery String?
-  latitude       Float
-  longitude      Float
-  apartment      StationApartment?
-  type           StationType         @relation(fields: [typeId], references: [id])
-  typeId         Int
-  agreements     StationAgreement[]
-}
-
-model StationApartment {
-  id             Int       @id @default(autoincrement())
-  description    String?
-  address        String
-  postalCode     String
-  postalLocation String
-  postalBox      Int?
-  latitude       Float
-  longitude      Float
-  stationId      Int       @unique
-  station        Station   @relation(fields: [stationId], references: [id])
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @unique
+  vessels              Vessel[]
+  tilFelt              String?
+  address              String
+  postalCode           String
+  postalLocation       String
+  postalBox            Int?
+  postalDelivery       String?
+  latitude             Float
+  longitude            Float
+  type                 StationType            @relation(fields: [typeId], references: [id])
+  typeId               Int
+  agreements           StationAgreement[]
+  StationAccommodation StationAccommodation?
 }
 
 model StationType {
@@ -106,6 +93,28 @@ model StationType {
   name        String    @unique
   description String?
   stations    Station[]
+}
+
+model StationAccommodation {
+  id             Int                      @id @default(autoincrement())
+  type           StationAccommodationType @relation(fields: [typeId], references: [id])
+  typeId         Int
+  description    String?
+  address        String
+  postalCode     String
+  postalLocation String
+  postalBox      Int?
+  latitude       Float
+  longitude      Float
+  stationId      Int                      @unique
+  station        Station                  @relation(fields: [stationId], references: [id])
+}
+
+model StationAccommodationType {
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @unique
+  description          String?
+  StationAccommodation StationAccommodation[]
 }
 
 // model StationAddress {
