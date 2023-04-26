@@ -19,6 +19,8 @@ model Vessel {
   id           Int                @id @default(autoincrement())
   name         String             @unique
   rs           Int                @unique
+  type         VesselType         @relation(fields: [typeId], references: [id])
+  typeId       Int
   station      Station?           @relation(fields: [stationId], references: [id])
   stationId    Int?
   capabilities VesselCapability[]
@@ -26,6 +28,13 @@ model Vessel {
   classId      Int
   state        VesselState        @relation(fields: [stateId], references: [id])
   stateId      Int
+}
+
+model VesselType {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  vessels     Vessel[]
 }
 
 model VesselStateCategory {
@@ -62,35 +71,82 @@ model VesselClass {
 }
 
 model Station {
-  id       Int              @id @default(autoincrement())
-  name     String           @unique
-  address  StationAddress?
-  location StationLocation?
-
-  vessels Vessel[]
+  id             Int                 @id @default(autoincrement())
+  name           String              @unique
+  vessels        Vessel[]
+  tilFelt        String?
+  address        String
+  postalCode     String
+  postalLocation String
+  postalBox      Int?
+  postalDelivery String?
+  latitude       Float
+  longitude      Float
+  apartment      StationApartment?   @relation(fields: [apartmentId], references: [id])
+  apartmentId    Int?
+  type           StationType         @relation(fields: [typeId], references: [id])
+  typeId         Int
+  agreements     StationAgreement[]
 }
 
-model StationAddress {
-  id          Int     @id @default(autoincrement())
-  address     String
-  zipCode     String
-  zipLocation String
-  station     Station @relation(fields: [stationId], references: [id])
-  stationId   Int     @unique
-  type        StationAddressType @relation(fields: [typeId], references: [id])
-  typeId      Int
+model StationApartment {
+  id             Int       @id @default(autoincrement())
+  name           String    @unique
+  description    String?
+  address        String
+  postalCode     String
+  postalLocation String
+  postalBox      Int?
+  latitude       Float
+  longitude      Float
+  stations       Station[]
 }
 
-model StationAddressType {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
-  address StationAddress[]
+model StationType {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  stations    Station[]
 }
 
-model StationLocation {
-  id        Int     @id @default(autoincrement())
-  latitude  Float
-  longitude Float
-  station   Station @relation(fields: [stationId], references: [id])
-  stationId Int     @unique
+// model StationAddress {
+//   id             Int    @id @default(autoincrement())
+//   address        String
+//   postalCode     String
+//   postalLocation String
+//   postalBox      Int?
+
+//   Station   Station @relation(fields: [stationId], references: [id])
+//   stationId Int     @unique
+// }
+
+// model StationAddressType {
+//   id          Int     @id @default(autoincrement())
+//   name        String  @unique
+//   description String?
+// }
+
+// model Postion {
+//   id             Int            @id @default(autoincrement())
+//   latitude       Float
+//   longitude      Float
+//   stationAddress StationAddress @relation(fields: [addressId], references: [id])
+//   addressId      Int            @unique
+// }
+
+model StationAgreement {
+  id        Int                  @id @default(autoincrement())
+  name      String               @unique
+  startDate DateTime
+  endDate   DateTime
+  type      StationAgreementType @relation(fields: [typeId], references: [id])
+  typeId    Int
+  stations  Station[]
+}
+
+model StationAgreementType {
+  id          Int                @id @default(autoincrement())
+  name        String             @unique
+  description String?
+  agreements  StationAgreement[]
 }

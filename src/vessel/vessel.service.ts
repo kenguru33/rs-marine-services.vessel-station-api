@@ -34,7 +34,8 @@ export class VesselService {
     return this.prisma.vessel.findUniqueOrThrow({
       where: { id },
       include: vesselInclude,
-    });''
+    });
+    ('');
   }
 
   async getVessels(include?: string): Promise<Vessel[] | VesselWithRelation[]> {
@@ -47,7 +48,15 @@ export class VesselService {
   }
 
   create(data: CreateVesselDto): Promise<Vessel> {
-    const { name, rs, capabilityIds, vesselClassId, stationId, stateId } = data;
+    const {
+      name,
+      rs,
+      capabilityIds,
+      vesselClassId,
+      stationId,
+      stateId,
+      vesselTypeId,
+    } = data;
     const vessel = this.prisma.vessel.create({
       data: {
         name,
@@ -58,6 +67,7 @@ export class VesselService {
         capabilities: {
           connect: capabilityIds ? capabilityIds.map((id) => ({ id })) : [],
         },
+        type: { connect: { id: vesselTypeId } },
       },
     });
     return vessel;

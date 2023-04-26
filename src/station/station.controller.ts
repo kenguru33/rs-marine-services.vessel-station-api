@@ -10,7 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateStationDto } from './dto/createStation.dto';
+import { CreateStationDto } from './dto/create-station.dto';
 import { StationService } from './station.service';
 import { Station } from '@prisma/client';
 
@@ -36,7 +36,10 @@ export class StationController {
 
   @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async updateStation(@Body() dto: CreateStationDto, @Param('id') id: number): Promise<Station> {
+  async updateStation(
+    @Body() dto: CreateStationDto,
+    @Param('id') id: number,
+  ): Promise<Station> {
     return this.stationsService.updateStation(id, dto);
   }
 

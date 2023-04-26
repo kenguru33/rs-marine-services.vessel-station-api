@@ -29,4 +29,7 @@ export class CreateVesselDto {
 
   @IsNumber()
   stateId: number;
+
+  @IsNumber()
+  vesselTypeId: number;
 }

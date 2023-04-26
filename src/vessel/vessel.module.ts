@@ -5,10 +5,12 @@ import { VesselCapabilitiesModule } from 'src/vessel-capability/vessel-capabilit
 import { VesselClasseModule } from 'src/vessel-class/vessel-class.module';
 import { VesselStateModule } from 'src/vessel-state/vessel-state.module';
 import { VesselService } from './vessel.service';
+import { VesselTypeController } from './vessel-type/vessel-type.controller';
+import { VesselTypeService } from './vessel-type/vessel-type.service';
 
 @Module({
-  providers: [VesselService],
-  controllers: [VesselController],
+  providers: [VesselService, VesselTypeService],
+  controllers: [VesselController, VesselTypeController],
   imports: [
     DatabaseModule,
     VesselStateModule,
