@@ -16,22 +16,22 @@ import { UpdateVesselStateDto } from './dto/updateVesselState.dto';
 
 @Controller('vessel-state')
 export class VesselStateController {
-  constructor(private vesselSubStateService: VesselStateService) {}
+  constructor(private vesselStateService: VesselStateService) {}
 
   @Get(':id')
   async subState(@Param('id', ParseIntPipe) id: number) {
-    return this.vesselSubStateService.getState(id);
+    return this.vesselStateService.getState(id);
   }
 
   @Get()
   async subStates() {
-    return this.vesselSubStateService.getStates();
+    return this.vesselStateService.getStates();
   }
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async createSubState(@Body() data: CreateVesselStateDto) {
-    return this.vesselSubStateService.createSubState(data);
+    return this.vesselStateService.createSubState(data);
   }
 
   @Put(':id')
@@ -40,11 +40,11 @@ export class VesselStateController {
     @Body() data: UpdateVesselStateDto,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    return this.vesselSubStateService.updateSubState(id, data);
+    return this.vesselStateService.updateSubState(id, data);
   }
 
   @Delete(':id')
   async deleteSubState(@Param('id', ParseIntPipe) id: number) {
-    return this.vesselSubStateService.deleteSubState(id);
+    return this.vesselStateService.deleteSubState(id);
   }
 }

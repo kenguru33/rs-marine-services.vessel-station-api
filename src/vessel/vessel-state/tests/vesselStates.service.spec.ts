@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { VesselStatesService } from '../vessel-state-category.service';
+import { VesselStatesService } from '../../vesste-state-category/vessel-state-category.service';
 
 describe('StatesService', () => {
   let service: VesselStatesService;

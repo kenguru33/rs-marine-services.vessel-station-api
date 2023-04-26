@@ -82,8 +82,7 @@ model Station {
   postalDelivery String?
   latitude       Float
   longitude      Float
-  apartment      StationApartment?   @relation(fields: [apartmentId], references: [id])
-  apartmentId    Int?
+  apartment      StationApartment?
   type           StationType         @relation(fields: [typeId], references: [id])
   typeId         Int
   agreements     StationAgreement[]
@@ -91,7 +90,6 @@ model Station {
 
 model StationApartment {
   id             Int       @id @default(autoincrement())
-  name           String    @unique
   description    String?
   address        String
   postalCode     String
@@ -99,7 +97,8 @@ model StationApartment {
   postalBox      Int?
   latitude       Float
   longitude      Float
-  stations       Station[]
+  stationId      Int       @unique
+  station        Station   @relation(fields: [stationId], references: [id])
 }
 
 model StationType {

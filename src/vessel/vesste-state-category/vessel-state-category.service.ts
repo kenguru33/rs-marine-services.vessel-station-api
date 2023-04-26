@@ -13,7 +13,7 @@ export class VesselStateCategoryService {
   constructor(private prisma: PrismaService) {}
 
   async getStateCategory(id: number): Promise<VesselStateCategory> {
-    return this.prisma.vesselStateCategory.findUnique({
+    return this.prisma.vesselStateCategory.findUniqueOrThrow({
       where: { id },
     });
   }

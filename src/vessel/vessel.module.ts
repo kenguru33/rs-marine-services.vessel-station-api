@@ -1,22 +1,36 @@
 import { Module } from '@nestjs/common';
 import { VesselController } from './vessel.controller';
 import { DatabaseModule } from 'src/database/database.module';
-import { VesselCapabilitiesModule } from 'src/vessel-capability/vessel-capabilities.module';
-import { VesselClasseModule } from 'src/vessel-class/vessel-class.module';
-import { VesselStateModule } from 'src/vessel-state/vessel-state.module';
 import { VesselService } from './vessel.service';
 import { VesselTypeController } from './vessel-type/vessel-type.controller';
 import { VesselTypeService } from './vessel-type/vessel-type.service';
+import { VesselClassService } from './vessel-class/vessel-class.service';
+import { VesselClassController } from './vessel-class/vessel-class.controller';
+import { VesselCapabilityService } from './vessel-capability/vessel-capabilities.service';
+import { VesselCapabilityController } from './vessel-capability/vessel-capability.controller';
+import { VesselStateController } from './vessel-state/vessel-state.controller';
+import { VesselStateService } from './vessel-state/vessel-state.service';
+import { VesselStateCategoryService } from './vesste-state-category/vessel-state-category.service';
+import { VesselStateCategoryController } from './vesste-state-category/vessel-state-category.controller';
 
 @Module({
-  providers: [VesselService, VesselTypeService],
-  controllers: [VesselController, VesselTypeController],
-  imports: [
-    DatabaseModule,
-    VesselStateModule,
-    VesselClasseModule,
-    VesselCapabilitiesModule,
+  providers: [
+    VesselService,
+    VesselTypeService,
+    VesselClassService,
+    VesselCapabilityService,
+    VesselStateService,
+    VesselStateCategoryService
   ],
-  exports: [VesselService],
+  controllers: [
+    VesselController,
+    VesselTypeController,
+    VesselClassController,
+    VesselCapabilityController,
+    VesselStateController,
+    VesselStateCategoryController
+  ],
+  imports: [DatabaseModule],
+  exports: [],
 })
 export class VesselsModule {}

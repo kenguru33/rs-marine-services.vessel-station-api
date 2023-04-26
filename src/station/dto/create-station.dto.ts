@@ -31,10 +31,6 @@ export class CreateStationDto {
   @IsLongitude()
   longitude: number;
 
-  @IsNumber()
-  @IsOptional()
-  apartmentId?: number;
-
   @IsString()
   @IsOptional() 
   postalDeleiver?: string;

@@ -11,9 +11,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateVesselClassDto } from './dto/createVesselClass.dto';
-import { VesselClassService } from './vessel-class.service';
 import { UpdateVesselClassDto } from './dto/updateVesselClass.dto';
 import { VesselClass } from '@prisma/client';
+import { VesselClassService } from './vessel-class.service';
 
 @Controller('vessel-class')
 export class VesselClassController {

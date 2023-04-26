@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { VesselClassService } from './vessel-class.service';
+import { VesselClassService } from '../vessel-class.service';
 
 describe('VesselClassesService', () => {
   let service: VesselClassService;
