@@ -16,7 +16,7 @@ export class CreateVesselDto {
   rs: number;
 
   @IsNumber()
-  vesselClassId: number;
+  classId: number;
 
   @IsArray()
   @IsOptional()
@@ -30,5 +30,5 @@ export class CreateVesselDto {
   stateId: number;
 
   @IsNumber()
-  vesselTypeId: number;
+  typeId: number;
 }

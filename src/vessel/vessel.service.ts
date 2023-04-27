@@ -52,38 +52,37 @@ export class VesselService {
       name,
       rs,
       capabilityIds,
-      vesselClassId,
+      classId,
       stationId,
       stateId,
-      vesselTypeId,
+      typeId,
     } = data;
     const vessel = this.prisma.vessel.create({
       data: {
         name,
         rs,
-        state: { connect: { id: stateId } },
-        station: stationId ? { connect: { id: stationId } } : undefined,
-        class: { connect: { id: vesselClassId } },
+        stateId: stateId,
+        stationId: stationId,
+        classId: classId,
         capabilities: {
           connect: capabilityIds ? capabilityIds.map((id) => ({ id })) : [],
         },
-        type: { connect: { id: vesselTypeId } },
+        typeId: typeId,
       },
     });
     return vessel;
   }
 
   async update(id: number, data: UpdateVesselDto): Promise<Vessel> {
-    const { name, rs, capabilityIds, vesselClassId, stateId, stationId } = data;
+    const { name, rs, capabilityIds, classId, stateId, stationId } = data;
     return this.prisma.vessel.update({
       where: { id },
       data: {
         name: name,
         rs: rs,
-        class: {
-          connect: vesselClassId ? { id: vesselClassId } : undefined,
-        },
-        state: stateId ? { connect: { id: data.stateId } } : undefined,
+        classId: classId,
+        stateId: stateId,
+        stationId: stationId,
         capabilities: {
           set: capabilityIds && capabilityIds.map((id) => ({ id })),
         },

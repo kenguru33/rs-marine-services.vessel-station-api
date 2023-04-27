@@ -1,34 +1,46 @@
-import { Controller, Delete, Get, Post, Put } from "@nestjs/common";
-import { StationPierTypeService } from "./station-pier-type.service";
-import { CreateStationPierDto } from "../station-pier/dto/create-station-pier.dto";
-import { UpdateStationPierDto } from "../station-pier/dto/update-station-pier.dto";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { StationPierTypeService } from './station-pier-type.service';
+import { CreateStationPierTypeDto } from './dto/create-station-pier-typer.dto';
+import { UpdateStationPierTypeDto } from './dto/update-station-pier-type.dto';
 
-@Controller('staion-pier-type')
+@Controller('station-pier-type')
 export class StationPierTypeController {
   constructor(private statinPierType: StationPierTypeService) {}
 
   @Get()
   async getStationPierTypes() {
     return this.statinPierType.getStationPierTypes();
-  } 
+  }
 
   @Get(':id')
-  async getStationPierType(id: number) {
+  async getStationPierType(@Param('id', ParseIntPipe) id: number) {
     return this.statinPierType.getStationPierType(id);
   }
 
   @Post()
-  async createStationPierType(dto: CreateStationPierDto) {
+  async createStationPierType(@Body() dto: CreateStationPierTypeDto) {
     return this.statinPierType.createStationPierType(dto);
   }
 
   @Put(':id')
-  async updateStationPierType(id: number, dto: UpdateStationPierDto) {
+  async updateStationPierType(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateStationPierTypeDto,
+  ) {
     return this.statinPierType.updateStationPierType(id, dto);
   }
 
   @Delete(':id')
-  async deleteStationPierType(id: number) {
+  async deleteStationPierType(@Param('id', ParseIntPipe) id: number) {
     return this.statinPierType.deleteStationPierType(id);
   }
 }

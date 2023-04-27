@@ -4,15 +4,15 @@ export class UpdateVesselDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  name: string;
+  name?: string;
 
   @IsNumber()
   @IsOptional()
-  rs: number;
+  rs?: number;
 
   @IsNumber()
   @IsOptional()
-  vesselClassId: number;
+  classId?: number;
 
   @IsArray()
   @IsOptional()
@@ -25,4 +25,8 @@ export class UpdateVesselDto {
   @IsNumber()
   @IsOptional()
   stateId?: number;
+
+  @IsNumber()
+  @IsOptional()
+  typeId?: number;
 }

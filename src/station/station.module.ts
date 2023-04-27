@@ -10,6 +10,8 @@ import { StationAccommodationTypeService } from './station-accommodation-type/st
 import { StationAccommodationTypeController } from './station-accommodation-type/station-accommodation-type.controller';
 import { StationPierService } from './station-pier/station-pier.service';
 import { StationPierController } from './station-pier/station-pier.controller';
+import { StationPierTypeService } from './station-pier-type/station-pier-type.service';
+import { StationPierTypeController } from './station-pier-type/station-pier-type.controller';
 
 
 @Module({
@@ -19,14 +21,16 @@ import { StationPierController } from './station-pier/station-pier.controller';
     StationTypeService,
     StationAccommodationService,
     StationAccommodationTypeService,
-    StationPierService
+    StationPierService,
+    StationPierTypeService
   ],
   controllers: [
     StationController,
     StationTypeController,
     StationAccommodationController,
     StationAccommodationTypeController,
-    StationPierController
+    StationPierController,
+    StationPierTypeController
   ],
   exports: [StationService],
 })
