@@ -6,7 +6,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { CreateVesselCapabilityDto } from 'src/vessel/vessel-capability/dto/createVesselCapability.dto';
 
 export class CreateVesselDto {
   @IsString()

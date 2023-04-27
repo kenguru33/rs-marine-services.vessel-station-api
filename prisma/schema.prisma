@@ -8,6 +8,7 @@ generator client {
 generator erd {
   provider                  = "prisma-erd-generator"
   includeRelationFromFields = true
+  theme                     = "forest"
 }
 
 datasource db {
@@ -71,8 +72,8 @@ model VesselClass {
 }
 
 model Station {
-  id                   Int                    @id @default(autoincrement())
-  name                 String                 @unique
+  id                   Int                   @id @default(autoincrement())
+  name                 String                @unique
   vessels              Vessel[]
   tilFelt              String?
   address              String
@@ -82,10 +83,11 @@ model Station {
   postalDelivery       String?
   latitude             Float
   longitude            Float
-  type                 StationType            @relation(fields: [typeId], references: [id])
+  type                 StationType           @relation(fields: [typeId], references: [id])
   typeId               Int
   agreements           StationAgreement[]
   StationAccommodation StationAccommodation?
+  StationPier          StationPier?
 }
 
 model StationType {
@@ -117,30 +119,38 @@ model StationAccommodationType {
   StationAccommodation StationAccommodation[]
 }
 
-// model StationAddress {
-//   id             Int    @id @default(autoincrement())
-//   address        String
-//   postalCode     String
-//   postalLocation String
-//   postalBox      Int?
+model StationPier {
+  id                Int                           @id @default(autoincrement())
+  length            Int
+  width             Int
+  minimumDepth      Int
+  StationPierType   StationPierType?              @relation(fields: [stationPierTypeId], references: [id])
+  stationPierTypeId Int?
+  floating          Boolean                       @default(false)
+  electricalSystem  StationPierElictricalSystem[]
+  diesel            Boolean                       @default(false)
+  petrol            Boolean                       @default(false)
+  storageSpace      Boolean                       @default(false)
+  coldWater         Boolean                       @default(false)
+  hotWater          Boolean                       @default(false)
+  stationId         Int                           @unique
+  station           Station                       @relation(fields: [stationId], references: [id])
+}
 
-//   Station   Station @relation(fields: [stationId], references: [id])
-//   stationId Int     @unique
-// }
+model StationPierType {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  StationPier StationPier[]
+}
 
-// model StationAddressType {
-//   id          Int     @id @default(autoincrement())
-//   name        String  @unique
-//   description String?
-// }
-
-// model Postion {
-//   id             Int            @id @default(autoincrement())
-//   latitude       Float
-//   longitude      Float
-//   stationAddress StationAddress @relation(fields: [addressId], references: [id])
-//   addressId      Int            @unique
-// }
+model StationPierElictricalSystem {
+  id            Int          @id @default(autoincrement())
+  name          String
+  description   String?
+  StationPier   StationPier? @relation(fields: [stationPierId], references: [id])
+  stationPierId Int?
+}
 
 model StationAgreement {
   id        Int                  @id @default(autoincrement())
