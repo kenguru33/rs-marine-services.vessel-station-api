@@ -788,7 +788,7 @@ export const seedStations = async () => {
         latitude: parseFloat(station.latitude),
         longitude: parseFloat(station.longitude),
         typeId: 1,
-        postalDelivery: "Post leveres på kaien eller i Rema 1000 like ved"
+        postalDelivery: 'Post leveres på kaien eller i Rema 1000 like ved',
       },
     });
     stationModels.push(stationModel);
