@@ -9,9 +9,12 @@ export class StationService {
   constructor(private prisma: PrismaService) {}
 
   async getStation(id: number): Promise<Station> {
-    return this.prisma.station.findUnique({
+    const station = await this.prisma.station.findUniqueOrThrow({
       where: { id },
     });
+
+    return station
+
   }
   async getStations(): Promise<Station[]> {
     return this.prisma.station.findMany({
