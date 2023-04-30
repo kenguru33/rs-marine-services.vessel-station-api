@@ -22,7 +22,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
    * @param includes string of includes, e.g. 'station,state.stateCategory'
    * @returns Prisma.Include<T> | undefined
    */
-  async parseInclude<T>(includes: string): Promise<T | undefined> {
+  async parseInclude<T>(includes: string | undefined): Promise<T | undefined> {
     
     if (!includes) {
       return undefined; // no includes

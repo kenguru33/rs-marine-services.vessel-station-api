@@ -1,18 +1,58 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { StationService } from '../station.service';
+import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
+import { Prisma, PrismaClient, Station } from '@prisma/client';
+import { CreateStationDto } from '../dto/create-station.dto';
+import { DatabaseModule } from 'src/database/database.module';
+import { PrismaService } from 'src/database/prisma.service';
 
 describe('StationsService', () => {
-  let service: StationService;
+  let stationService: StationService;
+  let prismaService: DeepMockProxy<PrismaClient>;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [StationService],
-    }).compile();
+    const moduleRef: TestingModule = await Test.createTestingModule({
+      imports: [DatabaseModule],
+      providers: [StationService, PrismaService],
+    })
+      .overrideProvider(PrismaService)
+      .useValue(mockDeep<PrismaClient>())
+      .compile();
 
-    service = module.get<StationService>(StationService);
+    prismaService = moduleRef.get(PrismaService);
+    stationService = moduleRef.get(StationService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  it(`should create a new station`, async () => {
+    const mockedStation: Station = {
+      id: 1,
+      address: 'testveien 1',
+      latitude: 0,
+      longitude: 0,
+      name: 'test station',
+      postalCode: '1372',
+      postalLocation: 'test',
+      typeId: 1,
+      postalBox: 1,
+      postalDelivery: '',
+      tilFelt: '',
+    };
+
+    prismaService.station.create.mockResolvedValue(mockedStation);
+
+    const createStation = () =>
+      stationService.createStation({
+        address: 'testveien 1',
+        latitude: 0,
+        longitude: 0,
+        name: 'test station',
+        postalCode: '1372',
+        postalLocation: 'test',
+        typeId: 1,
+        postalBox: 1,
+        tilFelt: '',
+      });
+
+    await expect(createStation()).resolves.toBe(mockedStation);
   });
 });

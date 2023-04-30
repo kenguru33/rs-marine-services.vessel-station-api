@@ -28,8 +28,8 @@ async function main() {
   console.log('Seeding station types');
   const stationTypes = await seedStationTypes();
 
-  //console.log('Seeding stations');
-  //const stations = await seedStations();
+  console.log('Seeding stations');
+  const stations = await seedStations();
 
   // console.log('Seeding vessels');
   // const vessels = await seedVessels(capabilities, stations, classes);
