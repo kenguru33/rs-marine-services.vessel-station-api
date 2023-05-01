@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { VesselController } from './vessel.controller';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from '../database/database.module';
 import { VesselService } from './vessel.service';
 import { VesselTypeController } from './vessel-type/vessel-type.controller';
 import { VesselTypeService } from './vessel-type/vessel-type.service';

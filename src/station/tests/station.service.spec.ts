@@ -3,8 +3,7 @@ import { StationService } from '../station.service';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { Prisma, PrismaClient, Station } from '@prisma/client';
 import { CreateStationDto } from '../dto/create-station.dto';
-import { DatabaseModule } from 'src/database/database.module';
-import { PrismaService } from 'src/database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 
 describe('StationsService', () => {
   let stationService: StationService;
@@ -12,7 +11,6 @@ describe('StationsService', () => {
 
   beforeEach(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
-      imports: [DatabaseModule],
       providers: [StationService, PrismaService],
     })
       .overrideProvider(PrismaService)
@@ -54,5 +52,25 @@ describe('StationsService', () => {
       });
 
     await expect(createStation()).resolves.toBe(mockedStation);
+  });
+  it('should return station with id 1', async () => {
+    const mockedStation: Station = {
+      id: 1,
+      address: 'testveien 1',
+      latitude: 0,
+      longitude: 0,
+      name: 'test station',
+      postalCode: '1372',
+      postalLocation: 'test',
+      typeId: 1,
+      postalBox: 1,
+      postalDelivery: '',
+      tilFelt: '',
+    };
+
+    prismaService.station.findFirstOrThrow.mockResolvedValue(mockedStation);
+
+    const getStation = () => stationService.getStation(1)
+    await expect(getStation).resolves.toBe(mockedStation);
   });
 });

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { VesselCapability, Prisma } from '@prisma/client';
-import { PrismaService } from 'src/database/prisma.service';
 import { CreateVesselCapabilityDto } from './dto/createVesselCapability.dto';
 import { UpdateVesselCapabilityDto } from './dto/updateVesselCapability.dto';
+import { PrismaService } from '../../database/prisma.service';
 
 export type VesselCapabilityWithRelation = Prisma.VesselCapabilityGetPayload<{
   include: {

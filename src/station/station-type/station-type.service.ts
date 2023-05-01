@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/database/prisma.service';
 import { CreateStationTypeDto } from './dto/create-station-type.dto';
 import { UpdateStationTypeDto } from './dto/update-station-type.dto';
+import { PrismaService } from '../../database/prisma.service';
 
 @Injectable()
 export class StationTypeService {

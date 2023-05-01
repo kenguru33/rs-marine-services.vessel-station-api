@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateVesselDto } from './dto/createVessel.dto';
 import { UpdateVesselDto } from './dto/updateVessel.dto';
 import { Prisma, Vessel } from '@prisma/client';
-import { PrismaService } from 'src/database/prisma.service';
+import { PrismaService } from '../database/prisma.service';
 
 export type VesselWithRelation = Prisma.VesselGetPayload<{
   include: {

@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module';
 import { StationController } from './station.controller';
 import { StationService } from './station.service';
 import { StationTypeService } from './station-type/station-type.service';
@@ -12,7 +11,7 @@ import { StationPierService } from './station-pier/station-pier.service';
 import { StationPierController } from './station-pier/station-pier.controller';
 import { StationPierTypeService } from './station-pier-type/station-pier-type.service';
 import { StationPierTypeController } from './station-pier-type/station-pier-type.controller';
-
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
   imports: [DatabaseModule],
@@ -22,7 +21,7 @@ import { StationPierTypeController } from './station-pier-type/station-pier-type
     StationAccommodationService,
     StationAccommodationTypeService,
     StationPierService,
-    StationPierTypeService
+    StationPierTypeService,
   ],
   controllers: [
     StationController,
@@ -30,7 +29,7 @@ import { StationPierTypeController } from './station-pier-type/station-pier-type
     StationAccommodationController,
     StationAccommodationTypeController,
     StationPierController,
-    StationPierTypeController
+    StationPierTypeController,
   ],
   exports: [StationService],
 })

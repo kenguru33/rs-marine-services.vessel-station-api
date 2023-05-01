@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/database/prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { Station } from '@prisma/client';
 import { CreateStationDto } from './dto/create-station.dto';
 import { UpdateStationDto } from './dto/updateStation.dto';
@@ -13,8 +13,7 @@ export class StationService {
       where: { id },
     });
 
-    return station
-
+    return station;
   }
   async getStations(): Promise<Station[]> {
     return this.prisma.station.findMany({
