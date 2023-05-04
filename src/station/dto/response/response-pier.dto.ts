@@ -1,4 +1,5 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ResponsePierTypeDto } from './response-pier-type.dto';
 
 export class ResponsePierDto {
   @Expose()
@@ -13,8 +14,11 @@ export class ResponsePierDto {
   @Expose()
   minimumDepth: number;
 
-  @Expose()
   typeId: number;
+
+  @Type(() => ResponsePierTypeDto)
+  @Expose()
+  type: ResponsePierTypeDto;
 
   @Expose()
   floating: boolean;
