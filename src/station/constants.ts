@@ -9,5 +9,6 @@ export const allowedIncludes = [
   'vessels.state',
   'vessels.class',
   'vessels.state.stateCategory',
+  'vessels.capabilities',
 ];
 export const allowedWhere = ['type', 'name'];

@@ -1,4 +1,8 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ResponseVesselClassDto } from './response-vessel-class.dto';
+import { ResponseVessselTypeDto } from './response-vessel-type.dto';
+import { ResponseVesselStateDto } from './response-vessel-state.dto';
+import { ResponseVesselCapabilityDto } from './response-vessel-capability.dto';
 
 export class ResponseVesselDto {
   @Expose()
@@ -12,20 +16,27 @@ export class ResponseVesselDto {
 
   stationId: number;
 
-  @Expose()
   classId: number;
 
+  @Type(() => ResponseVesselClassDto)
   @Expose()
+  class: ResponseVesselDto;
+
   stateId: number;
 
+  @Type(() => ResponseVesselStateDto)
   @Expose()
+  state: ResponseVesselStateDto;
+
   typeId: number;
 
+  @Type(() => ResponseVessselTypeDto)
   @Expose()
-  state: {
-    id: number;
-    name: string;
-    stateCategoryId: number;
-  };
+  type: ResponseVessselTypeDto;
 
+  capabilityIds: number[];
+
+  @Expose()
+  @Type(() => ResponseVesselCapabilityDto)
+  capabilities: ResponseVesselCapabilityDto[];
 }
