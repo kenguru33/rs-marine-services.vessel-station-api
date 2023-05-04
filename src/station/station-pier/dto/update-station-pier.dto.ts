@@ -15,7 +15,7 @@ export class UpdateStationPierDto {
 
   @IsOptional()
   @IsNumber()
-  stationPierTypeId?: number;
+  typeId?: number;
 
   @IsOptional()
   @IsBoolean()
@@ -42,6 +42,6 @@ export class UpdateStationPierDto {
   hotWater?: boolean;
 
   @IsOptional()
-  @IsBoolean()
+  @IsNumber()
   stationId?: number;
 }

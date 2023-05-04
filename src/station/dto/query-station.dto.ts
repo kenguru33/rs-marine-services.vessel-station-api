@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from "class-validator";
+import { Allow, IsOptional, IsString } from "class-validator";
 
 export class QueryStationDto {
     @IsOptional()
@@ -11,5 +11,5 @@ export class QueryStationDto {
 
     @IsOptional()
     @IsString()
-    postalLocation?: string;
+    type?: string;
 }

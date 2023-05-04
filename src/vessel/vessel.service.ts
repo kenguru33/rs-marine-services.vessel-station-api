@@ -48,10 +48,8 @@ export class VesselService {
       include,
     );
     return this.prisma.vessel.findMany({
-      where,
-      include: {
-        ...vesselInclude,
-      }
+      where: { name: { contains: where.name }, rs: where.rs },
+      include: vesselInclude,
     });
   }
 

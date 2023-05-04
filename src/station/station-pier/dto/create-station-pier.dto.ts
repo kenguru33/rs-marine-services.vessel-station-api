@@ -11,7 +11,7 @@ export class CreateStationPierDto {
   minimumDepth: number;
 
   @IsNumber()
-  stationPierTypeId: number;
+  typeId: number;
 
   @IsBoolean()
   floating: boolean;

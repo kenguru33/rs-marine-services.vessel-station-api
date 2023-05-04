@@ -1,7 +1,8 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
+import { QueryVesselDto } from '../dto/query-vessel.dto';
 
 export class QueryVesselValidatorPipe implements PipeTransform {
-  transform(value: any) {
+  transform(value: QueryVesselDto) {
     console.log('value: ', value);
     const allowedIncludes = [
       'state',

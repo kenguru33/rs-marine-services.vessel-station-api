@@ -17,8 +17,8 @@ generator erd {
 // }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -26,8 +26,6 @@ model Vessel {
   id           Int                @id @default(autoincrement())
   name         String             @unique
   rs           Int                @unique
-  type         VesselType         @relation(fields: [typeId], references: [id])
-  typeId       Int
   station      Station?           @relation(fields: [stationId], references: [id])
   stationId    Int?
   capabilities VesselCapability[]
@@ -35,11 +33,13 @@ model Vessel {
   classId      Int
   state        VesselState        @relation(fields: [stateId], references: [id])
   stateId      Int
+  type         VesselType         @relation(fields: [typeId], references: [id])
+  typeId       Int
 
-@@index([classId])
-@@unique([typeId])
-@@unique([stationId])
-@@index([stateId])
+  @@index([typeId])
+  @@index([stationId])
+  @@index([classId])
+  @@index([stateId])
 }
 
 model VesselType {
@@ -125,7 +125,7 @@ model StationAccommodation {
   longitude      Float
   stationId      Int                      @unique
   station        Station                  @relation(fields: [stationId], references: [id])
-  
+
   @@index([typeId])
 }
 
@@ -137,28 +137,28 @@ model StationAccommodationType {
 }
 
 model StationPier {
-  id                Int                           @id @default(autoincrement())
-  length            Int
-  width             Int
-  minimumDepth      Int
-  StationPierType   StationPierType?              @relation(fields: [stationPierTypeId], references: [id])
-  stationPierTypeId Int?
-  floating          Boolean                       @default(false)
-  electricalSystem  StationPierElictricalSystem[]
-  diesel            Boolean                       @default(false)
-  petrol            Boolean                       @default(false)
-  storageSpace      Boolean                       @default(false)
-  coldWater         Boolean                       @default(false)
-  hotWater          Boolean                       @default(false)
-  stationId         Int                           @unique
-  station           Station                       @relation(fields: [stationId], references: [id])
+  id               Int                           @id @default(autoincrement())
+  length           Int
+  width            Int
+  minimumDepth     Int
+  type             StationPierType?              @relation(fields: [typeId], references: [id])
+  typeId           Int?
+  floating         Boolean                       @default(false)
+  electricalSystem StationPierElictricalSystem[]
+  diesel           Boolean                       @default(false)
+  petrol           Boolean                       @default(false)
+  storageSpace     Boolean                       @default(false)
+  coldWater        Boolean                       @default(false)
+  hotWater         Boolean                       @default(false)
+  stationId        Int                           @unique
+  station          Station                       @relation(fields: [stationId], references: [id])
 
-  @@index([stationPierTypeId])
+  @@index([typeId])
 }
 
 model StationPierType {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
   description String?
   StationPier StationPier[]
 }

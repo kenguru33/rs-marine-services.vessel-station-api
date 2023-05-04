@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Query } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { Prisma, Station } from '@prisma/client';
 import { CreateStationDto } from './dto/create-station.dto';
@@ -22,7 +22,16 @@ export class StationService {
       await this.prisma.parseInclude<Prisma.StationInclude>(include);
 
     return this.prisma.station.findMany({
-      where,
+      where: {
+        name: where.name ? { contains: where.name } : undefined,
+        type: {
+          name: where.type
+            ? {
+                contains: where.type,
+              }
+            : undefined,
+        },
+      },
       include: stationInclude,
     });
   }
