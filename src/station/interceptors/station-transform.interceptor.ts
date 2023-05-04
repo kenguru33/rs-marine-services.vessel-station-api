@@ -8,7 +8,8 @@ import {
 import { Observable, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 import { QueryStationDto } from '../dto/query-station.dto';
-import { validate, validateSync } from 'class-validator';
+import { validateSync } from 'class-validator';
+import { allowedIncludes, allowedWhere } from '../constants';
 
 @Injectable()
 export class StationTransformInterceptor implements NestInterceptor {
@@ -21,8 +22,8 @@ export class StationTransformInterceptor implements NestInterceptor {
       excludeExtraneousValues: true,
     });
 
-    const allowedIncludes = ['type', 'vessels', 'pier', 'accommodation'];
-    const allowedWhere = ['type', 'name'];
+    //const allowedIncludes = ['type', 'vessels', 'pier', 'accommodation'];
+    //const allowedWhere = ['type', 'name'];
 
     const { include, ...where } = query;
     const includes = include?.split(',');
