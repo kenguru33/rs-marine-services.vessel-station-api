@@ -16,7 +16,6 @@ import { CreateStationDto } from './dto/create-station.dto';
 import { StationService } from './station.service';
 import { Station } from '@prisma/client';
 import { QueryStationDto } from './dto/query-station.dto';
-import { QueryStationValidationPipe } from './pipes/query-station-validation.pipe';
 import { StationTransformInterceptor } from './interceptors/station-transform.interceptor';
 
 @Controller('station')
@@ -30,9 +29,7 @@ export class StationController {
 
   @Get()
   @UseInterceptors(StationTransformInterceptor)
-  async getStations(
-    @Query() query: QueryStationDto, 
-  ): Promise<Station[]> {
+  async getStations(@Query() query: QueryStationDto): Promise<Station[]> {
     return this.stationsService.getStations(query);
   }
 
