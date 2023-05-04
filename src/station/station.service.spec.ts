@@ -93,7 +93,7 @@ describe('StationsService', () => {
       },
     ];
     prismaService.station.findMany.mockResolvedValue(mockedStation);
-    const getStations = () => stationService.getStations();
+    const getStations = () => stationService.getStations({});
     await expect(getStations()).resolves.toBe(mockedStation);
   });
 

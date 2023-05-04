@@ -100,7 +100,7 @@ model Station {
   typeId               Int
   agreements           StationAgreement[]
   StationAccommodation StationAccommodation?
-  StationPier          StationPier?
+  pier                 StationPier?
 
   @@index([typeId])
 }
