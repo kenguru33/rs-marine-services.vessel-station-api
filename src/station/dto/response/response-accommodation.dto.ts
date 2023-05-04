@@ -1,17 +1,15 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ResponseAccommodationTypeDto } from './response-accommodation-type.dto';
 
 export class ResponseAccommodationDto {
   @Expose()
   id: number;
 
-  @Expose()
   typeId: number;
 
+  @Type(() => ResponseAccommodationTypeDto)
   @Expose()
-  type: {
-    id: number;
-    name: string;
-  };
+  type: ResponseAccommodationTypeDto;
 
   @Expose()
   description?: string;

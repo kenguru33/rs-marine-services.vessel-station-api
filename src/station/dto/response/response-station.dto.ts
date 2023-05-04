@@ -1,7 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import {
-  IsNumber,
-} from 'class-validator';
+import { IsNumber } from 'class-validator';
 import { ResponsePierDto } from './response-pier.dto';
 import { ResponseAccommodationDto } from './response-accommodation.dto';
 import { ResponseStationTypeDto } from './response-station-type.dto';

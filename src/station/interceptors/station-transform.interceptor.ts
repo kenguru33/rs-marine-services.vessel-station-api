@@ -10,7 +10,7 @@ import { plainToInstance } from 'class-transformer';
 import { QueryStationDto } from '../dto/request/query-station.dto';
 import { validateSync } from 'class-validator';
 import { allowedIncludes, allowedWhere } from '../constants';
-import { ResponseStationDto } from '../dto/response-station.dto';
+import { ResponseStationDto } from '../dto/response/response-station.dto';
 
 @Injectable()
 export class StationTransformInterceptor implements NestInterceptor {
@@ -51,12 +51,12 @@ export class StationTransformInterceptor implements NestInterceptor {
     if (errors.length > 0) {
       throw new BadRequestException(errors);
     }
-    
+
     return next.handle().pipe(
       map((data) => {
         if (data instanceof Array) {
           return data.map((d) => {
-            console.log(d)
+            console.log(d);
             return plainToInstance(ResponseStationDto, d, {
               excludeExtraneousValues: true,
             });
