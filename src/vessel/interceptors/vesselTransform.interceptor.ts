@@ -5,7 +5,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
-import { VesselResponseDto } from '../dto/vesselResponse.dto';
+import { VesselResponseDto } from '../dto/response/vesselResponse.dto';
 import { plainToInstance } from 'class-transformer';
 import { VesselWithRelation } from '../vessel.service';
 

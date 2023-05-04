@@ -1,5 +1,5 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { QueryVesselDto } from '../dto/query-vessel.dto';
+import { QueryVesselDto } from '../dto/request/query-vessel.dto';
 
 export class QueryVesselValidatorPipe implements PipeTransform {
   transform(value: QueryVesselDto) {
@@ -10,7 +10,7 @@ export class QueryVesselValidatorPipe implements PipeTransform {
       'capabilities',
       'state.stateCategory',
       'station',
-      'type'
+      'type',
     ];
     const allowedWhere = ['name', 'rs'];
     const { include, ...where } = value;

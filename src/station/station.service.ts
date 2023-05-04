@@ -1,9 +1,9 @@
 import { Injectable, Query } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { Prisma, Station } from '@prisma/client';
-import { CreateStationDto } from './dto/create-station.dto';
-import { UpdateStationDto } from './dto/updateStation.dto';
-import { QueryStationDto } from './dto/query-station.dto';
+import { CreateStationDto } from './dto/request/create-station.dto';
+import { UpdateStationDto } from './dto/request/updateStation.dto';
+import { QueryStationDto } from './dto/request/query-station.dto';
 
 @Injectable()
 export class StationService {

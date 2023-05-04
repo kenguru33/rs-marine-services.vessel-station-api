@@ -7,16 +7,17 @@ import {
 } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
-import { QueryStationDto } from '../dto/query-station.dto';
+import { QueryStationDto } from '../dto/request/query-station.dto';
 import { validateSync } from 'class-validator';
 import { allowedIncludes, allowedWhere } from '../constants';
+import { ResponseStationDto } from '../dto/response-station.dto';
 
 @Injectable()
 export class StationTransformInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Observable<QueryStationDto> {
+  ): Observable<ResponseStationDto | ResponseStationDto[]> {
     const query = context.switchToHttp().getRequest().query;
     const queryStationDto = plainToInstance(QueryStationDto, query, {
       excludeExtraneousValues: true,
@@ -55,11 +56,15 @@ export class StationTransformInterceptor implements NestInterceptor {
       map((data) => {
         if (data instanceof Array) {
           return data.map((d) => {
-            delete d.typeId;
-            return d;
+            return plainToInstance(ResponseStationDto, d, {
+              excludeExtraneousValues: true,
+            });
+          });
+        } else {
+          return plainToInstance(ResponseStationDto, data, {
+            excludeExtraneousValues: true,
           });
         }
-        return data;
       }),
     );
   }

@@ -13,14 +13,14 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateVesselDto } from './dto/createVessel.dto';
-import { UpdateVesselDto } from './dto/updateVessel.dto';
+import { CreateVesselDto } from './dto/request/createVessel.dto';
+import { UpdateVesselDto } from './dto/request/updateVessel.dto';
 import { VesselTransformInterceptor } from './interceptors/vesselTransform.interceptor';
-import { VesselResponseDto } from './dto/vesselResponse.dto';
+import { VesselResponseDto } from './dto/response/vesselResponse.dto';
 import { Vessel } from '@prisma/client';
 import { VesselService, VesselWithRelation } from './vessel.service';
 import { QueryVesselValidatorPipe } from './pipes/query-vessel-validator.pipe';
-import { QueryVesselDto } from './dto/query-vessel.dto';
+import { QueryVesselDto } from './dto/request/query-vessel.dto';
 
 @Controller('vessel')
 export class VesselController {

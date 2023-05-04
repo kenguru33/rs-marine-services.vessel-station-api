@@ -144,7 +144,7 @@ model StationPier {
   type             StationPierType?              @relation(fields: [typeId], references: [id])
   typeId           Int?
   floating         Boolean                       @default(false)
-  electricalSystem StationPierElictricalSystem[]
+  electricity      StationPierElictrityType[]
   diesel           Boolean                       @default(false)
   petrol           Boolean                       @default(false)
   storageSpace     Boolean                       @default(false)
@@ -160,14 +160,14 @@ model StationPierType {
   id          Int           @id @default(autoincrement())
   name        String        @unique
   description String?
-  StationPier StationPier[]
+  stationPier StationPier[]
 }
 
-model StationPierElictricalSystem {
+model StationPierElictrityType {
   id            Int          @id @default(autoincrement())
   name          String
   description   String?
-  StationPier   StationPier? @relation(fields: [stationPierId], references: [id])
+  stationPier   StationPier? @relation(fields: [stationPierId], references: [id])
   stationPierId Int?
 
   @@index([stationPierId])

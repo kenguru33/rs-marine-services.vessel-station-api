@@ -1,5 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
-import { VesselWithRelation } from '../vessel.service';
+import { VesselWithRelation } from '../../vessel.service';
 import { Vessel } from '@prisma/client';
 
 export class VesselResponseDto {
