@@ -9,8 +9,8 @@ export const seedStationAccommodation = async function () {
     return randomStation;
   }
 
-  const randomAccommodationId = async () => {
-    const numberofAccommodations = await prisma.stationAccommodation.count();
+  const randomAccommodationTypeId = async () => {
+    const numberofAccommodations = await prisma.stationAccommodationType.count();
     const randomAccommodation = Math.floor(Math.random() * numberofAccommodations) + 1;
     return randomAccommodation;
   }
@@ -23,7 +23,7 @@ export const seedStationAccommodation = async function () {
       where: { stationId: station.id },
       update: {},
       create: {
-        typeId: await randomAccommodationId(),
+        typeId: await randomAccommodationTypeId(),
         address: station.address,
         stationId: station.id,
         postalCode: station.postalCode,
