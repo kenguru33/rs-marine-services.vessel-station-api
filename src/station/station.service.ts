@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { Station } from '@prisma/client';
+import { Prisma, Station } from '@prisma/client';
 import { CreateStationDto } from './dto/create-station.dto';
 import { UpdateStationDto } from './dto/updateStation.dto';
+import { QueryStationDto } from './dto/query-station.dto';
 
 @Injectable()
 export class StationService {
@@ -15,13 +16,14 @@ export class StationService {
 
     return station;
   }
-  async getStations(): Promise<Station[]> {
+  async getStations(query: QueryStationDto): Promise<Station[]> {
+    const { include, ...where } = query;
+    const stationInclude =
+      await this.prisma.parseInclude<Prisma.StationInclude>(include);
+
     return this.prisma.station.findMany({
-      include: {
-        StationAccommodation: true,
-        type: true,
-        vessels: true,
-      },
+      where,
+      include: stationInclude,
     });
   }
 

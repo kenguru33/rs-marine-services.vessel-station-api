@@ -7,12 +7,15 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateStationDto } from './dto/create-station.dto';
 import { StationService } from './station.service';
 import { Station } from '@prisma/client';
+import { QueryStationDto } from './dto/query-station.dto';
+import { QueryStationValidationPipe } from './pipes/query-station-validation.pipe';
 
 @Controller('station')
 export class StationController {
@@ -24,8 +27,10 @@ export class StationController {
   }
 
   @Get()
-  async stations(): Promise<Station[]> {
-    return this.stationsService.getStations();
+  async getStations(
+    @Query(QueryStationValidationPipe) query: QueryStationDto,
+  ): Promise<Station[]> {
+    return this.stationsService.getStations(query);
   }
 
   @Post()

@@ -3,6 +3,7 @@ import { CreateVesselDto } from './dto/createVessel.dto';
 import { UpdateVesselDto } from './dto/updateVessel.dto';
 import { Prisma, Vessel } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
+import { QueryVesselDto } from './dto/query-vessel.dto';
 
 export type VesselWithRelation = Prisma.VesselGetPayload<{
   include: {
@@ -14,6 +15,7 @@ export type VesselWithRelation = Prisma.VesselGetPayload<{
         stateCategory?: true;
       };
     };
+    type?: true;
   };
 }>;
 
@@ -38,25 +40,24 @@ export class VesselService {
     ('');
   }
 
-  async getVessels(include?: string): Promise<Vessel[] | VesselWithRelation[]> {
+  async getVessels(
+    query: QueryVesselDto,
+  ): Promise<Vessel[] | VesselWithRelation[]> {
+    const { include, ...where } = query;
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
       include,
     );
     return this.prisma.vessel.findMany({
-      include: vesselInclude,
+      where,
+      include: {
+        ...vesselInclude,
+      }
     });
   }
 
   create(data: CreateVesselDto): Promise<Vessel> {
-    const {
-      name,
-      rs,
-      capabilityIds,
-      classId,
-      stationId,
-      stateId,
-      typeId,
-    } = data;
+    const { name, rs, capabilityIds, classId, stationId, stateId, typeId } =
+      data;
     const vessel = this.prisma.vessel.create({
       data: {
         name,

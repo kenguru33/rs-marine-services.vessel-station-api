@@ -19,9 +19,10 @@ import { VesselTransformInterceptor } from './interceptors/vesselTransform.inter
 import { VesselResponseDto } from './dto/vesselResponse.dto';
 import { Vessel } from '@prisma/client';
 import { VesselService, VesselWithRelation } from './vessel.service';
+import { QueryVesselValidatorPipe } from './pipes/query-vessel-validator.pipe';
+import { QueryVesselDto } from './dto/query-vessel.dto';
 
 @Controller('vessel')
-//@UseInterceptors(VesselTransformInterceptor)
 export class VesselController {
   constructor(private vesselService: VesselService) {}
 
@@ -37,9 +38,9 @@ export class VesselController {
   @Get()
   @UseInterceptors(VesselTransformInterceptor)
   getVessels(
-    @Query('include') include: string,
+    @Query(QueryVesselValidatorPipe) query: QueryVesselDto,
   ): Promise<Vessel[] | VesselWithRelation[]> {
-    return this.vesselService.getVessels(include);
+    return this.vesselService.getVessels(query);
   }
 
   @Post()
