@@ -1,2 +1,2 @@
-export const allowedIncludes = ['type', 'vessels', 'pier', 'accommodation'];
+export const allowedIncludes = ['type', 'vessels', 'pier', 'accommodation', 'accommodation.type', 'vessels.type', 'vessels.state', 'vessels.class', 'vessels.state.stateCategory'];
 export const allowedWhere = ['type', 'name'];

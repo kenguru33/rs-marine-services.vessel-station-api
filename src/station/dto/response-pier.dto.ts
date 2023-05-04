@@ -34,6 +34,5 @@ export class ResponsePierDto {
   @Expose()
   hotWater: boolean;
 
-  @Expose()
   stationId: number;
 }

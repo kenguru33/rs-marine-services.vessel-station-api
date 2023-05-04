@@ -10,7 +10,6 @@ export class ResponseVesselDto {
   @Expose()
   rs: number;
 
-  @Expose()
   stationId: number;
 
   @Expose()
@@ -21,4 +20,12 @@ export class ResponseVesselDto {
 
   @Expose()
   typeId: number;
+
+  @Expose()
+  state: {
+    id: number;
+    name: string;
+    stateCategoryId: number;
+  };
+
 }

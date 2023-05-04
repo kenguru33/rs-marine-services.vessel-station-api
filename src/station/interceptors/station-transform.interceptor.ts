@@ -51,11 +51,12 @@ export class StationTransformInterceptor implements NestInterceptor {
     if (errors.length > 0) {
       throw new BadRequestException(errors);
     }
-    // TODO: validate create response dto and transform to it
+    
     return next.handle().pipe(
       map((data) => {
         if (data instanceof Array) {
           return data.map((d) => {
+            console.log(d)
             return plainToInstance(ResponseStationDto, d, {
               excludeExtraneousValues: true,
             });

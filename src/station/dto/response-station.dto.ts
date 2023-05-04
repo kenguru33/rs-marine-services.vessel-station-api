@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import {
   IsNumber,
 } from 'class-validator';
@@ -33,21 +33,24 @@ export class ResponseStationDto {
   postalDelivery?: string;
 
   @Expose()
-  @IsNumber()
   latitude: number;
 
   @Expose()
   longitude: number;
 
+  @Type(() => ResponsePierDto)
   @Expose()
   pier?: ResponsePierDto;
 
   @Expose()
+  @Type(() => ResponseAccommodationDto)
   accommodation?: ResponseAccommodationDto;
 
+  @Type(() => ResponseStationTypeDto)
   @Expose()
   type: ResponseStationTypeDto;
 
   @Expose()
+  @Type(() => ResponseVesselDto)
   vessels?: ResponseVesselDto[];
 }

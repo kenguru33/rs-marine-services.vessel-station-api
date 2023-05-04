@@ -8,6 +8,12 @@ export class ResponseAccommodationDto {
   typeId: number;
 
   @Expose()
+  type: {
+    id: number;
+    name: string;
+  };
+
+  @Expose()
   description?: string;
 
   @Expose()
@@ -28,6 +34,5 @@ export class ResponseAccommodationDto {
   @Expose()
   longitude: number;
 
-  @Expose()
   stationId: number;
 }

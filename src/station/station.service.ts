@@ -5,6 +5,32 @@ import { CreateStationDto } from './dto/request/create-station.dto';
 import { UpdateStationDto } from './dto/request/updateStation.dto';
 import { QueryStationDto } from './dto/request/query-station.dto';
 
+type stationWithRelation = Prisma.StationGetPayload<{
+  include: {
+    type?: true;
+    vessel: {
+      include: {
+        capabilities?: true;
+        class?: true;
+        station?: true;
+        state?: {
+          include: {
+            stateCategory?: true;
+          };
+        };
+        type?: true;
+      };
+    }
+    accommodations?: {
+      include: {
+        type?: true;
+      }
+    }
+    
+
+  };
+}>;
+
 @Injectable()
 export class StationService {
   constructor(private prisma: PrismaService) {}
