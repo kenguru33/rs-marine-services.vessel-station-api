@@ -21,7 +21,7 @@ export class StationTransformInterceptor implements NestInterceptor {
       excludeExtraneousValues: true,
     });
 
-    const allowedIncludes = ['type', 'vessels', 'pier'];
+    const allowedIncludes = ['type', 'vessels', 'pier', 'accommodation'];
     const allowedWhere = ['type', 'name'];
 
     const { include, ...where } = query;

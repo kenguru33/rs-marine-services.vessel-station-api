@@ -85,22 +85,22 @@ model VesselClass {
 }
 
 model Station {
-  id                   Int                   @id @default(autoincrement())
-  name                 String                @unique
-  vessels              Vessel[]
-  tilFelt              String?
-  address              String
-  postalCode           String
-  postalLocation       String
-  postalBox            Int?
-  postalDelivery       String?
-  latitude             Float
-  longitude            Float
-  type                 StationType           @relation(fields: [typeId], references: [id])
-  typeId               Int
-  agreements           StationAgreement[]
-  StationAccommodation StationAccommodation?
-  pier                 StationPier?
+  id             Int                   @id @default(autoincrement())
+  name           String                @unique
+  vessels        Vessel[]
+  tilFelt        String?
+  address        String
+  postalCode     String
+  postalLocation String
+  postalBox      Int?
+  postalDelivery String?
+  latitude       Float
+  longitude      Float
+  type           StationType           @relation(fields: [typeId], references: [id])
+  typeId         Int
+  agreements     StationAgreement[]
+  accommodation  StationAccommodation?
+  pier           StationPier?
 
   @@index([typeId])
 }
@@ -130,10 +130,10 @@ model StationAccommodation {
 }
 
 model StationAccommodationType {
-  id                   Int                    @id @default(autoincrement())
-  name                 String                 @unique
-  description          String?
-  StationAccommodation StationAccommodation[]
+  id             Int                    @id @default(autoincrement())
+  name           String                 @unique
+  description    String?
+  accommodations StationAccommodation[]
 }
 
 model StationPier {
