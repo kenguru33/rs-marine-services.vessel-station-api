@@ -9,6 +9,12 @@ export const seedStationPier = async function () {
     return randomStation;
   }
 
+  const randomStationPierTypeId = async () => {
+    const numberofStationPierTypes = await prisma.stationPierType.count();
+    const randomStationPierType = Math.floor(Math.random() * numberofStationPierTypes) + 1;
+    return randomStationPierType;
+  }
+
   const models: Array<StationPier> = [];
   const stations = await prisma.station.findMany();
 
@@ -18,7 +24,7 @@ export const seedStationPier = async function () {
       update: {},
       create: {
         stationId: station.id,
-        typeId: await randomStationId(),
+        typeId: await randomStationPierTypeId(),
         length: Math.floor(Math.random() * 10) + 1,
         width: Math.floor(Math.random() * 5) + 1,
         minimumDepth: Math.floor(Math.random() * 20) + 1,
