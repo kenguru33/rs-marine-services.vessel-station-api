@@ -2,7 +2,7 @@ import { Injectable, Query } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { Prisma, Station } from '@prisma/client';
 import { CreateStationDto } from './dto/request/create-station.dto';
-import { UpdateStationDto } from './dto/request/updateStation.dto';
+import { UpdateStationDto } from './dto/request/update-station.dto';
 import { QueryStationDto } from './dto/request/query-station.dto';
 
 type stationWithRelation = Prisma.StationGetPayload<{
@@ -20,14 +20,12 @@ type stationWithRelation = Prisma.StationGetPayload<{
         };
         type?: true;
       };
-    }
+    };
     accommodations?: {
       include: {
         type?: true;
-      }
-    }
-    
-
+      };
+    };
   };
 }>;
 
