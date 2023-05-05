@@ -1,5 +1,5 @@
-import { Expose, Type } from "class-transformer";
-import { ResponseVesselStateCategoryDto } from "./response-vessel-state-category.dto";
+import { Expose, Type } from 'class-transformer';
+import { ResponseVesselStateCategoryDto } from '../../vesste-state-category/dto/response-vessel-state-category.dto';
 
 export class ResponseVesselStateDto {
   @Expose()
@@ -16,5 +16,4 @@ export class ResponseVesselStateDto {
   @Type(() => ResponseVesselStateCategoryDto)
   @Expose()
   stateCategory: ResponseVesselStateCategoryDto;
-
-} 
+}

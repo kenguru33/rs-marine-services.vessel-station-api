@@ -16,7 +16,6 @@ import {
 import { CreateVesselDto } from './dto/request/createVessel.dto';
 import { UpdateVesselDto } from './dto/request/updateVessel.dto';
 import { VesselTransformInterceptor } from './interceptors/vesselTransform.interceptor';
-import { VesselResponseDto } from './dto/response/vesselResponse.dto';
 import { Vessel } from '@prisma/client';
 import { VesselService, VesselWithRelation } from './vessel.service';
 import { QueryVesselValidatorPipe } from './pipes/query-vessel-validator.pipe';

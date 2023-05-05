@@ -12,10 +12,10 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateStationDto } from './dto/request/create-station.dto';
+import { CreateStationDto } from './dto/create-station.dto';
 import { StationService } from './station.service';
 import { Station } from '@prisma/client';
-import { QueryStationDto } from './dto/request/query-station.dto';
+import { QueryStationDto } from './dto/query-station.dto';
 import { StationTransformInterceptor } from './interceptors/station-transform.interceptor';
 
 @Controller('station')

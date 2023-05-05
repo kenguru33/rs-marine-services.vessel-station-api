@@ -7,10 +7,10 @@ import {
 } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
-import { QueryStationDto } from '../dto/request/query-station.dto';
+import { QueryStationDto } from '../dto/query-station.dto';
 import { validateSync } from 'class-validator';
 import { allowedIncludes, allowedWhere } from '../constants';
-import { ResponseStationDto } from '../dto/response/response-station.dto';
+import { ResponseStationDto } from '../dto/response-station.dto';
 
 @Injectable()
 export class StationTransformInterceptor implements NestInterceptor {
