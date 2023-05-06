@@ -7,15 +7,14 @@ import {
 import { Observable, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
 import { VesselWithRelation } from '../vessel.service';
-import { ResponseVesselDto } from '../dto/response/response-vessel.dto';
+import { ResponseVesselDto } from '../dto/response-vessel.dto';
 
 @Injectable()
-export class VesselTransformInterceptor implements NestInterceptor {
+export class VesselResponseTransformInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<ResponseVesselDto | ResponseVesselDto[]> {
-    console.log(context.switchToHttp().getRequest().body);
     return next.handle().pipe(
       map((data: VesselWithRelation) => {
         if (data instanceof Array) {

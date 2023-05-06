@@ -1,4 +1,4 @@
-const allowedIncludes = [
+export const ALLOWED_INCLUDES = [
   'state',
   'class',
   'capabilities',
@@ -6,4 +6,4 @@ const allowedIncludes = [
   'station',
   'type',
 ];
-export const allowedWhere = ['name', 'rs'];
+export const ALLOWED_FILTERS = ['name', 'rs', 'type', 'state', 'class'];

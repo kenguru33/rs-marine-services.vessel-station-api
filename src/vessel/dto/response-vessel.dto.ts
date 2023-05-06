@@ -1,8 +1,8 @@
 import { Expose, Type } from 'class-transformer';
-import { ResponseVesselClassDto } from '../../vessel-class/dto/response-vessel-class.dto';
-import { ResponseVessselTypeDto } from '../../vessel-type/dto/response-vessel-type.dto';
-import { ResponseVesselStateDto } from '../../vessel-state/dto/response-vessel-state.dto';
-import { ResponseVesselCapabilityDto } from '../../vessel-capability/dto/response-vessel-capability.dto';
+import { ResponseVesselClassDto } from '../vessel-class/dto/response-vessel-class.dto';
+import { ResponseVessselTypeDto } from '../vessel-type/dto/response-vessel-type.dto';
+import { ResponseVesselStateDto } from '../vessel-state/dto/response-vessel-state.dto';
+import { ResponseVesselCapabilityDto } from '../vessel-capability/dto/response-vessel-capability.dto';
 
 export class ResponseVesselDto {
   @Expose()

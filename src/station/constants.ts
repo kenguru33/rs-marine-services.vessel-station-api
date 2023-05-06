@@ -1,4 +1,4 @@
-export const allowedIncludes = [
+export const ALLOWED_INCLUDES = [
   'type',
   'vessels',
   'pier',
@@ -11,4 +11,4 @@ export const allowedIncludes = [
   'vessels.state.stateCategory',
   'vessels.capabilities',
 ];
-export const allowedWhere = ['type', 'name'];
+export const ALLOWED_FILTERS = ['type', 'name'];

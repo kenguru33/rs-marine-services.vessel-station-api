@@ -42,7 +42,7 @@ export class StationService {
   }
   async getStations(query: QueryStationDto): Promise<Station[]> {
     const { include, ...where } = query;
-    const stationInclude =
+    const stationPrismaInclude =
       await this.prisma.parseInclude<Prisma.StationInclude>(include);
 
     return this.prisma.station.findMany({
@@ -56,7 +56,7 @@ export class StationService {
             : undefined,
         },
       },
-      include: stationInclude,
+      include: stationPrismaInclude,
     });
   }
 

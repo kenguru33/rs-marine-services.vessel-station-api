@@ -13,31 +13,38 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateVesselDto } from './dto/request/createVessel.dto';
-import { UpdateVesselDto } from './dto/request/updateVessel.dto';
-import { VesselTransformInterceptor } from './interceptors/vesselTransform.interceptor';
+import { CreateVesselDto } from './dto/createVessel.dto';
+import { UpdateVesselDto } from './dto/updateVessel.dto';
+import { VesselResponseTransformInterceptor } from './interceptors/vessel-response-transform.interceptor';
 import { Vessel } from '@prisma/client';
 import { VesselService, VesselWithRelation } from './vessel.service';
-import { QueryVesselValidatorPipe } from './pipes/query-vessel-validator.pipe';
-import { QueryVesselDto } from './dto/request/query-vessel.dto';
+import { QueryVesselDto } from './dto/query-vessel.dto';
+import { QueryParamsValidatorInterceptor } from '../shared/interceptors/query-params-validator.interceptor';
+import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 
 @Controller('vessel')
 export class VesselController {
   constructor(private vesselService: VesselService) {}
 
+  @UseInterceptors(
+    new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES),
+    VesselResponseTransformInterceptor,
+  )
   @Get(':id')
   getVessel(
     @Param('id', ParseIntPipe) id: number,
     @Query('include') include: string,
   ): Promise<Vessel> {
-    console.log('include: ', include);
     return this.vesselService.getVessel(id, include);
   }
 
+  @UseInterceptors(
+    new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
+    VesselResponseTransformInterceptor,
+  )
   @Get()
-  @UseInterceptors(VesselTransformInterceptor)
   getVessels(
-    @Query(QueryVesselValidatorPipe) query: QueryVesselDto,
+    @Query() query: QueryVesselDto,
   ): Promise<Vessel[] | VesselWithRelation[]> {
     return this.vesselService.getVessels(query);
   }
