@@ -36,7 +36,6 @@ export class StationAccommodationController {
     @Body() dto: UpdateStationAccommodationDto,
     @Param('id', ParseIntPipe) id: number,
   ) {
-    console.log(dto)
     return this.stationAccommodation.updateStationAccommodation(id, dto);
   }
 

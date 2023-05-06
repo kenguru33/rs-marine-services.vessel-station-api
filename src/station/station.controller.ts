@@ -39,8 +39,6 @@ export class StationController {
   )
   @Get()
   async getStations(@Query() query: QueryStationDto): Promise<Station[]> {
-    console.log('query: ', query);
-
     return this.stationsService.getStations(query);
   }
 

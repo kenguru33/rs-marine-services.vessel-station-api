@@ -18,7 +18,6 @@ export class StationPierTypeService {
   }
 
   async createStationPierType(data: CreateStationPierTypeDto) {
-    console.log(data);
     return this.prisma.stationPierType.create({
       data: data,
     });
@@ -33,7 +32,6 @@ export class StationPierTypeService {
   }
 
   async updateStationPierType(id: number, data: UpdateStationPierTypeDto) {
-    console.log(data);
     return this.prisma.stationPierType.update({
       where: {
         id,

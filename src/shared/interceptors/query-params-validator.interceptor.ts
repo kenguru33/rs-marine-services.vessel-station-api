@@ -19,7 +19,6 @@ export class QueryParamsValidatorInterceptor<T> implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     const query = context.switchToHttp().getRequest().query;
 
-    console.log(query);
     const { include, ...filter } = query;
 
     if (include) {
@@ -37,9 +36,9 @@ export class QueryParamsValidatorInterceptor<T> implements NestInterceptor {
     includes.forEach((include: string) => {
       if (!this.allowedIncludes.includes(include.trim()))
         throw new BadRequestException(
-          `Invalid include value: ${include}. Allowed values are include${this.allowedFilters ? ', ' + this.allowedIncludes.join(
-            ', ',
-          ): ''}`,
+          `Invalid include value: ${include}. Allowed values are include${
+            this.allowedFilters ? ', ' + this.allowedIncludes.join(', ') : ''
+          }`,
         );
     });
   }
@@ -48,9 +47,9 @@ export class QueryParamsValidatorInterceptor<T> implements NestInterceptor {
     wheres.forEach((where: string) => {
       if (!this.allowedFilters?.includes(where.trim()))
         throw new BadRequestException(
-          `Invalid query parameter: ${where}. Allowed values are include${this.allowedFilters ? ', ' + this.allowedFilters.join(
-            ', ',
-          ): ''}`,
+          `Invalid query parameter: ${where}. Allowed values are include${
+            this.allowedFilters ? ', ' + this.allowedFilters.join(', ') : ''
+          }`,
         );
     });
   }
