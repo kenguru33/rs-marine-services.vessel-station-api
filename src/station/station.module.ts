@@ -12,6 +12,12 @@ import { StationPierController } from './station-pier/station-pier.controller';
 import { StationPierTypeService } from './station-pier-type/station-pier-type.service';
 import { StationPierTypeController } from './station-pier-type/station-pier-type.controller';
 import { DatabaseModule } from '../database/database.module';
+import { StationAgreementService } from './station-agreement/station-agreement.service';
+import { StationAgreementCustomerService } from './station-agreement-customer/station-agreement-customer.service';
+import { StationAgreementCustomerContactService } from './station-agreement-customer-contact/station-agreement-customer-contact.service';
+import { StationAgreementCustomerController } from './station-agreement-customer/station-agreement-customer.controller';
+import { StationAgreementController } from './station-agreement/station-agreement.controller';
+import { StationAgreementCustomerContactController } from './station-agreement-customer-contact/station-agreement-customer-contact.controller';
 
 @Module({
   imports: [DatabaseModule],
@@ -22,6 +28,9 @@ import { DatabaseModule } from '../database/database.module';
     StationAccommodationTypeService,
     StationPierService,
     StationPierTypeService,
+    StationAgreementService,
+    StationAgreementCustomerService,
+    StationAgreementCustomerContactService
   ],
   controllers: [
     StationController,
@@ -30,6 +39,9 @@ import { DatabaseModule } from '../database/database.module';
     StationAccommodationTypeController,
     StationPierController,
     StationPierTypeController,
+    StationAgreementCustomerController,
+    StationAgreementController,
+    StationAgreementCustomerContactController
   ],
   exports: [StationService],
 })

@@ -74,6 +74,7 @@ model VesselCapability {
   name        String   @unique
   description String?
   vessels     Vessel[]
+  stationAgreements StationAgreement[]
 }
 
 model VesselClass {
@@ -137,21 +138,21 @@ model StationAccommodationType {
 }
 
 model StationPier {
-  id               Int                           @id @default(autoincrement())
-  length           Int
-  width            Int
-  minimumDepth     Int
-  type             StationPierType?              @relation(fields: [typeId], references: [id])
-  typeId           Int?
-  floating         Boolean                       @default(false)
-  electricity      StationPierElictrityType[]
-  diesel           Boolean                       @default(false)
-  petrol           Boolean                       @default(false)
-  storageSpace     Boolean                       @default(false)
-  coldWater        Boolean                       @default(false)
-  hotWater         Boolean                       @default(false)
-  stationId        Int                           @unique
-  station          Station                       @relation(fields: [stationId], references: [id])
+  id           Int                        @id @default(autoincrement())
+  length       Int
+  width        Int
+  minimumDepth Int
+  type         StationPierType?           @relation(fields: [typeId], references: [id])
+  typeId       Int?
+  floating     Boolean                    @default(false)
+  electricity  StationPierElictrityType[]
+  diesel       Boolean                    @default(false)
+  petrol       Boolean                    @default(false)
+  storageSpace Boolean                    @default(false)
+  coldWater    Boolean                    @default(false)
+  hotWater     Boolean                    @default(false)
+  stationId    Int                        @unique
+  station      Station                    @relation(fields: [stationId], references: [id])
 
   @@index([typeId])
 }
@@ -174,20 +175,32 @@ model StationPierElictrityType {
 }
 
 model StationAgreement {
-  id        Int                  @id @default(autoincrement())
-  name      String               @unique
-  startDate DateTime
-  endDate   DateTime
-  type      StationAgreementType @relation(fields: [typeId], references: [id])
-  typeId    Int
-  stations  Station[]
-
-  @@index([typeId])
+  id                     Int                      @id @default(autoincrement())
+  startDate              DateTime?
+  endDate                DateTime?
+  customer               StationAgreementCustomer @relation(fields: [customerId], references: [id])
+  customerId             Int                      @unique
+  stations               Station[]
+  deliveryObligation     Boolean?                 @default(false)
+  callOutTimeRequirement Int?                     @default(0)
+  description            String?
+  capabilities           VesselCapability[]     
 }
 
-model StationAgreementType {
-  id          Int                @id @default(autoincrement())
-  name        String             @unique
-  description String?
-  agreements  StationAgreement[]
+model StationAgreementCustomer {
+  id                Int                               @id @default(autoincrement())
+  name              String                            @unique
+  contacts          StationAgreementCustomerContact[]
+  stationAgreements StationAgreement[]
+}
+
+model StationAgreementCustomerContact {
+  id                         Int                       @id @default(autoincrement())
+  onCall                     Boolean                   @default(false)
+  phone                      String?
+  email                      String?
+  stationAgreementCustomer   StationAgreementCustomer? @relation(fields: [stationAgreementCustomerId], references: [id])
+  stationAgreementCustomerId Int?
+
+  @@index([stationAgreementCustomerId])
 }

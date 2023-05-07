@@ -10,5 +10,6 @@ export const ALLOWED_INCLUDES = [
   'vessels.class',
   'vessels.state.stateCategory',
   'vessels.capabilities',
+  'agreements',
 ];
 export const ALLOWED_FILTERS = ['type', 'name'];
