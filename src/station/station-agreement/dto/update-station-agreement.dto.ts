@@ -1,11 +1,42 @@
+import {
+  IsArray,
+  IsBoolean,
+  IsDateString,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+
 export class UpdateStationAgreementDto {
+  @IsNumber()
+  @IsOptional()
   customerId: number;
-  startDate: Date;
-  endDate: Date;
-  stations: number[];
-  deliveryObligation: boolean;
-  callOutTimeRequirements: number;
-  description: string;
+
+  @IsDateString()
+  @IsOptional()
+  startDate?: Date;
+
+  @IsDateString()
+  @IsOptional()
+  endDate?: Date;
+
+  @IsArray()
+  @IsOptional()
+  stationIds?: number[];
+
+  @IsArray()
+  @IsOptional()
+  capabilityIds?: number[];
+
+  @IsBoolean()
+  @IsOptional()
+  deliveryObligation?: boolean;
+
+  @IsNumber()
+  @IsOptional()
+  callOutTimeRequirement?: number;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
 }
-
-

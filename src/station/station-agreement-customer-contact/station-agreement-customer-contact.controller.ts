@@ -48,7 +48,7 @@ export class StationAgreementCustomerContactController {
 
   @Put(':id')
   async updateStationAgreementCustomerContact(
-    id: number,
+    @Param('id', ParseIntPipe)id: number,
     @Body() data: UpdateStationAgreementCustomerContactDto,
   ) {
     return this.stationAgreementCustomerContactService.updateStationAgreementCustomerContact(

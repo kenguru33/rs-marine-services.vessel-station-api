@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { StationAgreementService } from './station-agreement.service';
 import { CreateStationAgreementDto } from './dto/create-station-agreement.dto';
+import { UpdateStationAgreementDto } from './dto/update-station-agreement.dto';
 
 @Controller('station-agreement')
 export class StationAgreementController {
@@ -38,7 +39,7 @@ export class StationAgreementController {
   @Put(':id')
   async updateStationAgreement(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: CreateStationAgreementDto,
+    @Body() data: UpdateStationAgreementDto,
   ) {
     return this.stationAgreementService.updateStationAgreement(id, data);
   }

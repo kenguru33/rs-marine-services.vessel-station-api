@@ -9,12 +9,12 @@ export class UpdateStationAgreementCustomerContactDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly phone?: string;
+  phone?: string;
 
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  readonly email?: string;
+  email?: string;
 
   @IsBoolean()
   @IsOptional()
