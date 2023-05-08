@@ -3,6 +3,7 @@ import { ResponseVesselClassDto } from '../vessel-class/dto/response-vessel-clas
 import { ResponseVessselTypeDto } from '../vessel-type/dto/response-vessel-type.dto';
 import { ResponseVesselStateDto } from '../vessel-state/dto/response-vessel-state.dto';
 import { ResponseVesselCapabilityDto } from '../vessel-capability/dto/response-vessel-capability.dto';
+import { ResponseStationDto } from '../../station/dto/response-station.dto';
 
 export class ResponseVesselDto {
   @Expose()
@@ -15,6 +16,10 @@ export class ResponseVesselDto {
   rs: number;
 
   stationId: number;
+
+  @Type(() => ResponseStationDto)
+  @Expose()
+  station: ResponseStationDto;
 
   classId: number;
 

@@ -12,6 +12,10 @@ export class UpdateStationAgreementDto {
   @IsOptional()
   customerId: number;
 
+  @IsNumber()
+  @IsOptional()
+  agreementTypeId: number;
+
   @IsDateString()
   @IsOptional()
   startDate?: Date;

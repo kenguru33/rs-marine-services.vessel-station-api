@@ -10,7 +10,7 @@ export class StationAgreementCustomerService {
   async getAllStationAgreementCustomers() {
     return this.prisma.stationAgreementCustomer.findMany({
       include: {
-        stationAgreements: true,
+        agreements: true,
         contacts: true,
       },
     });

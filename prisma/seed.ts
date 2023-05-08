@@ -10,6 +10,7 @@ import { seedStationTypes } from './seed/seed-station-type';
 import { seedVesselTypes } from './seed/seed-vessel-type';
 import { seedStationPier } from './seed/seed-station-pier';
 import { seedStationAccommodation } from './seed/seed-station-accommodation';
+import { seedStationAgreementTypes } from './seed/seed-agreement-type';
 
 const prisma = new PrismaClient();
 async function main() {
@@ -42,6 +43,9 @@ async function main() {
 
   console.log('Seeding station accommodations');
   const accommodations = await seedStationAccommodation();
+
+  console.log('Seeding station agreement types');
+  const agreementTypes = await seedStationAgreementTypes();
 
   console.log('Seeding vessels');
   const vessels = await seedVessels(capabilities, stations, classes);

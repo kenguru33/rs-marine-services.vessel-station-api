@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '../database/prisma.service';
 import { CreateStationAgreementDto } from './dto/create-station-agreement.dto';
 import { UpdateStationAgreementDto } from './dto/update-station-agreement.dto';
 
@@ -19,6 +19,7 @@ export class StationAgreementService {
         stations: true,
         customer: true,
         capabilities: true,
+        type: true,
       },
     });
   }
@@ -31,7 +32,11 @@ export class StationAgreementService {
         callOutTimeRequirement: data.callOutTimeRequirement,
         startDate: data.startDate ? new Date(data.startDate) : undefined,
         endDate: data.endDate ? new Date(data.endDate) : undefined,
-        customerId: data.customerId,
+        customer: {
+          connect: {
+            id: data.customerId,
+          },
+        },
         stations: {
           connect: data.stationIds ? data.stationIds.map((id) => ({ id })) : [],
         },

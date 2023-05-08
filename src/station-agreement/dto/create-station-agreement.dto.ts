@@ -11,6 +11,9 @@ export class CreateStationAgreementDto {
   @IsNumber()
   customerId: number;
 
+  @IsNumber()
+  typeId: number; 
+
   @IsDateString()
   @IsOptional()
   startDate?: Date;

@@ -4,7 +4,7 @@ import { ResponsePierDto } from '../station-pier/dto/response-pier.dto';
 import { ResponseAccommodationDto } from '../station-accommodation/dto/response-accommodation.dto';
 import { ResponseStationTypeDto } from '../station-type/dto/response-station-type.dto';
 import { ResponseVesselDto } from '../../vessel/dto/response-vessel.dto';
-import { ResponseStationAgreementDto } from '../station-agreement/dto/response-station-agreement.dto';
+import { ResponseStationAgreementDto } from '../../station-agreement/dto/response-station-agreement.dto';
 
 export class ResponseStationDto {
   @Expose()

@@ -70,10 +70,10 @@ model VesselState {
 }
 
 model VesselCapability {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  description String?
-  vessels     Vessel[]
+  id                Int                @id @default(autoincrement())
+  name              String             @unique
+  description       String?
+  vessels           Vessel[]
   stationAgreements StationAgreement[]
 }
 
@@ -179,19 +179,33 @@ model StationAgreement {
   startDate              DateTime?
   endDate                DateTime?
   customer               StationAgreementCustomer @relation(fields: [customerId], references: [id])
-  customerId             Int                      @unique
+  customerId             Int
   stations               Station[]
   deliveryObligation     Boolean?                 @default(false)
   callOutTimeRequirement Int?                     @default(0)
   description            String?
-  capabilities           VesselCapability[]     
+  capabilities           VesselCapability[]
+  type                   StationAgreementType?    @relation(fields: [typeId], references: [id])
+  typeId                 Int?
+
+  @@index([customerId])
+  @@index([typeId])
 }
 
 model StationAgreementCustomer {
-  id                Int                               @id @default(autoincrement())
-  name              String                            @unique
-  contacts          StationAgreementCustomerContact[]
-  stationAgreements StationAgreement[]
+  id         Int                               @id @default(autoincrement())
+  name       String                            @unique
+  contacts   StationAgreementCustomerContact[]
+  agreements StationAgreement[]
+}
+
+model StationAgreementType {
+  id          Int                @id @default(autoincrement())
+  name        String             @unique
+  description String?
+  agreements  StationAgreement[]
+
+  @@index([name])
 }
 
 model StationAgreementCustomerContact {
