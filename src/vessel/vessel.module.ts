@@ -12,13 +12,14 @@ import { VesselStateController } from './vessel-state/vessel-state.controller';
 import { VesselStateService } from './vessel-state/vessel-state.service';
 import { VesselStateCategoryService } from './vesste-state-category/vessel-state-category.service';
 import { VesselStateCategoryController } from './vesste-state-category/vessel-state-category.controller';
+import { VesselCapabilityModule } from './vessel-capability/vessel-capability.module';
 
 @Module({
   providers: [
     VesselService,
     VesselTypeService,
     VesselClassService,
-    VesselCapabilityService,
+    //VesselCapabilityService,
     VesselStateService,
     VesselStateCategoryService
   ],
@@ -26,11 +27,11 @@ import { VesselStateCategoryController } from './vesste-state-category/vessel-st
     VesselController,
     VesselTypeController,
     VesselClassController,
-    VesselCapabilityController,
+    // VesselCapabilityController,
     VesselStateController,
     VesselStateCategoryController
   ],
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, VesselCapabilityModule],
   exports: [],
 })
 export class VesselModule {}

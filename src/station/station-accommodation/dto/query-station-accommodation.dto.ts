@@ -1,10 +1,6 @@
-import { Expose, Type } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { ResponsePierDto } from '../../station-pier/dto/response-pier.dto';
-import { ResponseAccommodationDto } from './response-station-accommodation.dto';
-import { ResponseStationAgreementDto } from '../../station-agreement/dto/response-station-agreement.dto';
+import { IsOptional, IsString } from 'class-validator';
 
-export class QueryStationAccommodation {
+export class QueryStationAccommodationDto {
   @IsOptional()
   @IsString()
   include?: string;

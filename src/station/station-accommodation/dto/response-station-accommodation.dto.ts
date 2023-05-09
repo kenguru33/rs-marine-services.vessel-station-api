@@ -1,5 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { ResponseAccommodationTypeDto } from '../station-accommodation-type/dto/response-accommodation-type.dto';
+import { ResponseStationDto } from '../../dto/response-station.dto';
 
 export class ResponseAccommodationDto {
   @Expose()
@@ -31,6 +32,10 @@ export class ResponseAccommodationDto {
 
   @Expose()
   longitude: number;
+
+  @Type(() => ResponseStationDto)
+  @Expose()
+  station: ResponseStationDto
 
   stationId: number;
 }

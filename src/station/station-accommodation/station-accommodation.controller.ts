@@ -16,6 +16,7 @@ import { UpdateStationAccommodationDto } from './dto/update-station-apartment.dt
 import { StationAccommodatoionResponseTransformInterceptor } from './interceptors/station-accommodation-response-transform.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
+import { QueryStationAccommodationDto } from './dto/query-station-accommodation.dto';
 
 @UseInterceptors(StationAccommodatoionResponseTransformInterceptor)
 @Controller('station-accommodation')
@@ -26,26 +27,34 @@ export class StationAccommodationController {
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
   @Get()
-  async getStationAccommodations() {
-    return this.stationAccommodation.getStationAccommodations();
+  async getStationAccommodations(@Query() query: QueryStationAccommodationDto) {
+    return this.stationAccommodation.getStationAccommodations(query);
   }
 
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
-  async getStationAccommodation(@Param('id', ParseIntPipe) id: number) {
-    return this.stationAccommodation.getStationAccommodation(id);
+  async getStationAccommodation(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: QueryStationAccommodationDto,
+  ) {
+    return this.stationAccommodation.getStationAccommodation(id, query);
   }
 
   @Post()
-  async createStationAccommodation(@Body() dto: CreateStationAccommodationDto) {
-    return this.stationAccommodation.createStationAccommodation(dto);
+  async createStationAccommodation(
+    @Body() dto: CreateStationAccommodationDto,
+    @Query() query: QueryStationAccommodationDto,
+  ) {
+    return this.stationAccommodation.createStationAccommodation(dto, query);
   }
 
   @Put(':id')
   async updateStationAccommodation(
     @Body() dto: UpdateStationAccommodationDto,
     @Param('id', ParseIntPipe) id: number,
+    @Query() query: QueryStationAccommodationDto,
   ) {
-    return this.stationAccommodation.updateStationAccommodation(id, dto);
+    return this.stationAccommodation.updateStationAccommodation(id, dto, query);
   }
 
   @Delete(':id')
