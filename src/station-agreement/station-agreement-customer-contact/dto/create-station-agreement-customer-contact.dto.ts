@@ -3,7 +3,7 @@ import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-val
 export class CreateStationAgreementCustomerContactDto {
   
   @IsNumber()
-  stationAgreementCustomerId: number;
+  customerId: number;
 
   @IsString()
   @IsNotEmpty()

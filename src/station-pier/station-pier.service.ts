@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStationPierDto } from './dto/create-station-pier.dto';
 import { UpdateStationPierDto } from './dto/update-station-pier.dto';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '../database/prisma.service';
 
 @Injectable()
 export class StationPierService {

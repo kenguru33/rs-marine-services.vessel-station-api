@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseInterceptors } from '@nestjs/common';
 import { StationAgreementCustomerService } from './station-agreement-customer.service';
 import { CreateStationAgreementCustomerDto } from './dto/create-station-agreement-customer.dto';
 import { UpdateStationAgreementCustomerDto } from './dto/update-station-agreement-customer.dto';
+import { StationAgreementCustomerResponseTransformInterceptor } from './interceptors/station-agreement-customer.interceptor';
 
 @Controller('station-agreement-customer')
 export class StationAgreementCustomerController {
@@ -9,6 +10,7 @@ export class StationAgreementCustomerController {
     private stationAgreementCustomerService: StationAgreementCustomerService,
   ) {}
 
+  @UseInterceptors(StationAgreementCustomerResponseTransformInterceptor)
   @Get()
   async getStationAgreementCustomers() {
     return this.stationAgreementCustomerService.getAllStationAgreementCustomers();

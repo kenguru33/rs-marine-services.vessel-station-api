@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
 import { CreateStationAgreementDto } from './dto/create-station-agreement.dto';
 import { UpdateStationAgreementDto } from './dto/update-station-agreement.dto';
+import { QueryStationAgreementDto } from './dto/query-station-agreement.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class StationAgreementService {
@@ -13,14 +15,10 @@ export class StationAgreementService {
     });
   }
 
-  async getStationAgreements() {
+  async getStationAgreements(query: QueryStationAgreementDto) {
+    const stationAgreementIncludes = await this.prisma.parseInclude<Prisma.StationAgreementInclude>(query.include);
     return this.prisma.stationAgreement.findMany({
-      include: {
-        stations: true,
-        customer: true,
-        capabilities: true,
-        type: true,
-      },
+      include: stationAgreementIncludes,
     });
   }
 
@@ -32,6 +30,11 @@ export class StationAgreementService {
         callOutTimeRequirement: data.callOutTimeRequirement,
         startDate: data.startDate ? new Date(data.startDate) : undefined,
         endDate: data.endDate ? new Date(data.endDate) : undefined,
+        type: {
+          connect: {
+            id: data.typeId,
+          },
+        },
         customer: {
           connect: {
             id: data.customerId,
@@ -70,11 +73,17 @@ export class StationAgreementService {
         endDate: data.endDate ? new Date(data.endDate) : undefined,
         customerId: data.customerId,
         stations: {
-          connect: data.stationIds ? data.stationIds.map((id) => ({ id })) : [],
+          set: data.stationIds && data.stationIds.map((id) => ({ id })),
         },
         capabilities: {
           set: data.capabilityIds && data.capabilityIds.map((id) => ({ id })),
         },
+      },
+      include: {
+        type: true,
+        capabilities: true,
+        stations: true,
+        customer: true,
       },
     });
   }

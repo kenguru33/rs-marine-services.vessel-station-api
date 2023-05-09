@@ -185,8 +185,8 @@ model StationAgreement {
   callOutTimeRequirement Int?                     @default(0)
   description            String?
   capabilities           VesselCapability[]
-  type                   StationAgreementType?    @relation(fields: [typeId], references: [id])
-  typeId                 Int?
+  type                   StationAgreementType     @relation(fields: [typeId], references: [id])
+  typeId                 Int
 
   @@index([customerId])
   @@index([typeId])
@@ -209,12 +209,12 @@ model StationAgreementType {
 }
 
 model StationAgreementCustomerContact {
-  id                         Int                       @id @default(autoincrement())
-  onCall                     Boolean                   @default(false)
-  phone                      String?
-  email                      String?
-  stationAgreementCustomer   StationAgreementCustomer? @relation(fields: [stationAgreementCustomerId], references: [id])
-  stationAgreementCustomerId Int?
+  id         Int                       @id @default(autoincrement())
+  onCall     Boolean                   @default(false)
+  phone      String?                   @unique
+  email      String?                   @unique
+  customer   StationAgreementCustomer? @relation(fields: [customerId], references: [id])
+  customerId Int
 
-  @@index([stationAgreementCustomerId])
+  @@index([customerId])
 }

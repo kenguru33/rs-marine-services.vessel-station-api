@@ -1,6 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { IsNumber } from 'class-validator';
-import { ResponsePierDto } from '../station-pier/dto/response-pier.dto';
+import { ResponsePierDto } from '../../station-pier/dto/response-pier.dto';
 import { ResponseAccommodationDto } from '../station-accommodation/dto/response-accommodation.dto';
 import { ResponseStationTypeDto } from '../station-type/dto/response-station-type.dto';
 import { ResponseVesselDto } from '../../vessel/dto/response-vessel.dto';

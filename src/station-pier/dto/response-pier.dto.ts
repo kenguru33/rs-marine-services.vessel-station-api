@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { ResponsePierTypeDto } from '../../station-pier-type/dto/response-pier-type.dto';
+import { ResponsePierTypeDto } from '../station-pier-type/dto/response-pier-type.dto';
 
 export class ResponsePierDto {
   @Expose()
