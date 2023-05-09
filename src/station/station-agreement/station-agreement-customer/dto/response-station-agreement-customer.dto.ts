@@ -9,13 +9,16 @@ export class ResponseStationAgreementCustomerDto {
   @Expose()
   name: string;
 
+  @Expose()
+  description: string;
+
   @Type(() => ResponseStationAgreementCustomerContactDto)
   @Expose()
   contacts : ResponseStationAgreementCustomerContactDto[];
 
   @Type(() => ResponseStationAgreementDto)
   @Expose()
-  agrements: ResponseStationAgreementDto[]
+  agreements: ResponseStationAgreementDto[]
 
   agreementIds: number[];
 

@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { ResponseAccommodationTypeDto } from '../../station-accommodation-type/dto/response-accommodation-type.dto';
+import { ResponseAccommodationTypeDto } from '../station-accommodation-type/dto/response-accommodation-type.dto';
 
 export class ResponseAccommodationDto {
   @Expose()

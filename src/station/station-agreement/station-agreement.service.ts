@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 import { CreateStationAgreementDto } from './dto/create-station-agreement.dto';
 import { UpdateStationAgreementDto } from './dto/update-station-agreement.dto';
 import { QueryStationAgreementDto } from './dto/query-station-agreement.dto';
@@ -9,20 +9,35 @@ import { Prisma } from '@prisma/client';
 export class StationAgreementService {
   constructor(private prisma: PrismaService) {}
 
-  async getStationAgreement(id: number) {
+  async getStationAgreement(id: number, query: QueryStationAgreementDto) {
+    const stationAgreementIncludes =
+      await this.prisma.parseInclude<Prisma.StationAgreementInclude>(
+        query.include,
+      );
     return this.prisma.stationAgreement.findUniqueOrThrow({
       where: { id },
-    });
-  }
-
-  async getStationAgreements(query: QueryStationAgreementDto) {
-    const stationAgreementIncludes = await this.prisma.parseInclude<Prisma.StationAgreementInclude>(query.include);
-    return this.prisma.stationAgreement.findMany({
       include: stationAgreementIncludes,
     });
   }
 
-  async createStationAgreement(data: CreateStationAgreementDto) {
+  async getStationAgreements(query: QueryStationAgreementDto) {
+    const { include, ...where } = query;
+    const stationAgreementIncludes =
+      await this.prisma.parseInclude<Prisma.StationAgreementInclude>(include);
+    return this.prisma.stationAgreement.findMany({
+      include: stationAgreementIncludes,
+      where,
+    });
+  }
+
+  async createStationAgreement(
+    data: CreateStationAgreementDto,
+    query: QueryStationAgreementDto,
+  ) {
+    const stationAgreementIncludes =
+      await this.prisma.parseInclude<Prisma.StationAgreementInclude>(
+        query.include,
+      );
     return this.prisma.stationAgreement.create({
       data: {
         description: data.description,
@@ -49,6 +64,7 @@ export class StationAgreementService {
             : [],
         },
       },
+      include: stationAgreementIncludes,
     });
   }
 
@@ -60,7 +76,15 @@ export class StationAgreementService {
     });
   }
 
-  async updateStationAgreement(id: number, data: UpdateStationAgreementDto) {
+  async updateStationAgreement(
+    id: number,
+    data: UpdateStationAgreementDto,
+    query: QueryStationAgreementDto,
+  ) {
+    const stationAgreementIncludes =
+      await this.prisma.parseInclude<Prisma.StationAgreementInclude>(
+        query.include,
+      );
     return this.prisma.stationAgreement.update({
       where: {
         id,
@@ -79,12 +103,7 @@ export class StationAgreementService {
           set: data.capabilityIds && data.capabilityIds.map((id) => ({ id })),
         },
       },
-      include: {
-        type: true,
-        capabilities: true,
-        stations: true,
-        customer: true,
-      },
+      include: stationAgreementIncludes,
     });
   }
 }

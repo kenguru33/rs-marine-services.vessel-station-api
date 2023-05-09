@@ -1,7 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { UpdateeStationAccommodationTypeDto } from "./dto/update-station-accommodation-type.dto";
-import { CreateStationAccommodationTypeDto } from "./dto/create-station-accommodation-type.dto";
-import { PrismaService } from "../../database/prisma.service";
+import { Injectable } from '@nestjs/common';
+import { UpdateeStationAccommodationTypeDto } from './dto/update-station-accommodation-type.dto';
+import { CreateStationAccommodationTypeDto } from './dto/create-station-accommodation-type.dto';
+import { PrismaService } from '../../../database/prisma.service';
 
 @Injectable()
 export class StationAccommodationTypeService {
@@ -17,7 +17,9 @@ export class StationAccommodationTypeService {
     return this.prisma.stationAccommodationType.findMany();
   }
 
-  async createStationAccommodationType(data: CreateStationAccommodationTypeDto) {
+  async createStationAccommodationType(
+    data: CreateStationAccommodationTypeDto,
+  ) {
     return this.prisma.stationAccommodationType.create({
       data: data,
     });
@@ -31,7 +33,10 @@ export class StationAccommodationTypeService {
     });
   }
 
-  async updateStationAccommodationType(id: number, data: UpdateeStationAccommodationTypeDto) {
+  async updateStationAccommodationType(
+    id: number,
+    data: UpdateeStationAccommodationTypeDto,
+  ) {
     return this.prisma.stationAccommodationType.update({
       where: {
         id,

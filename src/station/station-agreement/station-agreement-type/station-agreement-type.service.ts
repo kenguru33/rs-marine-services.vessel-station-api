@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '../../../database/prisma.service';
 import { CreateStationAgreementTypeDto } from './dto/create-station-agreement-type.dto';
 import { UpdateStationAgreementTypeDto } from './dto/update-station-agreement-type.dto';
 

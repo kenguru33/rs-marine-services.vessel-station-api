@@ -9,13 +9,22 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UpdateStationAccommodationDto } from './dto/update-station-apartment.dto';
+import { StationAccommodatoionResponseTransformInterceptor } from './interceptors/station-accommodation-response-transform.interceptor';
+import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
+import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
 
+@UseInterceptors(StationAccommodatoionResponseTransformInterceptor)
 @Controller('station-accommodation')
 export class StationAccommodationController {
   constructor(private stationAccommodation: StationAccommodationService) {}
 
+  @UseInterceptors(
+    new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
+  )
   @Get()
   async getStationAccommodations() {
     return this.stationAccommodation.getStationAccommodations();

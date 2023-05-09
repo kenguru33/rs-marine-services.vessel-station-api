@@ -1,7 +1,7 @@
 import { Expose, Type } from 'class-transformer';
 import { ResponseStationAgreementTypeDto } from '../station-agreement-type/dto/response-station-agreement-type.dto';
-import { ResponseVesselCapabilityDto } from '../../vessel/vessel-capability/dto/response-vessel-capability.dto';
-import { ResponseStationDto } from '../../station/dto/response-station.dto';
+import { ResponseVesselCapabilityDto } from '../../../vessel/vessel-capability/dto/response-vessel-capability.dto';
+import { ResponseStationDto } from '../../dto/response-station.dto';
 import { ResponseStationAgreementCustomerDto } from '../station-agreement-customer/dto/response-station-agreement-customer.dto';
 
 export class ResponseStationAgreementDto {

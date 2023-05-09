@@ -195,6 +195,7 @@ model StationAgreement {
 model StationAgreementCustomer {
   id         Int                               @id @default(autoincrement())
   name       String                            @unique
+  description String?
   contacts   StationAgreementCustomerContact[]
   agreements StationAgreement[]
 }
