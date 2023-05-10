@@ -85,6 +85,18 @@ model VesselClass {
   vessels Vessel[]
 }
 
+model VesselBuildInfo {
+  id           Int      @id @default(autoincrement())
+  buildYear    Int?
+  inServiceFrom DateTime?
+  inServiceTo   DateTime?
+  builder      String?
+  salesOrganization String?
+  buildMaterial String?
+  financedBy   String?
+  dnvClass     String?
+}
+
 model Station {
   id             Int                   @id @default(autoincrement())
   name           String                @unique

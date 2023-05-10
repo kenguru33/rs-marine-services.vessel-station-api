@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
-import { StationModule } from '../../src/station/station.module';
-import { VesselModule } from '../../src/vessel/vessel.module';
+import { StationModule } from '../../src/modules/station/station.module';
+import { VesselModule } from '../../src/modules/vessel/vessel.module';
 import { PrismaService } from '../../src/database/prisma.service';
 
 describe('StationController (e2e)', () => {
@@ -25,17 +25,17 @@ describe('StationController (e2e)', () => {
 
   it('/station (POST)', async () => {
     const mockStation = {
-      "name": "Heggedal",
-      "typeId": 1,
-      "address": "Kallekuveien 8",
-      "postalCode": "1734",
-      "postalLocation": "Skjærhalden",
-      "latitude": 0,
-      "longitude": 0
-    }
+      name: 'Heggedal',
+      typeId: 1,
+      address: 'Kallekuveien 8',
+      postalCode: '1734',
+      postalLocation: 'Skjærhalden',
+      latitude: 0,
+      longitude: 0,
+    };
     return await request(app.getHttpServer())
       .post('/station')
-      .set("Accept", "application/json")
+      .set('Accept', 'application/json')
       .send(mockStation)
       .expect(HttpStatus.CREATED);
   });

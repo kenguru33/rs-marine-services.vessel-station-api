@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
-import { VesselModule } from './vessel/vessel.module';
-import { StationModule } from './station/station.module';
+import { VesselModule } from './modules/vessel/vessel.module';
+import { StationModule } from './modules/station/station.module';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
