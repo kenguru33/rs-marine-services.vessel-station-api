@@ -23,18 +23,19 @@ datasource db {
 }
 
 model Vessel {
-  id           Int                @id @default(autoincrement())
-  name         String             @unique
-  rs           Int                @unique
-  station      Station?           @relation(fields: [stationId], references: [id])
-  stationId    Int?
-  capabilities VesselCapability[]
-  class        VesselClass        @relation(fields: [classId], references: [id])
-  classId      Int
-  state        VesselState        @relation(fields: [stateId], references: [id])
-  stateId      Int
-  type         VesselType         @relation(fields: [typeId], references: [id])
-  typeId       Int
+  id              Int                @id @default(autoincrement())
+  name            String             @unique
+  rs              Int                @unique
+  station         Station?           @relation(fields: [stationId], references: [id])
+  stationId       Int?
+  capabilities    VesselCapability[]
+  class           VesselClass        @relation(fields: [classId], references: [id])
+  classId         Int
+  state           VesselState        @relation(fields: [stateId], references: [id])
+  stateId         Int
+  type            VesselType         @relation(fields: [typeId], references: [id])
+  typeId          Int
+  vesselBuildInfo VesselBuildInfo[]
 
   @@index([typeId])
   @@index([stationId])
@@ -86,15 +87,19 @@ model VesselClass {
 }
 
 model VesselBuildInfo {
-  id           Int      @id @default(autoincrement())
-  buildYear    Int?
-  inServiceFrom DateTime?
-  inServiceTo   DateTime?
-  builder      String?
+  id                Int       @id @default(autoincrement())
+  vessel            Vessel    @relation(fields: [vesselId], references: [id])
+  vesselId          Int
+  buildYear         Int?
+  inServiceFrom     DateTime?
+  inServiceTo       DateTime?
+  builder           String?
   salesOrganization String?
-  buildMaterial String?
-  financedBy   String?
-  dnvClass     String?
+  buildMaterial     String?
+  financedBy        String?
+  dnvClass          String?
+
+  @@index([vesselId])
 }
 
 model Station {
@@ -205,11 +210,11 @@ model StationAgreement {
 }
 
 model StationAgreementCustomer {
-  id         Int                               @id @default(autoincrement())
-  name       String                            @unique
+  id          Int                               @id @default(autoincrement())
+  name        String                            @unique
   description String?
-  contacts   StationAgreementCustomerContact[]
-  agreements StationAgreement[]
+  contacts    StationAgreementCustomerContact[]
+  agreements  StationAgreement[]
 }
 
 model StationAgreementType {

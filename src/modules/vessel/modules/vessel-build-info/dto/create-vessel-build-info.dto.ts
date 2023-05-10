@@ -3,7 +3,7 @@ import { IsDate, IsDateString, IsInt, IsNumber, IsOptional, IsString, Max, Min }
 export class CreateVesselBuildInfoDto {
 
   @IsNumber()
-  stationId: number;
+  vesselId: number;
 
   @IsInt()
   @Min(1800)
