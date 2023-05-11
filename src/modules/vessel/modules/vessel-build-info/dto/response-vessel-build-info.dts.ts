@@ -1,4 +1,6 @@
+import { Vessel } from '@prisma/client';
 import { Expose, Type } from 'class-transformer';
+import { ResponseVesselDto } from '../../../dto/response-vessel.dto';
 
 export class ResponseVesselBuildInfoDto {
   @Expose()
@@ -24,4 +26,12 @@ export class ResponseVesselBuildInfoDto {
 
   @Expose()
   dnvClass: string;
+
+  @Type(() => ResponseVesselDto)
+  @Expose()
+  vessel: ResponseVesselDto
+  
+  vesselId: number;
+
+
 }

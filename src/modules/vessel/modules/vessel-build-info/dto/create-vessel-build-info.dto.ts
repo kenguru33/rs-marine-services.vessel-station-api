@@ -9,33 +9,33 @@ export class CreateVesselBuildInfoDto {
   @Min(1800)
   @Max(2100)
   @IsOptional()
-  buildYear: number;
+  buildYear?: number;
 
   @IsDateString()
   @IsOptional()
-  inServiceFrom: string;
+  inServiceFrom?: string;
 
   @IsDateString()
   @IsOptional()
-  inServiceTo: string;
+  inServiceTo?: string;
 
   @IsString()
   @IsOptional()
-  builder: string;
+  builder?: string;
 
   @IsString()
   @IsOptional()
-  salesOrganization: string;
+  salesOrganization?: string;
 
   @IsString()
   @IsOptional()
-  buildMaterial: string;
+  buildMaterial?: string;
 
   @IsString()
   @IsOptional()
-  financedBy: string;
+  financedBy?: string;
 
   @IsString()
   @IsOptional()
-  dnvClass: string;
+  dnvClass?: string;
 }

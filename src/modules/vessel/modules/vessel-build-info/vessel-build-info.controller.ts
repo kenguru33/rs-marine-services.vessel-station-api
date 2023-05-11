@@ -19,7 +19,7 @@ import { CreateVesselBuildInfoDto } from './dto/create-vessel-build-info.dto';
 import { UpdateVesselBuildInfoDto } from './dto/update-vessel-build-info.dto';
 
 @UseInterceptors(VesselBuildInfoResponseTransformInterceptor)
-@Controller()
+@Controller('vessel-build-info')
 export class VesselBuildInfoController {
   constructor(private vesselBuildInfoService: VesselBuildInfoService) {}
 
@@ -44,7 +44,7 @@ export class VesselBuildInfoController {
   @Post()
   async createVesselBuildInfo(
     @Body() dto: CreateVesselBuildInfoDto,
-    query: QueryVesselBuildInfoDto,
+    @Query() query: QueryVesselBuildInfoDto,
   ) {
     return this.vesselBuildInfoService.createVesselBuildInfo(dto, query);
   }
