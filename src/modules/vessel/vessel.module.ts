@@ -14,7 +14,7 @@ import { VesselStateCategoryService } from './modules/vessel-state/vessel-state-
 import { VesselStateCategoryController } from './modules/vessel-state/vessel-state-category/vessel-state-category.controller';
 import { VesselCapabilityModule } from './modules/vessel-capability/vessel-capability.module';
 import { VesselStateModule } from './modules/vessel-state/vessel-state.module';
-import { VesselBuildInfoModule } from './modules/vessel-build-info/vessel-build-info.module';
+import { VesselCommunicationEquipmentModule } from './modules/vessel-communication-equipment/vessel-communication-equipment.module';
 
 @Module({
   providers: [
@@ -33,7 +33,12 @@ import { VesselBuildInfoModule } from './modules/vessel-build-info/vessel-build-
     // VesselStateController,
     // VesselStateCategoryController
   ],
-  imports: [DatabaseModule, VesselCapabilityModule, VesselStateModule, VesselBuildInfoModule],
+  imports: [
+    DatabaseModule,
+    VesselCapabilityModule,
+    VesselStateModule,
+    VesselCommunicationEquipmentModule,
+  ],
   exports: [],
 })
 export class VesselModule {}

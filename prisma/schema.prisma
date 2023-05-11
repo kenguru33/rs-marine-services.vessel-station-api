@@ -23,24 +23,26 @@ datasource db {
 }
 
 model Vessel {
-  id              Int                @id @default(autoincrement())
-  name            String             @unique
-  rs              Int                @unique
-  station         Station?           @relation(fields: [stationId], references: [id])
-  stationId       Int?
-  capabilities    VesselCapability[]
-  class           VesselClass        @relation(fields: [classId], references: [id])
-  classId         Int
-  state           VesselState        @relation(fields: [stateId], references: [id])
-  stateId         Int
-  type            VesselType         @relation(fields: [typeId], references: [id])
-  typeId          Int
-  vesselBuildInfo VesselBuildInfo[]
+  id                             Int                           @id @default(autoincrement())
+  name                           String                        @unique
+  rs                             Int                           @unique
+  station                        Station?                      @relation(fields: [stationId], references: [id])
+  stationId                      Int?
+  capabilities                   VesselCapability[]
+  class                          VesselClass                   @relation(fields: [classId], references: [id])
+  classId                        Int
+  state                          VesselState                   @relation(fields: [stateId], references: [id])
+  stateId                        Int
+  type                           VesselType                    @relation(fields: [typeId], references: [id])
+  typeId                         Int
+  VesselCommunicationEquipment   VesselCommunicationEquipment? @relation(fields: [vesselCommunicationEquipmentId], references: [id])
+  vesselCommunicationEquipmentId Int?
 
   @@index([typeId])
   @@index([stationId])
   @@index([classId])
   @@index([stateId])
+  @@index([vesselCommunicationEquipmentId])
 }
 
 model VesselType {
@@ -86,20 +88,21 @@ model VesselClass {
   vessels Vessel[]
 }
 
-model VesselBuildInfo {
-  id                Int       @id @default(autoincrement())
-  vessel            Vessel    @relation(fields: [vesselId], references: [id])
-  vesselId          Int
-  buildYear         Int?
-  inServiceFrom     DateTime?
-  inServiceTo       DateTime?
-  builder           String?
-  salesOrganization String?
-  buildMaterial     String?
-  financedBy        String?
-  dnvClass          String?
+model VesselCommunicationEquipment {
+  id          Int                              @id @default(autoincrement())
+  type        VesselCommunicationEquipmentType @relation(fields: [typeId], references: [id])
+  typeId      Int
+  description String?
+  vessels     Vessel[]
 
-  @@index([vesselId])
+  @@index([typeId])
+}
+
+model VesselCommunicationEquipmentType {
+  id                           Int                            @id @default(autoincrement())
+  name                         String                         @unique
+  description                  String?
+  VesselCommunicationEquipment VesselCommunicationEquipment[]
 }
 
 model Station {
