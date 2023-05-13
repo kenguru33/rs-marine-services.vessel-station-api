@@ -2,6 +2,6 @@ import { Controller } from "@nestjs/common";
 import { VesselEngineService } from "./vessel-engine.service";
 
 @Controller("vessel-engine")
-export class VesselCommunicationEquipmentController {
+export class VesselEngineController {
   constructor(private vesselEngineService: VesselEngineService) {}
 }

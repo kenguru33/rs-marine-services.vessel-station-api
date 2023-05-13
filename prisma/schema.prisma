@@ -36,11 +36,14 @@ model Vessel {
   type                    VesselType                     @relation(fields: [typeId], references: [id])
   typeId                  Int
   communicationEquipments VesselCommunicationEquipment[]
+  inspector               VesselInspector?               @relation(fields: [inspectorId], references: [id])
+  inspectorId             Int?
 
   @@index([typeId])
   @@index([stationId])
   @@index([classId])
   @@index([stateId])
+  @@index([inspectorId])
 }
 
 model VesselType {
@@ -100,10 +103,20 @@ model VesselCommunicationEquipment {
 }
 
 model VesselCommunicationEquipmentType {
-  id                           Int                            @id @default(autoincrement())
-  name                         String                         @unique
-  description                  String?
+  id                     Int                            @id @default(autoincrement())
+  name                   String                         @unique
+  description            String?
   communicationEquipment VesselCommunicationEquipment[]
+}
+
+model VesselInspector {
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  phone    String   @unique
+  email    String   @unique
+  fromDate DateTime
+  toDate   DateTime
+  vessels  Vessel[]
 }
 
 model Station {
