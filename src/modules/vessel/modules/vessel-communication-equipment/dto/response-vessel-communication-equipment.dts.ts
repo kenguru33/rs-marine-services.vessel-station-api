@@ -1,7 +1,6 @@
-import { Vessel } from '@prisma/client';
 import { Expose, Type } from 'class-transformer';
-import { ResponseVesselCommunicationEquipmentTypeDto } from '../vessel-communication-equipment-type/dto/response-vessel-communication-equipment-type';
 import { ResponseVesselDto } from '../../../dto/response-vessel.dto';
+import { ResponseVesselCommunicationEquipmentTypeDto } from '../vessel-communication-equipment-type/dto/response-vessel-communication-equipment-type';
 
 export class ResponseVesselCommunicationEquipmentDto {
   @Expose()
