@@ -19,7 +19,7 @@ import { UpdateVesselCommunicationEquipmentDto } from './dto/update-vessel-commu
 import { QueryVesselCommunicationEquipmentDto } from './dto/query-vessel-communication-equipment.dto';
 
 @UseInterceptors(VesselCommunicationEquipmentTransformInterceptor)
-@Controller('vessel-communication-equipment-type')
+@Controller('vessel-communication-equipment')
 export class VesselCommunicationEquipmentController {
   constructor(
     private vesselBuildInfoService: VesselCommunicationEquipmentService,

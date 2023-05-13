@@ -8,30 +8,30 @@ export class VesselCommunicationEquipmentTypeService {
   constructor(private prisma: PrismaService) {}
 
   async getVesselCommunicationEquipmentTypes() {
-    this.prisma.vesselCommunicationEquipmentType.findMany();
+    return this.prisma.vesselCommunicationEquipmentType.findMany();
   }
 
   async getVesselCommunicationEquipmentType(id: number) {
-    this.prisma.vesselCommunicationEquipmentType.findUnique({
+    return this.prisma.vesselCommunicationEquipmentType.findUnique({
       where: { id },
     });
   }
 
   async createVesselCommunicationEquipmentType(data: CreateVesselCommunicationEquipmentTypeDto) {
-    this.prisma.vesselCommunicationEquipmentType.create({
+    return this.prisma.vesselCommunicationEquipmentType.create({
       data,
     });
   }
 
   async updateVesselCommunicationEquipmentType(id: number, data: UpdateVesselCommunicationEquipmentTypeDto) {
-    this.prisma.vesselCommunicationEquipmentType.update({
+    return this.prisma.vesselCommunicationEquipmentType.update({
       where: { id },
       data,
     });
   }
 
   async deleteVesselCommunicationEquipmentType(id: number) {
-    this.prisma.vesselCommunicationEquipmentType.delete({
+    return this.prisma.vesselCommunicationEquipmentType.delete({
       where: { id },
     });
   }

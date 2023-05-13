@@ -7,7 +7,7 @@ export class CreateVesselCommunicationEquipmentDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  description: string;
+  description?: string;
 
   @IsNumber()
   typeId: number;

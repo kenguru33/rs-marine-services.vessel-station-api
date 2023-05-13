@@ -10,7 +10,11 @@ import { seedStationTypes } from './seed/seed-station-type';
 import { seedVesselTypes } from './seed/seed-vessel-type';
 import { seedStationPier } from './seed/seed-station-pier';
 import { seedStationAccommodation } from './seed/seed-station-accommodation';
-import { seedStationAgreementTypes } from './seed/seed-agreement-type';
+import { seedStationAgreementTypes } from './seed/seed-station-agreement-type';
+import { seedCommunicationEquipmentTypes } from './seed/seed-vessel-communication-equipment-type';
+import { seedStationAgreementCustomer } from './seed/seed-station-agreement-customer';
+import { seedCommunicationEquipment } from './seed/seed-vessel-communication-equipment';
+
 
 const prisma = new PrismaClient();
 async function main() {
@@ -47,8 +51,18 @@ async function main() {
   console.log('Seeding station agreement types');
   const agreementTypes = await seedStationAgreementTypes();
 
+  console.log('Seeding station agreement customers');
+  const agreementCustomers = await seedStationAgreementCustomer();
+
   console.log('Seeding vessels');
   const vessels = await seedVessels(capabilities, stations, classes);
+
+  console.log('Seeding vessel communication equipment types');
+  const communicationEquipmentTypes = await seedCommunicationEquipmentTypes();
+
+  console.log('Seeding vessel communication equipment');
+  const communicationEquipment = await seedCommunicationEquipment();
+
 }
 
 main()

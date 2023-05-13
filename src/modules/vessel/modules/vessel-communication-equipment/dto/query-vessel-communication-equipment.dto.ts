@@ -9,4 +9,8 @@ export class QueryVesselCommunicationEquipmentDto {
   @IsOptional()
   @IsString()
   type?: string;
+
+  @IsOptional()
+  @IsString()
+  name?: string;
 }

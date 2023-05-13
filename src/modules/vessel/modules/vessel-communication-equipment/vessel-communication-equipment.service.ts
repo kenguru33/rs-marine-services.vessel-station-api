@@ -13,12 +13,17 @@ export class VesselCommunicationEquipmentService {
     query: QueryVesselCommunicationEquipmentDto,
   ) {
     const { include, ...where } = query;
+    console.log('where', where);
     const vesselCommunicationEquipmentIncludes =
       await this.prisma.parseInclude<Prisma.VesselCommunicationEquipmentInclude>(include);
     return this.prisma.vesselCommunicationEquipment.findMany({
       include: vesselCommunicationEquipmentIncludes,
       where: {
-        
+        type: {
+          name: {
+            contains: where.type,
+          }
+        }
       }
     });
   }
@@ -28,13 +33,13 @@ export class VesselCommunicationEquipmentService {
     query: QueryVesselCommunicationEquipmentDto,
   ) {
     console.log('id', id);
-    const vesselBuildInfoIncludes =
+    const vesselVesselCommunicationEquipmentIncludes =
       await this.prisma.parseInclude<Prisma.VesselCommunicationEquipmentInclude>(
         query.include,
       );
     return this.prisma.vesselCommunicationEquipment.findUniqueOrThrow({
       where: { id },
-      include: vesselBuildInfoIncludes,
+      include: vesselVesselCommunicationEquipmentIncludes,
     });
   }
 
@@ -42,13 +47,26 @@ export class VesselCommunicationEquipmentService {
     data: CreateVesselCommunicationEquipmentDto,
     query: QueryVesselCommunicationEquipmentDto,
   ) {
-    const vesselBuildInfoIncludes =
+    const vesselCommunicationEquipmentIncludes =
       await this.prisma.parseInclude<Prisma.VesselCommunicationEquipmentInclude>(
         query.include,
       );
     return this.prisma.vesselCommunicationEquipment.create({
-      data,
-      include: vesselBuildInfoIncludes,
+      data: {
+        numberOfUnits: data.numberOfUnits,
+        description: data.description,
+        vessel: {
+          connect: {
+            id: data.vesselId,
+          },
+        },
+        type: {
+          connect: {
+            id: data.typeId,
+          },
+        },
+      },
+      include: vesselCommunicationEquipmentIncludes,
     });
   }
 
