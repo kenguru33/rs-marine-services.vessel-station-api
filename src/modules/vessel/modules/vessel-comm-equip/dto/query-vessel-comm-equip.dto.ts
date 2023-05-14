@@ -1,6 +1,6 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class QueryVesselCommunicationEquipmentDto {
+export class QueryVesselCommEquipDto {
   @IsOptional()
   @IsString()
   include?: string;

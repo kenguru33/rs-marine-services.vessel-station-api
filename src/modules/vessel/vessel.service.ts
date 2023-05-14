@@ -58,33 +58,59 @@ export class VesselService {
     });
   }
 
-  create(data: CreateVesselDto): Promise<Vessel> {
-    const {
-      name,
-      rs,
-      capabilityIds,
-      classId,
-      stationId,
-      stateId,
-      typeId,
-      mmsi,
-      prefix,
-    } = data;
-    const vessel = this.prisma.vessel.create({
+  create(data: CreateVesselDto) {
+    return this.prisma.vessel.create({
       data: {
-        name,
-        rs,
-        mmsi,
-        stateId: stateId,
-        stationId: stationId,
-        classId: classId,
-        capabilities: {
-          connect: capabilityIds ? capabilityIds.map((id) => ({ id })) : [],
+        mmsi: data.mmsi,
+        name: data.name,
+        rs: data.rs,
+        state: {
+          connect: { id: data.stateId },
         },
-        typeId: typeId,
+        station: {
+          connect: data.stationId ? { id: data.stationId } : undefined,
+        },
+        class: {
+          connect: data.classId ? { id: data.classId } : undefined,
+        },
+        capabilities: {
+          connect: data.capabilityIds
+            ? data.capabilityIds.map((id) => ({ id }))
+            : [],
+        },
+        type: {
+          connect: data.typeId ? { id: data.typeId } : undefined,
+        },
+        inspectors: {
+          connect: data.inspectorIds
+            ? data.inspectorIds.map((id) => ({ id }))
+            : [],
+        }
       },
     });
-    return vessel;
+
+    //   data: {
+    //     name,
+    //     rs,
+    //     mmsi,
+    //     state: {
+    //       connect: { id: stateId },
+    //     },
+    //     station: {
+    //       connect: stationId ? { id: stationId } : undefined,
+    //     },
+    //     class: {
+    //       connect: classId ? { id: classId } : undefined,
+    //     },
+    //     capabilities: {
+    //       connect: capabilityIds ? capabilityIds.map((id) => ({ id })) : [],
+    //     },
+    //     typeId: typeId,
+    //     inspectors: {
+    //       connect: inspectorIds ? inspectorIds.map((id) => ({ id })) : [],
+    //     },
+    //   }
+    // });
   }
 
   async update(id: number, data: UpdateVesselDto): Promise<Vessel> {
@@ -99,6 +125,9 @@ export class VesselService {
         stationId: stationId,
         capabilities: {
           set: capabilityIds && capabilityIds.map((id) => ({ id })),
+        },
+        inspectors: {
+          set: data.inspectorIds && data.inspectorIds.map((id) => ({ id })),
         },
       },
     });

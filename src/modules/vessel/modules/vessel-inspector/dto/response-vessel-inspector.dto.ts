@@ -15,14 +15,5 @@ export class ResponseVesselInspectorDto {
     phone: string;
 
     @Expose()
-    address: string;
-
-    @Expose()
-    createdAt: Date;
-
-    @Expose()
-    updatedAt: Date;
-
-    @Expose()
     vessels: ResponseVesselDto[];
 }

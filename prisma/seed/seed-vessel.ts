@@ -737,9 +737,9 @@ const randomCapabilityId = function (capabilities: Array<VesselCapability>) {
   return capabilities[Math.floor(Math.random() * capabilities.length)];
 };
 
-const randomInspectorId = async function () {
+const randomInspectorIds = async function () {
   const inspectorCount = await prisma.vesselInspector.count();
-  return Math.floor(Math.random() * inspectorCount);
+  return [Math.floor(Math.random() * inspectorCount)];
 };
 
 const randomCapabilityArray = function (capabilities: Array<VesselCapability>) {
@@ -773,7 +773,7 @@ export const seedVessels = async function (
           connect: randomCapabilityArray(capabilities),
         },
         typeId: await randomVesselTypeId(),
-        inspectorId: await randomInspectorId(),
+        // TODO add inspector
       },
     });
     vesselModels.push(vesselModel);

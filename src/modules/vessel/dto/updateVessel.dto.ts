@@ -29,4 +29,9 @@ export class UpdateVesselDto {
   @IsNumber()
   @IsOptional()
   typeId?: number;
+
+  @IsNumber()
+  @IsOptional()
+  inspectorIds?: number[];
+  
 }

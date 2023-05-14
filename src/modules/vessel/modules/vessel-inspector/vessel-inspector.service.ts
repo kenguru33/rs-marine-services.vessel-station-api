@@ -21,9 +21,15 @@ export class VesselInspectorService {
     return await this.prisma.vesselInspector.create({
       data: {
         vessels: {
-          connect: data.vesselIds.map((id: number) => ({ id })),
+          connect: data.vesselIds
+            ? data.vesselIds.map((id: number) => ({ id }))
+            : [],
         },
+
         ...data,
+      },
+      include: {
+        vessels: true,
       },
     });
   }

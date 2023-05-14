@@ -37,50 +37,45 @@ model Vessel {
   type                    VesselType                     @relation(fields: [typeId], references: [id])
   typeId                  Int
   communicationEquipments VesselCommunicationEquipment[]
-  inspector               VesselInspector?               @relation(fields: [inspectorId], references: [id])
-  inspectorId             Int?
-  VesselMaintenance       VesselMaintenance?             @relation(fields: [vesselMaintenanceId], references: [id])
-  vesselMaintenanceId     Int?
-  VesselCrew              VesselCrew?                    @relation(fields: [vesselCrewId], references: [id])
-  vesselCrewId            Int?
+  inspectors              VesselInspector[]
 
-  buildYear         Int?
-  inOperationFrom   DateTime?
-  inOperationTo     DateTime?
-  constrctor        String?
-  salesOrganization String?
-  buildingMaterial  String?
-  financedBy        String?
-  dnvClass          String?
+  // // buildinfo
+  //   buildYear         Int?
+  //   inOperationFrom   DateTime?
+  //   inOperationTo     DateTime?
+  //   constrctor        String?
+  //   salesOrganization String?
+  //   buildingMaterial  String?
+  //   financedBy        String?
+  //   dnvClass          String?
 
-  maxSpeed       Int?
-  cruisingSpeed  Int?
-  range          Int?
-  length         Int?
-  beam           Int?
-  draft          Int?
-  bunkerOil      Int?
-  ballastTank    Int?
-  freshWaterTank Int?
-  bollbadPull    Int?
-  towingHook     Boolean?
-  tonnageGross   Int?
-  tonnageNet     Int?
+  // // dimensions
+  //   maxSpeed       Int?
+  //   cruisingSpeed  Int?
+  //   range          Int?
+  //   length         Int?
+  //   beam           Int?
+  //   draft          Int?
+  //   bunkerOil      Int?
+  //   ballastTank    Int?
+  //   freshWaterTank Int?
+  //   bollbadPull    Int?
+  //   towingHook     Boolean?
+  //   tonnageGross   Int?
+  //   tonnageNet     Int?
 
-  mainEngine      String?
-  secondaryEngine String?
-  gear            String?
-  waterJet        Boolean?
-  proppellers     Boolean?
-  bowThruster     Boolean?
+  // // motor and propeller
+  //   mainEngine      String?
+  //   secondaryEngine String?
+  //   gear            String?
+  //   waterJet        Boolean?
+  //   proppellers     Boolean?
+  //   bowThruster     Boolean?
 
   @@index([typeId])
   @@index([stationId])
   @@index([classId])
   @@index([stateId])
-  @@index([inspectorId])
-  @@index([vesselMaintenanceId])
-  @@index([vesselCrewId])
 }
 
 model VesselType {
@@ -155,25 +150,17 @@ model VesselInspector {
   vessels Vessel[]
 }
 
-model VesselMaintenance {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
-  description String?
-  progress    String?
-  responsible String?
-  approvedBy  String
-  fromDate    DateTime
-  toDate      DateTime
-  vessels     Vessel[]
-}
-
-model VesselCrew {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
-  phone   String   @unique
-  email   String   @unique
-  vessels Vessel[]
-}
+// model VesselMaintenance {
+//   id          Int      @id @default(autoincrement())
+//   name        String   @unique
+//   description String?
+//   progress    String?
+//   responsible String?
+//   approvedBy  String
+//   fromDate    DateTime
+//   toDate      DateTime
+//   vessels     Vessel[]
+// }
 
 model Station {
   id             Int                   @id @default(autoincrement())

@@ -20,4 +20,6 @@ export class QueryVesselDto {
   @Transform(({ value }) => +value)
   typeId?: number;
 
+  
+
 }

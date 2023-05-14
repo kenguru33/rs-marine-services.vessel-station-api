@@ -1,6 +1,6 @@
 import { IsNumber } from 'class-validator';
 
-export class UpdateVesselCommunicationEquipmentDto {
+export class UpdateVesselCommEquipDto {
   @IsNumber()
   typeId: number;
 

@@ -1,4 +1,4 @@
-import { IsDateString, IsEmail, IsMobilePhone, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
+import { IsArray, IsDateString, IsEmail, IsMobilePhone, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreateVesselInspectorDto {
   @IsString()
@@ -11,11 +11,7 @@ export class CreateVesselInspectorDto {
   @IsEmail()
   email: string;
 
-  @IsDateString()
-  fromDate: string;
-  @IsDateString()
-  toDate: string;
-
-  @IsNumber()
+  @IsArray()
+  @IsOptional()
   vesselIds: number[];
 }

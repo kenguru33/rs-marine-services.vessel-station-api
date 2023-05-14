@@ -28,6 +28,7 @@ export class VesselInspectorController {
 
   @Post()
   async createVesselInspector(@Body() data: CreateVesselInspectorDto) {
+    console.log('inspector-post', data);
     return await this.vessselInspectorService.createVesselInspector(data);
   }
 
@@ -36,6 +37,7 @@ export class VesselInspectorController {
     @Param('id', ParseIntPipe) id: number,
     @Body() data: UpdateVesselInspectorDto,
   ) {
+    console.log('inspector-update', data);
     return await this.vessselInspectorService.updateVesselInspector(id, data);
   }
 

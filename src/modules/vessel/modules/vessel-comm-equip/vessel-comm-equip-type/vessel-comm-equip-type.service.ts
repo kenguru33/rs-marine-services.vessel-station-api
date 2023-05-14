@@ -1,36 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../../database/prisma.service';
-import { CreateVesselCommunicationEquipmentTypeDto } from './dto/create-vessel-communication-equipment-type';
-import { UpdateVesselCommunicationEquipmentTypeDto } from './dto/update-vessel-communication-equipment-type';
+import { CreateVesselCommEquipTypeDto } from './dto/create-vessel-comm-equip-type';
+import { UpdateVesselCommEquipTypeDto } from './dto/update-vessel-comm-equip-type';
 
 @Injectable()
-export class VesselCommunicationEquipmentTypeService {
+export class VesselCommEquipTypeService {
   constructor(private prisma: PrismaService) {}
 
-  async getVesselCommunicationEquipmentTypes() {
+  async getVesselCommEquipTypes() {
     return this.prisma.vesselCommunicationEquipmentType.findMany();
   }
 
-  async getVesselCommunicationEquipmentType(id: number) {
+  async getVesselCommEquipType(id: number) {
     return this.prisma.vesselCommunicationEquipmentType.findUnique({
       where: { id },
     });
   }
 
-  async createVesselCommunicationEquipmentType(data: CreateVesselCommunicationEquipmentTypeDto) {
+  async createVesselCommEquipType(data: CreateVesselCommEquipTypeDto) {
     return this.prisma.vesselCommunicationEquipmentType.create({
       data,
     });
   }
 
-  async updateVesselCommunicationEquipmentType(id: number, data: UpdateVesselCommunicationEquipmentTypeDto) {
+  async updateVesselCommEquipType(
+    id: number,
+    data: UpdateVesselCommEquipTypeDto,
+  ) {
     return this.prisma.vesselCommunicationEquipmentType.update({
       where: { id },
       data,
     });
   }
 
-  async deleteVesselCommunicationEquipmentType(id: number) {
+  async deleteVesselCommEquipType(id: number) {
     return this.prisma.vesselCommunicationEquipmentType.delete({
       where: { id },
     });

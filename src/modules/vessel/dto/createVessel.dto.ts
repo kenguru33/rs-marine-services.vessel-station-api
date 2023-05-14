@@ -20,10 +20,6 @@ export class CreateVesselDto {
   @IsNumber()
   rs: number;
 
-  @IsString()
-  @IsNotEmpty()
-  prefix: string;
-
   @IsMmsi()
   mmsi: number;
 
@@ -44,99 +40,106 @@ export class CreateVesselDto {
   @IsNumber()
   typeId: number;
 
-  @IsNumber()
+  @IsArray()
   @IsOptional()
-  fleetCapacity?: number;
+  inspectorIds?: number[];
 
-  @IsNumber()
-  @IsOptional()
-  maxPax?: number;
+  // // aner ikke hva dette er
 
-  // BuildInfo
+  // @IsNumber()
+  // @IsOptional()
+  // fleetCapacity?: number;
 
-  @IsInt()
-  @Min(1800)
-  @Max(2100)
-  @IsOptional()
-  buildYear?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // maxPax?: number;
 
-  @IsDateString()
-  @IsOptional()
-  inServiceFrom?: string;
 
-  @IsDateString()
-  @IsOptional()
-  inServiceTo?: string;
+  // // BuildInfo
 
-  @IsString()
-  @IsOptional()
-  builder?: string;
+  // @IsInt()
+  // @Min(1800)
+  // @Max(2100)
+  // @IsOptional()
+  // buildYear?: number;
 
-  @IsString()
-  @IsOptional()
-  salesOrganization?: string;
+  // @IsDateString()
+  // @IsOptional()
+  // inServiceFrom?: string;
 
-  @IsString()
-  @IsOptional()
-  buildMaterial?: string;
+  // @IsDateString()
+  // @IsOptional()
+  // inServiceTo?: string;
 
-  @IsString()
-  @IsOptional()
-  financedBy?: string;
+  // @IsString()
+  // @IsOptional()
+  // builder?: string;
 
-  @IsString()
-  @IsOptional()
-  dnvClass?: string;
+  // @IsString()
+  // @IsOptional()
+  // salesOrganization?: string;
 
-  // Dimensions
+  // @IsString()
+  // @IsOptional()
+  // buildMaterial?: string;
 
-  @IsNumber()
-  @IsOptional()
-  maxSpeed?: number;
+  // @IsString()
+  // @IsOptional()
+  // financedBy?: string;
 
-  @IsNumber()
-  @IsOptional()
-  cruisingSpeed?: number;
+  // @IsString()
+  // @IsOptional()
+  // dnvClass?: string;
 
-  @IsNumber()
-  @IsOptional()
-  range?: number;
+  // // Dimensions
 
-  @IsNumber()
-  @IsOptional()
-  length?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // maxSpeed?: number;
 
-  @IsNumber()
-  @IsOptional()
-  beam?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // cruisingSpeed?: number;
 
-  @IsNumber()
-  @IsOptional()
-  bunkersOil?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // range?: number;
 
-  @IsNumber()
-  @IsOptional()
-  balastTank?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // length?: number;
 
-  @IsNumber()
-  @IsOptional()
-  freshWaterTank?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // beam?: number;
 
-  @IsNumber()
-  @IsOptional()
-  bollardPull?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // bunkersOil?: number;
 
-  @IsNumber()
-  @IsOptional()
-  towingPower: number;
+  // @IsNumber()
+  // @IsOptional()
+  // balastTank?: number;
 
-  @IsNumber()
-  @IsOptional()
-  netTonnage?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // freshWaterTank?: number;
 
-  @IsNumber()
-  @IsOptional()
-  grossTonnage?: number;
+  // @IsNumber()
+  // @IsOptional()
+  // bollardPull?: number;
+
+  // @IsNumber()
+  // @IsOptional()
+  // towingPower: number;
+
+  // @IsNumber()
+  // @IsOptional()
+  // netTonnage?: number;
+
+  // @IsNumber()
+  // @IsOptional()
+  // grossTonnage?: number;
 
   
 }

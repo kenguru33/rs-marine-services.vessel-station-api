@@ -1,36 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../database/prisma.service';
-import { QueryVesselCommunicationEquipmentDto } from './dto/query-vessel-communication-equipment.dto';
+import { QueryVesselCommEquipDto } from './dto/query-vessel-comm-equip.dto';
 import { Prisma } from '@prisma/client';
-import { CreateVesselCommunicationEquipmentDto } from './dto/create-vessel-communication-equipment.dto';
-import { UpdateVesselCommunicationEquipmentDto } from './dto/update-vessel-communication-equipment.dto';
+import { CreateVesselCommEquipDto } from './dto/create-vessel-comm-equip.dto';
+import { UpdateVesselCommEquipDto } from './dto/update-vessel-comm-equip.dto';
 
 @Injectable()
-export class VesselCommunicationEquipmentService {
+export class VesselCommEquipService {
   constructor(private prisma: PrismaService) {}
 
-  async getVesselCommunicationEquipments(
-    query: QueryVesselCommunicationEquipmentDto,
-  ) {
+  async getVesselCommunicationEquipments(query: QueryVesselCommEquipDto) {
     const { include, ...where } = query;
     console.log('where', where);
     const vesselCommunicationEquipmentIncludes =
-      await this.prisma.parseInclude<Prisma.VesselCommunicationEquipmentInclude>(include);
+      await this.prisma.parseInclude<Prisma.VesselCommunicationEquipmentInclude>(
+        include,
+      );
     return this.prisma.vesselCommunicationEquipment.findMany({
       include: vesselCommunicationEquipmentIncludes,
       where: {
         type: {
           name: {
             contains: where.type,
-          }
-        }
-      }
+          },
+        },
+      },
     });
   }
 
   async getVesselCommunicationEquipment(
     id: number,
-    query: QueryVesselCommunicationEquipmentDto,
+    query: QueryVesselCommEquipDto,
   ) {
     console.log('id', id);
     const vesselVesselCommunicationEquipmentIncludes =
@@ -44,8 +44,8 @@ export class VesselCommunicationEquipmentService {
   }
 
   async createVesselCommunicationEquipment(
-    data: CreateVesselCommunicationEquipmentDto,
-    query: QueryVesselCommunicationEquipmentDto,
+    data: CreateVesselCommEquipDto,
+    query: QueryVesselCommEquipDto,
   ) {
     const vesselCommunicationEquipmentIncludes =
       await this.prisma.parseInclude<Prisma.VesselCommunicationEquipmentInclude>(
@@ -72,8 +72,8 @@ export class VesselCommunicationEquipmentService {
 
   async updateVesselCommunicationEquipment(
     id: number,
-    data: UpdateVesselCommunicationEquipmentDto,
-    query: QueryVesselCommunicationEquipmentDto,
+    data: UpdateVesselCommEquipDto,
+    query: QueryVesselCommEquipDto,
   ) {
     const vesselCommunicationEquipment =
       await this.prisma.parseInclude<Prisma.VesselCommunicationEquipmentInclude>(

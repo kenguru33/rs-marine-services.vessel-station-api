@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CreateVesselCommunicationEquipmentDto {
+export class CreateVesselCommEquipDto {
   @IsNumber()
   vesselId: number;
 

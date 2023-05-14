@@ -18,6 +18,8 @@ import { seedVesselInspectors } from './seed/seed-vessel-inspector';
 
 const prisma = new PrismaClient();
 async function main() {
+
+  // seed lookup types and objects
   console.log('Seeding capabilities');
   const capabilities = await seedCapabilities();
 
@@ -36,37 +38,37 @@ async function main() {
   console.log('Seeding station types');
   const stationTypes = await seedStationTypes();
 
-  console.log('Seeding stations');
-  const stations = await seedStations();
-
   console.log('Seeding vessel types');
   const vesselTypes = await seedVesselTypes();
-
-  console.log('Seeding station piers');
-  const piers = await seedStationPier();
-
-  console.log('Seeding station accommodations');
-  const accommodations = await seedStationAccommodation();
 
   console.log('Seeding station agreement types');
   const agreementTypes = await seedStationAgreementTypes();
 
-  console.log('Seeding station agreement customers');
-  const agreementCustomers = await seedStationAgreementCustomer();
-
-  console.log('Seeding vessel inspectors');
-  const inspectors = await seedVesselInspectors();
-
-  console.log('Seeding vessels');
-  const vessels = await seedVessels(capabilities, stations, classes);
-
   console.log('Seeding vessel communication equipment types');
   const communicationEquipmentTypes = await seedCommunicationEquipmentTypes();
 
-  console.log('Seeding vessel communication equipment');
-  const communicationEquipment = await seedCommunicationEquipment();
+  // concrete objects
+  // console.log('Seeding stations');
+  // const stations = await seedStations();
 
-  
+  // console.log('Seeding station piers');
+  // const piers = await seedStationPier();
+
+  // console.log('Seeding station accommodations');
+  // const accommodations = await seedStationAccommodation();
+
+  // console.log('Seeding station agreement customers');
+  // const agreementCustomers = await seedStationAgreementCustomer();
+
+  // console.log('Seeding vessel inspectors');
+  // const inspectors = await seedVesselInspectors();
+
+  // console.log('Seeding vessels');
+  // const vessels = await seedVessels(capabilities, stations, classes);
+
+  // console.log('Seeding vessel communication equipment');
+  // const communicationEquipment = await seedCommunicationEquipment();
+
 }
 
 main()
