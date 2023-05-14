@@ -31,6 +31,7 @@
     "@nestjs/devtools-integration": "^0.1.4",
     "@nestjs/graphql": "^11.0.5",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.3.0",
     "@prisma/client": "^4.11.0",
     "@redningsselskapet/class-validator-ais": "^1.0.3",
     "class-transformer": "^0.5.1",

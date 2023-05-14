@@ -39,6 +39,9 @@ model Vessel {
   communicationEquipments VesselCommunicationEquipment[]
   inspectors              VesselInspector[]
 
+  VesselMaintenance   VesselMaintenance? @relation(fields: [vesselMaintenanceId], references: [id])
+  vesselMaintenanceId Int?
+
   // // buildinfo
   //   buildYear         Int?
   //   inOperationFrom   DateTime?
@@ -76,6 +79,7 @@ model Vessel {
   @@index([stationId])
   @@index([classId])
   @@index([stateId])
+  @@index([vesselMaintenanceId])
 }
 
 model VesselType {
@@ -150,17 +154,17 @@ model VesselInspector {
   vessels Vessel[]
 }
 
-// model VesselMaintenance {
-//   id          Int      @id @default(autoincrement())
-//   name        String   @unique
-//   description String?
-//   progress    String?
-//   responsible String?
-//   approvedBy  String
-//   fromDate    DateTime
-//   toDate      DateTime
-//   vessels     Vessel[]
-// }
+model VesselMaintenance {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  progress    String?
+  responsible String?
+  approvedBy  String
+  fromDate    DateTime
+  toDate      DateTime
+  vessels     Vessel[]
+}
 
 model Station {
   id             Int                   @id @default(autoincrement())

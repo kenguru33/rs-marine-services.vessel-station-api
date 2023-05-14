@@ -1,4 +1,4 @@
-import { Expose } from "class-transformer";
+import { Expose } from 'class-transformer';
 
 export class ResponseVessselTypeDto {
   @Expose()
@@ -6,6 +6,9 @@ export class ResponseVessselTypeDto {
 
   @Expose()
   name: string;
+
+  @Expose()
+  prefix: string;
 
   @Expose()
   description?: string;
