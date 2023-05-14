@@ -26,6 +26,7 @@ model Vessel {
   id                      Int                            @id @default(autoincrement())
   name                    String                         @unique
   rs                      Int                            @unique
+  mmsi                    Int                            @unique
   station                 Station?                       @relation(fields: [stationId], references: [id])
   stationId               Int?
   capabilities            VesselCapability[]
@@ -38,17 +39,54 @@ model Vessel {
   communicationEquipments VesselCommunicationEquipment[]
   inspector               VesselInspector?               @relation(fields: [inspectorId], references: [id])
   inspectorId             Int?
+  VesselMaintenance       VesselMaintenance?             @relation(fields: [vesselMaintenanceId], references: [id])
+  vesselMaintenanceId     Int?
+  VesselCrew              VesselCrew?                    @relation(fields: [vesselCrewId], references: [id])
+  vesselCrewId            Int?
+
+  buildYear         Int?
+  inOperationFrom   DateTime?
+  inOperationTo     DateTime?
+  constrctor        String?
+  salesOrganization String?
+  buildingMaterial  String?
+  financedBy        String?
+  dnvClass          String?
+
+  maxSpeed       Int?
+  cruisingSpeed  Int?
+  range          Int?
+  length         Int?
+  beam           Int?
+  draft          Int?
+  bunkerOil      Int?
+  ballastTank    Int?
+  freshWaterTank Int?
+  bollbadPull    Int?
+  towingHook     Boolean?
+  tonnageGross   Int?
+  tonnageNet     Int?
+
+  mainEngine      String?
+  secondaryEngine String?
+  gear            String?
+  waterJet        Boolean?
+  proppellers     Boolean?
+  bowThruster     Boolean?
 
   @@index([typeId])
   @@index([stationId])
   @@index([classId])
   @@index([stateId])
   @@index([inspectorId])
+  @@index([vesselMaintenanceId])
+  @@index([vesselCrewId])
 }
 
 model VesselType {
   id          Int      @id @default(autoincrement())
   name        String   @unique
+  prefix      String   @default("RS")
   description String?
   vessels     Vessel[]
 }
@@ -110,13 +148,31 @@ model VesselCommunicationEquipmentType {
 }
 
 model VesselInspector {
-  id       Int      @id @default(autoincrement())
-  name     String   @unique
-  phone    String   @unique
-  email    String   @unique
-  fromDate DateTime
-  toDate   DateTime
-  vessels  Vessel[]
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  phone   String   @unique
+  email   String   @unique
+  vessels Vessel[]
+}
+
+model VesselMaintenance {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  progress    String?
+  responsible String?
+  approvedBy  String
+  fromDate    DateTime
+  toDate      DateTime
+  vessels     Vessel[]
+}
+
+model VesselCrew {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  phone   String   @unique
+  email   String   @unique
+  vessels Vessel[]
 }
 
 model Station {

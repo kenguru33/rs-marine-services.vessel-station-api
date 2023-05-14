@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../database/prisma.service';
+import { UpdateVesselInspectorDto } from './dto/update-vessel-inspector.dto';
+import { CreateVesselInspectorDto } from './dto/create-vessel-inspector.dto';
 
 @Injectable()
 export class VesselInspectorService {
@@ -15,28 +17,26 @@ export class VesselInspectorService {
     return await this.prisma.vesselInspector.findMany();
   }
 
-  async createVesselInspector(data: any) {
+  async createVesselInspector(data: CreateVesselInspectorDto) {
     return await this.prisma.vesselInspector.create({
       data: {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        fromDate: data.fromDate,
-        toDate: data.toDate,
         vessels: {
-          connect: {
-            id: data.vesselId,
-            
-          }
-        }        
-      }
+          connect: data.vesselIds.map((id: number) => ({ id })),
+        },
+        ...data,
+      },
     });
   }
 
-  async updateVesselInspector(id: number, data: any) {
+  async updateVesselInspector(id: number, data: UpdateVesselInspectorDto) {
     return await this.prisma.vesselInspector.update({
       where: { id },
-      data,
+      data: {
+        vessels: {
+          set: data.vesselIds?.map((id: number) => ({ id })),
+        },
+        ...data,
+      },
     });
   }
 

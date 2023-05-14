@@ -20,6 +20,10 @@ export class CreateVesselDto {
   @IsNumber()
   rs: number;
 
+  @IsString()
+  @IsNotEmpty()
+  prefix: string;
+
   @IsMmsi()
   mmsi: number;
 

@@ -5,18 +5,22 @@ const vesselTypes = [
   {
     name: 'Fast bemannet',
     description: 'Faste bemannet skøyte',
+    prefix: 'RS',
   },
   {
     name: 'Sjøredningsskorps',
     description: 'Frivillige bemannet skøyter',
+    prefix: 'RS',
   },
   {
     name: 'Støttefartøy',
     description: 'Støttefortøy for andre fartøy',
+    prefix: 'SF',
   },
   {
     name: 'Ambulanse',
-    description: 'Støttefortøy for andre fartøy',
+    description: 'Ambulansefartøy',
+    prefix: 'EYR',
   },
 ];
 

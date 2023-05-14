@@ -4,6 +4,8 @@ import { ResponseVessselTypeDto } from '../vessel-type/dto/response-vessel-type.
 import { ResponseVesselStateDto } from '../modules/vessel-state/dto/response-vessel-state.dto';
 import { ResponseVesselCapabilityDto } from '../modules/vessel-capability/dto/response-vessel-capability.dto';
 import { ResponseStationDto } from '../../station/dto/response-station.dto';
+import { ResponseVesselInspectorDto } from '../modules/vessel-inspector/dto/response-vessel-inspector.dto';
+import { ResponseVesselCommunicationEquipmentDto } from '../modules/vessel-communication-equipment/dto/response-vessel-communication-equipment.dts';
 
 export class ResponseVesselDto {
   @Expose()
@@ -14,6 +16,12 @@ export class ResponseVesselDto {
 
   @Expose()
   rs: number;
+
+  @Expose()
+  mmsi: number;
+
+  @Expose()
+  prefix: string;
 
   stationId: number;
 
@@ -44,4 +52,12 @@ export class ResponseVesselDto {
   @Expose()
   @Type(() => ResponseVesselCapabilityDto)
   capabilities: ResponseVesselCapabilityDto[];
+
+  @Expose()
+  @Type(() => ResponseVesselInspectorDto)
+  inspector: ResponseVesselInspectorDto
+
+  @Expose()
+  @Type(() => ResponseVesselCommunicationEquipmentDto)
+  communicationEquipments: ResponseVesselCommunicationEquipmentDto[];
 }

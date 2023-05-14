@@ -1,9 +1,11 @@
+import { faker } from '@faker-js/faker';
 import {
   PrismaClient,
   Station,
   Vessel,
   VesselCapability,
   VesselClass,
+  VesselInspector,
   VesselState,
 } from '@prisma/client';
 const prisma = new PrismaClient();
@@ -735,6 +737,11 @@ const randomCapabilityId = function (capabilities: Array<VesselCapability>) {
   return capabilities[Math.floor(Math.random() * capabilities.length)];
 };
 
+const randomInspectorId = async function () {
+  const inspectorCount = await prisma.vesselInspector.count();
+  return Math.floor(Math.random() * inspectorCount);
+};
+
 const randomCapabilityArray = function (capabilities: Array<VesselCapability>) {
   const maxNumberOfCapability = Math.floor(Math.random() * capabilities.length);
   const capabilityArray: number[] = [];
@@ -757,6 +764,7 @@ export const seedVessels = async function (
       update: {},
       create: {
         rs: +vessel.rs,
+        mmsi: +vessel.mmsi,
         name: vessel.name,
         classId: randomVesselClassId(classes).id,
         stationId: randomStationId(stations).id,
@@ -765,6 +773,7 @@ export const seedVessels = async function (
           connect: randomCapabilityArray(capabilities),
         },
         typeId: await randomVesselTypeId(),
+        inspectorId: await randomInspectorId(),
       },
     });
     vesselModels.push(vesselModel);

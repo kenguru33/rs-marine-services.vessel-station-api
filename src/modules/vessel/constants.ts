@@ -5,5 +5,9 @@ export const ALLOWED_INCLUDES = [
   'state.stateCategory',
   'station',
   'type',
+  'communicationEquipments',
+  'communicationEquipments.communicationEquipmentType',
+  'communicationEquipmentType',
+  'inspector',
 ];
 export const ALLOWED_FILTERS = ['name', 'rs', 'type', 'state', 'class'];

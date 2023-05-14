@@ -9,7 +9,7 @@ export class CreateVesselInspectorDto {
   phone: string;
 
   @IsEmail()
-  mail: string;
+  email: string;
 
   @IsDateString()
   fromDate: string;

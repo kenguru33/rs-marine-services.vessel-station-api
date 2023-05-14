@@ -12,7 +12,7 @@ export class UpdateVesselInspectorDto {
 
   @IsEmail()
   @IsOptional() 
-  mail?: string;
+  email?: string;
 
   @IsDateString()
   @IsOptional() 

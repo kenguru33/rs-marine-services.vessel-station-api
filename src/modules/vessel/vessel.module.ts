@@ -9,7 +9,9 @@ import { VesselClassController } from './vessel-class/vessel-class.controller';
 import { VesselCapabilityModule } from './modules/vessel-capability/vessel-capability.module';
 import { VesselStateModule } from './modules/vessel-state/vessel-state.module';
 import { VesselCommunicationEquipmentModule } from './modules/vessel-communication-equipment/vessel-communication-equipment.module';
-import { VesselEngineModule } from './vessel-engine/vessel-engine.module';
+import { VesselInspectorModule } from './modules/vessel-inspector/vessel-inspector.module';
+import { VesselMaintenanceModule } from './vessel-maintenance/vessel-maintenance.module';
+import { VesselCrewModule } from './modules/vessel-crew/vessel-crew.module';
 
 @Module({
   providers: [VesselService, VesselTypeService, VesselClassService],
@@ -19,7 +21,9 @@ import { VesselEngineModule } from './vessel-engine/vessel-engine.module';
     VesselCapabilityModule,
     VesselStateModule,
     VesselCommunicationEquipmentModule,
-    VesselEngineModule,
+    VesselInspectorModule,
+    VesselMaintenanceModule,
+    VesselCrewModule,
   ],
   exports: [],
 })

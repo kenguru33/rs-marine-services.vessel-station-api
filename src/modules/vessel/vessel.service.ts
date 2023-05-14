@@ -16,6 +16,11 @@ export type VesselWithRelation = Prisma.VesselGetPayload<{
       };
     };
     type?: true;
+    communicationEquipments?: {
+      include: {
+        type?: true;
+      };
+    };
   };
 }>;
 
@@ -54,12 +59,22 @@ export class VesselService {
   }
 
   create(data: CreateVesselDto): Promise<Vessel> {
-    const { name, rs, capabilityIds, classId, stationId, stateId, typeId } =
-      data;
+    const {
+      name,
+      rs,
+      capabilityIds,
+      classId,
+      stationId,
+      stateId,
+      typeId,
+      mmsi,
+      prefix,
+    } = data;
     const vessel = this.prisma.vessel.create({
       data: {
         name,
         rs,
+        mmsi,
         stateId: stateId,
         stationId: stationId,
         classId: classId,

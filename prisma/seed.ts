@@ -14,7 +14,7 @@ import { seedStationAgreementTypes } from './seed/seed-station-agreement-type';
 import { seedCommunicationEquipmentTypes } from './seed/seed-vessel-communication-equipment-type';
 import { seedStationAgreementCustomer } from './seed/seed-station-agreement-customer';
 import { seedCommunicationEquipment } from './seed/seed-vessel-communication-equipment';
-
+import { seedVesselInspectors } from './seed/seed-vessel-inspector';
 
 const prisma = new PrismaClient();
 async function main() {
@@ -54,6 +54,9 @@ async function main() {
   console.log('Seeding station agreement customers');
   const agreementCustomers = await seedStationAgreementCustomer();
 
+  console.log('Seeding vessel inspectors');
+  const inspectors = await seedVesselInspectors();
+
   console.log('Seeding vessels');
   const vessels = await seedVessels(capabilities, stations, classes);
 
@@ -63,6 +66,7 @@ async function main() {
   console.log('Seeding vessel communication equipment');
   const communicationEquipment = await seedCommunicationEquipment();
 
+  
 }
 
 main()
