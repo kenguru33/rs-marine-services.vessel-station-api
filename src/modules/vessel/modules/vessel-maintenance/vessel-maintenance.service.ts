@@ -10,11 +10,20 @@ export class VesselMaintenanceService {
   async getVesselMaintenance(id: number) {
     return await this.prisma.vesselMaintenance.findUniqueOrThrow({
       where: { id },
+      include: {
+        approvedBy: true,
+        Vessel: true,
+      },
     });
   }
 
   async getVesselMaintenances() {
-    return await this.prisma.vesselMaintenance.findMany();
+    return await this.prisma.vesselMaintenance.findMany({
+      include: {
+        approvedBy: true,
+        Vessel: true,
+      },
+    });
   }
 
   async createVesselMaintenance(data: CreateVesselMaintenanceDto) {
@@ -27,6 +36,10 @@ export class VesselMaintenanceService {
         fromDate: data.fromDate,
         toDate: data.toDate,
         Vessel: { connect: { id: data.vesselId } },
+      },
+      include: {
+        approvedBy: true,
+        Vessel: true,
       },
     });
   }

@@ -7,7 +7,8 @@ export class CreateVesselMaintenanceDto {
 
   @Max(100)
   @Min(0)
-  progress: number; // in percent
+  @IsOptional()
+  progress?: number; // in percent
 
   @IsString()
   responsible: string; // verksted, verft, etc
