@@ -28,12 +28,6 @@ export type VesselWithRelation = Prisma.VesselGetPayload<{
 export class VesselService {
   constructor(private prisma: PrismaService) {}
 
-  async getVesselByRs(rs: number): Promise<Vessel> {
-    return this.prisma.vessel.findFirstOrThrow({
-      where: { rs },
-    });
-  }
-
   async getVessel(id: number, include?: string): Promise<Vessel> {
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
       include,
