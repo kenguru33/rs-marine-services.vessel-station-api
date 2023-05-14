@@ -22,14 +22,12 @@ import { QueryVesselDto } from './dto/query-vessel.dto';
 import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 
+@UseInterceptors(VesselResponseTransformInterceptor)
 @Controller('vessel')
 export class VesselController {
   constructor(private vesselService: VesselService) {}
 
-  @UseInterceptors(
-    new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES),
-    VesselResponseTransformInterceptor,
-  )
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
   getVessel(
     @Param('id', ParseIntPipe) id: number,
@@ -40,7 +38,6 @@ export class VesselController {
 
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
-    VesselResponseTransformInterceptor,
   )
   @Get()
   getVessels(
@@ -49,17 +46,23 @@ export class VesselController {
     return this.vesselService.getVessels(query);
   }
 
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
-  createVessel(@Body() data: CreateVesselDto): Promise<Vessel> {
-    return this.vesselService.create(data);
+  createVessel(
+    @Body() data: CreateVesselDto,
+    @Query() query: QueryVesselDto,
+  ): Promise<Vessel> {
+    return this.vesselService.create(data, query);
   }
 
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
   updateVessel(
     @Body() data: UpdateVesselDto,
     @Param('id') id: number,
+    @Query() query: QueryVesselDto,
   ): Promise<Vessel> {
-    return this.vesselService.update(id, data);
+    return this.vesselService.update(id, data, query);
   }
 
   @Delete(':id')

@@ -58,7 +58,11 @@ export class VesselService {
     });
   }
 
-  create(data: CreateVesselDto) {
+  async create(data: CreateVesselDto, query: QueryVesselDto) {
+    const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
+      query.include,
+    );
+
     return this.prisma.vessel.create({
       data: {
         mmsi: data.mmsi,
@@ -85,8 +89,9 @@ export class VesselService {
           connect: data.inspectorIds
             ? data.inspectorIds.map((id) => ({ id }))
             : [],
-        }
+        },
       },
+      include: vesselInclude,
     });
 
     //   data: {
@@ -113,23 +118,44 @@ export class VesselService {
     // });
   }
 
-  async update(id: number, data: UpdateVesselDto): Promise<Vessel> {
-    const { name, rs, capabilityIds, classId, stateId, stationId } = data;
+  async update(
+    id: number,
+    data: UpdateVesselDto,
+    query: QueryVesselDto,
+  ): Promise<Vessel> {
+    const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
+      query.include,
+    );
     return this.prisma.vessel.update({
       where: { id },
       data: {
-        name: name,
-        rs: rs,
-        classId: classId,
-        stateId: stateId,
-        stationId: stationId,
+        mmsi: data.mmsi,
+        name: data.name,
+        rs: data.rs,
+        state: {
+          connect: { id: data.stateId },
+        },
+        station: {
+          connect: data.stationId ? { id: data.stationId } : undefined,
+        },
+        class: {
+          connect: data.classId ? { id: data.classId } : undefined,
+        },
         capabilities: {
-          set: capabilityIds && capabilityIds.map((id) => ({ id })),
+          connect: data.capabilityIds
+            ? data.capabilityIds.map((id) => ({ id }))
+            : [],
+        },
+        type: {
+          connect: data.typeId ? { id: data.typeId } : undefined,
         },
         inspectors: {
-          set: data.inspectorIds && data.inspectorIds.map((id) => ({ id })),
+          connect: data.inspectorIds
+            ? data.inspectorIds.map((id) => ({ id }))
+            : [],
         },
       },
+      include: vesselInclude,
     });
   }
 
