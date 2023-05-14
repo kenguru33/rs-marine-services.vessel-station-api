@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVesselDto } from './dto/createVessel.dto';
-import { UpdateVesselDto } from './dto/updateVessel.dto';
 import { Prisma, Vessel } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
+import { CreateVesselDto } from './dto/createVessel.dto';
 import { QueryVesselDto } from './dto/query-vessel.dto';
+import { UpdateVesselDto } from './dto/updateVessel.dto';
 
 export type VesselWithRelation = Prisma.VesselGetPayload<{
   include: {
@@ -87,29 +87,6 @@ export class VesselService {
       },
       include: vesselInclude,
     });
-
-    //   data: {
-    //     name,
-    //     rs,
-    //     mmsi,
-    //     state: {
-    //       connect: { id: stateId },
-    //     },
-    //     station: {
-    //       connect: stationId ? { id: stationId } : undefined,
-    //     },
-    //     class: {
-    //       connect: classId ? { id: classId } : undefined,
-    //     },
-    //     capabilities: {
-    //       connect: capabilityIds ? capabilityIds.map((id) => ({ id })) : [],
-    //     },
-    //     typeId: typeId,
-    //     inspectors: {
-    //       connect: inspectorIds ? inspectorIds.map((id) => ({ id })) : [],
-    //     },
-    //   }
-    // });
   }
 
   async update(
@@ -158,50 +135,4 @@ export class VesselService {
       where: { id },
     });
   }
-
-  // async addCapability(params: {
-  //   vesselId: number;
-  //   capabilityId: number;
-  // }): Promise<Vessel> {
-  //   const { vesselId, capabilityId } = params;
-  //   return this.prisma.vessel.update({
-  //     where: { id: vesselId },
-  //     data: {
-  //       capabilities: {
-  //         connect: { id: capabilityId },
-  //       },
-  //     },
-  //     include: {
-  //       capabilities: true,
-  //       class: true,
-  //       station: true,
-  //       subState: {
-  //         include: { parentState: true },
-  //       },
-  //     },
-  //   });
-  // }
-
-  // async removeCapability(params: {
-  //   vesselId: number;
-  //   capabilityId: number;
-  // }): Promise<Vessel> {
-  //   const { vesselId, capabilityId } = params;
-  //   return this.prisma.vessel.update({
-  //     where: { id: vesselId },
-  //     data: {
-  //       capabilities: {
-  //         disconnect: { id: capabilityId },
-  //       },
-  //     },
-  //     include: {
-  //       capabilities: true,
-  //       class: true,
-  //       station: true,
-  //       subState: {
-  //         include: { parentState: true },
-  //       },
-  //     },
-  //   });
-  // }
 }
