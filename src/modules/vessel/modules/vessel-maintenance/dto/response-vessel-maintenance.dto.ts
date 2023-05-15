@@ -1,4 +1,4 @@
-import { Expose, Type } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { ResponseVesselDto } from '../../../dto/response-vessel.dto';
 import { ResponseVesselInspectorDto } from '../../vessel-inspector/dto/response-vessel-inspector.dto';
 

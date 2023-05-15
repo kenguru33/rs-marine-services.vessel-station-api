@@ -7,12 +7,19 @@ export class VesselMaintenanceApproverService {
   constructor(private prisma: PrismaService) {}
 
   async getVesselMaintenanceApprovers() {
-    return await this.prisma.vesselMaintenanceApprover.findMany();
+    return await this.prisma.vesselMaintenanceApprover.findMany({
+      include: {
+        maintenances: true,
+      },
+    });
   }
 
   async getVesselMaintenanceApprover(id: number) {
     return await this.prisma.vesselMaintenanceApprover.findUnique({
       where: { id },
+      include: {
+        maintenances: true,
+      },
     });
   }
 
@@ -24,9 +31,9 @@ export class VesselMaintenanceApproverService {
         name: data.name,
         email: data.email,
         phone: data.phone,
-        maintenance: {
-          connect: data.maintenanceId ? { id: data.maintenanceId } : undefined,
-        },
+      },
+      include: {
+        maintenances: true,
       },
     });
   }
@@ -41,9 +48,9 @@ export class VesselMaintenanceApproverService {
         name: data.name,
         email: data.email,
         phone: data.phone,
-        maintenance: {
-          connect: { id: data.maintenanceId },
-        },
+      },
+      include: {
+        maintenances: true,
       },
     });
   }

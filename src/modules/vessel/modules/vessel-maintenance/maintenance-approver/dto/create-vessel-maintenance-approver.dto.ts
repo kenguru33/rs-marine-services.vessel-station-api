@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsOptional, IsPhoneNumber, IsString } from "class-validator";
+import { IsArray, IsEmail, IsNumber, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreateVesselMaintenanceApproverDto {
     @IsString()
@@ -9,8 +9,4 @@ export class CreateVesselMaintenanceApproverDto {
 
     @IsPhoneNumber('NO')
     phone: string;
-
-    @IsNumber()
-    @IsOptional()
-    maintenanceId?: number;
 }

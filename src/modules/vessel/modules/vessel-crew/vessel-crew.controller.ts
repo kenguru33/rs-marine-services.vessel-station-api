@@ -13,11 +13,12 @@ import {
 import { VesselCrewService } from './vessel-crew.service';
 import { CreateVesselCrewDto } from './dto/create-vessel-crew.dto';
 import { UpdateVesselCrewDto } from './dto/update-vessel-crew.dto';
-import { VesselCapabilityResponseTransformInterceptor } from './interceptors/vessel-crew-response-transform.interceptor';
 import { QueryParamsValidatorInterceptor } from '../../../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_INCLUDES, ALLOWED_FILTERS } from './contstants';
 import { QueryVesselCrewDto } from './dto/query-vessel-crew.dto';
-@UseInterceptors(VesselCapabilityResponseTransformInterceptor)
+import { VesselCrewResponseTransformInterceptor } from './interceptors/vessel-crew-response-transform.interceptor';
+
+@UseInterceptors(VesselCrewResponseTransformInterceptor)
 @Controller('vessel-crew')
 export class VesselCrewController {
   constructor(private vesselCrewService: VesselCrewService) {}

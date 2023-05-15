@@ -10,7 +10,7 @@ import { ResponseVesselDto } from '../../../dto/response-vessel.dto';
 import { VesselCrewResponseDto } from '../dto/response-vessel-crew.dto';
 
 @Injectable()
-export class VesselCapabilityResponseTransformInterceptor
+export class VesselCrewResponseTransformInterceptor
   implements NestInterceptor
 {
   intercept(

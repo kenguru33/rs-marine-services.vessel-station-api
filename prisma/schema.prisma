@@ -162,23 +162,22 @@ model VesselMaintenance {
   fromDate DateTime
   toDate   DateTime
 
-  Vessel     Vessel                      @relation(fields: [vesselId], references: [id])
-  vesselId   Int
-  approvedBy VesselMaintenanceApprover[]
+  vessel       Vessel                    @relation(fields: [vesselId], references: [id])
+  vesselId     Int
+  approvedBy   VesselMaintenanceApprover @relation(fields: [approvedById], references: [id])
+  approvedById Int
 
   @@index([vesselId])
+  @@index([approvedById])
 }
 
 model VesselMaintenanceApprover {
   id    Int    @id @default(autoincrement())
-  name  String
+  name  String @unique
   email String
   phone String
 
-  maintenance   VesselMaintenance? @relation(fields: [maintenanceId], references: [id])
-  maintenanceId Int?
-
-  @@index([maintenanceId])
+  maintenances VesselMaintenance[]
 }
 
 model VesselCrew {

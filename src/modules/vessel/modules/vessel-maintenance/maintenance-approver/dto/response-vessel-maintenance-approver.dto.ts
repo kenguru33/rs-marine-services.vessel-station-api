@@ -1,5 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { ResponseVesselDto } from '../../../../dto/response-vessel.dto';
+import { ResponseVesselMaintenanceDto } from '../../dto/response-vessel-maintenance.dto';
 
 export class ResponseVesselMaintenanceApproverDto {
   @Expose()
@@ -11,7 +12,7 @@ export class ResponseVesselMaintenanceApproverDto {
   @Expose()
   title: string;
 
-  @Type(() => ResponseVesselDto)
+  @Type(() => ResponseVesselMaintenanceDto)
   @Expose()
-  vessel: ResponseVesselDto;
+  maintenances: ResponseVesselMaintenanceDto[];
 }

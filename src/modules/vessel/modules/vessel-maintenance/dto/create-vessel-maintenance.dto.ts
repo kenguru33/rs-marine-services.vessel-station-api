@@ -14,7 +14,7 @@ export class CreateVesselMaintenanceDto {
   responsible: string; // verksted, verft, etc
 
   @IsNumber()
-  approvedByInspectorId: number; // id of inspector
+  approvedById: number; // id of inspector
 
   @IsDateString()
   fromDate: Date;
