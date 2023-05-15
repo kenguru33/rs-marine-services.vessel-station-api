@@ -19,7 +19,10 @@ import { StationResponseTransformInterceptor } from './interceptors/station-resp
 import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { QueryStationDto } from './dto/query-station.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('station')
+@UseInterceptors(StationResponseTransformInterceptor)
 @Controller('station')
 export class StationController {
   constructor(private stationsService: StationService) {}

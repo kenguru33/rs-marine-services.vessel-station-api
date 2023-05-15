@@ -21,7 +21,9 @@ import { VesselService, VesselWithRelation } from './vessel.service';
 import { QueryVesselDto } from './dto/query-vessel.dto';
 import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('vessel')
 @UseInterceptors(VesselResponseTransformInterceptor)
 @Controller('vessel')
 export class VesselController {

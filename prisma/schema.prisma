@@ -41,6 +41,7 @@ model Vessel {
 
   maintenances VesselMaintenance[]
 
+  VesselCrew VesselCrew[]
   // // buildinfo
   //   buildYear         Int?
   //   inOperationFrom   DateTime?
@@ -170,6 +171,16 @@ model VesselMaintenance {
 
   @@index([vesselId])
   @@index([inspectorId])
+}
+
+model VesselCrew {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  title    String?
+  vesselId Int?
+  vessel   Vessel? @relation(fields: [vesselId], references: [id])
+
+  @@index([vesselId])
 }
 
 model Station {
