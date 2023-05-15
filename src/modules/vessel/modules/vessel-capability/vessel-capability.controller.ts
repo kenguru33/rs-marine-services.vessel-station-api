@@ -12,15 +12,14 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { VesselCapabilityService } from './vessel-capabilities.service';
-import { CreateVesselCapabilityDto } from './dto/createVesselCapability.dto';
-import { UpdateVesselCapabilityDto } from './dto/updateVesselCapability.dto';
 import { Prisma, VesselCapability } from '@prisma/client';
-import { VesselResponseTransformInterceptor } from '../../interceptors/vessel-response-transform.interceptor';
-import { VesselCapabilityResponseTransformInterceptor } from './interceptors/vessel-capability-response-transform.interceptor';
-import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { QueryParamsValidatorInterceptor } from '../../../../shared/interceptors/query-params-validator.interceptor';
+import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
+import { CreateVesselCapabilityDto } from './dto/createVesselCapability.dto';
 import { QueryVesselCapabilityDto } from './dto/query-vessel-capability.dto';
+import { UpdateVesselCapabilityDto } from './dto/updateVesselCapability.dto';
+import { VesselCapabilityResponseTransformInterceptor } from './interceptors/vessel-capability-response-transform.interceptor';
+import { VesselCapabilityService } from './vessel-capabilities.service';
 
 @UseInterceptors(VesselCapabilityResponseTransformInterceptor)
 @Controller('vessel-capability')
