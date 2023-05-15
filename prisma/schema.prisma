@@ -146,12 +146,11 @@ model VesselCommunicationEquipmentType {
 }
 
 model VesselInspector {
-  id                Int                 @id @default(autoincrement())
-  name              String              @unique
-  phone             String              @unique
-  email             String              @unique
-  vessels           Vessel[]
-  VesselMaintenance VesselMaintenance[]
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  phone   String   @unique
+  email   String   @unique
+  vessels Vessel[]
 }
 
 model VesselMaintenance {
@@ -160,17 +159,26 @@ model VesselMaintenance {
   progress    Int    @default(0)
   responsible String // who is responsible for the maintenance
 
-  approvedBy  VesselInspector @relation(fields: [inspectorId], references: [id])
-  inspectorId Int
-
   fromDate DateTime
   toDate   DateTime
 
-  Vessel   Vessel @relation(fields: [vesselId], references: [id])
-  vesselId Int
+  Vessel     Vessel                      @relation(fields: [vesselId], references: [id])
+  vesselId   Int
+  approvedBy VesselMaintenanceApprover[]
 
   @@index([vesselId])
-  @@index([inspectorId])
+}
+
+model VesselMaintenanceApprover {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String
+  phone String
+
+  maintenance   VesselMaintenance? @relation(fields: [maintenanceId], references: [id])
+  maintenanceId Int?
+
+  @@index([maintenanceId])
 }
 
 model VesselCrew {
