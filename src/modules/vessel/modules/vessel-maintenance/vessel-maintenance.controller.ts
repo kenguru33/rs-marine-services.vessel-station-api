@@ -16,7 +16,7 @@ import { UpdateVesselMaintenanceDto } from './dto/update-vessel-maintenance.dto'
 import { ALLOWED_INCLUDES, ALLOWED_FILTERS } from './constant';
 import { QueryVesselMaintenancepDto } from './dto/query-vessel-maintenance.dto';
 import { QueryParamsValidatorInterceptor } from '../../../../shared/interceptors/query-params-validator.interceptor';
-import { VesselMaintenanceInterceptor } from './interceptors/vessel-maintenance.interceptor.dto';
+import { VesselMaintenanceInterceptor } from './interceptors/vessel-maintenance.interceptor';
 
 @UseInterceptors(VesselMaintenanceInterceptor)
 @Controller('vessel-maintenance')

@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../database/prisma.service';
 import { UpdateVesselInspectorDto } from './dto/update-vessel-inspector.dto';
 import { CreateVesselInspectorDto } from './dto/create-vessel-inspector.dto';
+import { QueryVesselInspectorDto } from './dto/query-vessel-inspector.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class VesselInspectorService {
@@ -13,11 +15,28 @@ export class VesselInspectorService {
     });
   }
 
-  async getVesselInspectors() {
-    return await this.prisma.vesselInspector.findMany();
+  async getVesselInspectors(query: QueryVesselInspectorDto) {
+    const { include, ...filter } = query;
+    const vesselInspectorInlcudes =
+      await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(include);
+    return await this.prisma.vesselInspector.findMany({
+      where: {
+        name: {
+          contains: filter.name,
+        },
+      },
+      include: vesselInspectorInlcudes,
+    });
   }
 
-  async createVesselInspector(data: CreateVesselInspectorDto) {
+  async createVesselInspector(
+    data: CreateVesselInspectorDto,
+    query: QueryVesselInspectorDto,
+  ) {
+    const vesselInspectorInlcudes =
+      await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(
+        query.include,
+      );
     return await this.prisma.vesselInspector.create({
       data: {
         vessels: {
@@ -28,13 +47,19 @@ export class VesselInspectorService {
 
         ...data,
       },
-      include: {
-        vessels: true,
-      },
+      include: vesselInspectorInlcudes,
     });
   }
 
-  async updateVesselInspector(id: number, data: UpdateVesselInspectorDto) {
+  async updateVesselInspector(
+    id: number,
+    data: UpdateVesselInspectorDto,
+    query: QueryVesselInspectorDto,
+  ) {
+    const vesselInspectorInlcudes =
+      await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(
+        query.include,
+      );
     return await this.prisma.vesselInspector.update({
       where: { id },
       data: {
@@ -43,6 +68,7 @@ export class VesselInspectorService {
         },
         ...data,
       },
+      include: vesselInspectorInlcudes,
     });
   }
 
