@@ -1,6 +1,6 @@
 import { Expose, Type } from 'class-transformer';
 import { ResponseVesselClassDto } from '../vessel-class/dto/response-vessel-class.dto';
-import { ResponseVessselTypeDto } from '../vessel-type/dto/response-vessel-type.dto';
+import { ResponseVesselTypeDto } from '../vessel-type/dto/response-vessel-type.dto';
 import { ResponseVesselStateDto } from '../modules/vessel-state/dto/response-vessel-state.dto';
 import { ResponseVesselCapabilityDto } from '../modules/vessel-capability/dto/response-vessel-capability.dto';
 import { ResponseStationDto } from '../../station/dto/response-station.dto';
@@ -44,9 +44,9 @@ export class ResponseVesselDto {
 
   typeId: number;
 
-  @Type(() => ResponseVessselTypeDto)
+  @Type(() => ResponseVesselTypeDto)
   @Expose()
-  type: ResponseVessselTypeDto;
+  type: ResponseVesselTypeDto;
 
   capabilityIds: number[];
 

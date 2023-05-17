@@ -1,6 +1,7 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ResponseVesselDto } from '../../dto/response-vessel.dto';
 
-export class ResponseVessselTypeDto {
+export class ResponseVesselTypeDto {
   @Expose()
   id: number;
 
@@ -12,4 +13,8 @@ export class ResponseVessselTypeDto {
 
   @Expose()
   description?: string;
+
+  @Type(() => ResponseVesselDto)
+  @Expose()
+  vessels: ResponseVesselDto[];
 }
