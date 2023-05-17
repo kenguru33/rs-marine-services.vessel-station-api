@@ -82,8 +82,6 @@ export const seedVesselClasses = async function () {
       update: {},
       create: {
         name: vesselClass.name,
-        range: vesselClass.range,
-        speed: vesselClass.speed,
       },
     });
     vesselClassModels.push(vesselClassModel);

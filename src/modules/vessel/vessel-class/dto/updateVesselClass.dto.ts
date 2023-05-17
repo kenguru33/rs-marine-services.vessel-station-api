@@ -5,10 +5,8 @@ export class UpdateVesselClassDto {
   @IsNotEmpty()
   @IsOptional()
   name?: string;
-  @IsNumber()
+  
+  @IsString()
   @IsOptional()
-  range?: number; // in nautical miles
-  @IsNumber()
-  @IsOptional()
-  speed?: number; // in knots
+  description?: string;
 }

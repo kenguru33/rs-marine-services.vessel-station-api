@@ -118,11 +118,10 @@ model VesselCapability {
 }
 
 model VesselClass {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
-  range   Int
-  speed   Int
-  vessels Vessel[]
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  vessels     Vessel[]
 }
 
 model VesselCommunicationEquipment {
