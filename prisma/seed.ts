@@ -1,223 +1,74 @@
 import { PrismaClient } from '@prisma/client';
+import { seedCapabilities } from './seed/seed-capability';
+import { seedVesselClasses } from './seed/seed-class';
+import { seedStateCategories } from './seed/seed-state-category';
+import { seedStations } from './seed/seed-station';
+import { seedVessels } from './seed/seed-vessel';
+import { seedStationAccommodationTypes } from './seed/seed-station-accommodation-type';
+import { seedStationPierTypes } from './seed/seed-station-pier-type';
+import { seedStationTypes } from './seed/seed-station-type';
+import { seedVesselTypes } from './seed/seed-vessel-type';
+import { seedStationPier } from './seed/seed-station-pier';
+import { seedStationAccommodation } from './seed/seed-station-accommodation';
+import { seedStationAgreementTypes } from './seed/seed-station-agreement-type';
+import { seedCommunicationEquipmentTypes } from './seed/seed-vessel-communication-equipment-type';
+import { seedStationAgreementCustomer } from './seed/seed-station-agreement-customer';
+import { seedCommunicationEquipment } from './seed/seed-vessel-communication-equipment';
+import { seedVesselInspectors } from './seed/seed-vessel-inspector';
+
 const prisma = new PrismaClient();
 async function main() {
-  const operativ = await prisma.vesselState.upsert({
-    where: { name: 'Operativ' },
-    update: {},
-    create: {
-      description: 'Status hovedkategori',
-      name: 'Operativ',
-      subStates: {
-        create: [
-          {
-            description: 'Operativ status underkategori',
-            name: 'Ledig på base',
-          },
-          {
-            description: 'Operativ status underkategori',
-            name: 'Ledig på patrulje',
-          },
-        ],
-      },
-    },
-  });
 
-  const operativSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: operativ.id } },
-  });
+  // seed lookup types and objects
+  console.log('Seeding capabilities');
+  const capabilities = await seedCapabilities();
 
-  const uad = await prisma.vesselState.upsert({
-    where: { name: 'UAD' },
-    update: {},
-    create: {
-      description: 'Status hovedkategori',
-      name: 'UAD',
-      subStates: {
-        create: [
-          {
-            description: 'UAD status underkategori',
-            name: 'Verksted',
-          },
-          {
-            description: 'UAD status underkategori',
-            name: 'Mannskap',
-          },
-        ],
-      },
-    },
-  });
+  console.log('Seeding vessel classes');
+  const classes = await seedVesselClasses();
 
-  const uadSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: uad.id } },
-  });
+  console.log('Seeding vessel state categories');
+  const stateCategories = await seedStateCategories();
 
-  const beredskap = await prisma.vesselState.upsert({
-    where: { name: 'Beredskap' },
-    update: {},
-    create: {
-      description: 'Status hovedkategori',
-      name: 'Beredskap',
-      subStates: {
-        create: [
-          {
-            description: 'Beredskap status underkategori',
-            name: '30 min. forberedelsestid',
-          },
-          {
-            description: 'Beredskap status underkategori',
-            name: '60 min. forberedelsestid',
-          },
-        ],
-      },
-    },
-  });
+  console.log('Seeding station accommodation types');
+  const accommodationTypes = await seedStationAccommodationTypes();
 
-  const beredskaoSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: beredskap.id } },
-  });
+  console.log('Seeding station pier types');
+  const pierTypes = await seedStationPierTypes();
 
-  const historisk = await prisma.vesselState.upsert({
-    where: { name: 'Historisk' },
-    update: {},
-    create: {
-      description: 'Status hovedkategori',
-      name: 'Historisk',
-      subStates: {
-        create: [
-          {
-            description: 'Historisk status underkategori',
-            name: 'Solg',
-          },
-          {
-            description: 'Status underkategori',
-            name: 'Makulert/utgått',
-          },
-        ],
-      },
-    },
-  });
+  console.log('Seeding station types');
+  const stationTypes = await seedStationTypes();
 
-  const historiskSubStates = await prisma.vesselSubState.findMany({
-    where: { parentState: { id: historisk.id } },
-  });
+  console.log('Seeding vessel types');
+  const vesselTypes = await seedVesselTypes();
 
-  console.log({ operativ, uad, beredskap, historisk });
+  console.log('Seeding station agreement types');
+  const agreementTypes = await seedStationAgreementTypes();
 
-  const staffClass = await prisma.vesselClass.upsert({
-    where: { name: 'Staff klassen' },
-    update: {},
-    create: {
-      name: 'Staff klassen',
-      range: 30,
-      speed: 45,
-    },
-  });
+  console.log('Seeding vessel communication equipment types');
+  const communicationEquipmentTypes = await seedCommunicationEquipmentTypes();
 
-  const ankerClass = await prisma.vesselClass.upsert({
-    where: { name: 'Anker klassen' },
-    update: {},
-    create: {
-      name: 'Anker klassen',
-      range: 80,
-      speed: 60,
-    },
-  });
+  // concrete objects
+  // console.log('Seeding stations');
+  // const stations = await seedStations();
 
-  console.log({ staffClass, ankerClass });
+  // console.log('Seeding station piers');
+  // const piers = await seedStationPier();
 
-  const capabilityDykker = await prisma.vesselCapability.upsert({
-    where: { name: 'Dykker' },
-    update: {},
-    create: {
-      name: 'Dykker',
-      description: 'Dykker ombord',
-    },
-  });
+  // console.log('Seeding station accommodations');
+  // const accommodations = await seedStationAccommodation();
 
-  const capabilitySøk = await prisma.vesselCapability.upsert({
-    where: { name: 'Søk' },
-    update: {},
-    create: {
-      name: 'Søk',
-      description: 'Søk med termisk kamera',
-    },
-  });
+  // console.log('Seeding station agreement customers');
+  // const agreementCustomers = await seedStationAgreementCustomer();
 
-  const capabilityDrone = await prisma.vesselCapability.upsert({
-    where: { name: 'Drone' },
-    update: {},
-    create: {
-      name: 'Drone',
-      description: 'Drone ombord',
-    },
-  });
+  // console.log('Seeding vessel inspectors');
+  // const inspectors = await seedVesselInspectors();
 
-  console.log({ capabilityDykker, capabilitySøk, capabilityDrone });
+  // console.log('Seeding vessels');
+  // const vessels = await seedVessels(capabilities, stations, classes);
 
-  const stationStavern = await prisma.station.upsert({
-    where: { name: 'Stavern' },
-    update: {},
-    create: {
-      name: 'Stavern',
-    },
-  });
+  // console.log('Seeding vessel communication equipment');
+  // const communicationEquipment = await seedCommunicationEquipment();
 
-  const stationHorten = await prisma.station.upsert({
-    where: { name: 'Horten' },
-    update: {},
-    create: {
-      name: 'Horten',
-    },
-  });
-
-  console.log({ stationStavern, stationHorten });
-
-  const vessel1 = await prisma.vessel.upsert({
-    where: { name: 'RS Bernt Anker' },
-    update: {},
-    create: {
-      rs: 180,
-      name: 'RS Bernt Anker',
-      classId: ankerClass.id,
-      stationId: stationStavern.id,
-      subStateId: operativSubStates[0].id,
-      capabilities: {
-        connect: [{ id: capabilityDykker.id }, { id: capabilitySøk.id }],
-      },
-    },
-  });
-
-  const vessel2 = await prisma.vessel.upsert({
-    where: { name: 'RS Elias' },
-    update: {},
-    create: {
-      rs: 168,
-      name: 'RS Elias',
-      classId: staffClass.id,
-      stationId: stationHorten.id,
-      subStateId: uadSubStates[0].id,
-      capabilities: {
-        connect: [{ id: capabilityDykker.id }, { id: capabilityDrone.id }],
-      },
-    },
-  });
-
-  const vessel3 = await prisma.vessel.upsert({
-    where: { name: 'RS Hvaler' },
-    update: {},
-    create: {
-      rs: 124,
-      name: 'RS Hvaler',
-      classId: staffClass.id,
-      stationId: stationHorten.id,
-      subStateId: beredskaoSubStates[1].id,
-      capabilities: {
-        connect: [{ id: capabilityDykker.id }],
-      },
-    },
-  });
-
-  console.log({ vessel1, vessel2 });
 }
 
 main()

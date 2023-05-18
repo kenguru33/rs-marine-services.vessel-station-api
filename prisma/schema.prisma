@@ -8,63 +8,318 @@ generator client {
 generator erd {
   provider                  = "prisma-erd-generator"
   includeRelationFromFields = true
+  theme                     = "forest"
 }
 
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Vessel {
-  id           Int                @id @default(autoincrement())
-  name         String             @unique
-  rs           Int                @unique
-  station      Station?           @relation(fields: [stationId], references: [id])
-  stationId    Int?
-  capabilities VesselCapability[]
-  class        VesselClass        @relation(fields: [classId], references: [id])
-  classId      Int
-  subState     VesselSubState     @relation(fields: [subStateId], references: [id])
-  subStateId   Int
+  id                      Int                            @id @default(autoincrement())
+  name                    String                         @unique
+  rs                      Int                            @unique
+  mmsi                    Int                            @unique
+  station                 Station?                       @relation(fields: [stationId], references: [id])
+  stationId               Int?
+  capabilities            VesselCapability[]
+  class                   VesselClass                    @relation(fields: [classId], references: [id])
+  classId                 Int
+  state                   VesselState                    @relation(fields: [stateId], references: [id])
+  stateId                 Int
+  type                    VesselType                     @relation(fields: [typeId], references: [id])
+  typeId                  Int
+  communicationEquipments VesselCommunicationEquipment[]
+  inspectors              VesselInspector[]
+
+  maintenances VesselMaintenance[]
+
+  VesselCrew VesselCrew[]
+  // // buildinfo
+  //   buildYear         Int?
+  //   inOperationFrom   DateTime?
+  //   inOperationTo     DateTime?
+  //   constrctor        String?
+  //   salesOrganization String?
+  //   buildingMaterial  String?
+  //   financedBy        String?
+  //   dnvClass          String?
+
+  // // dimensions
+  //   maxSpeed       Int?
+  //   cruisingSpeed  Int?
+  //   range          Int?
+  //   length         Int?
+  //   beam           Int?
+  //   draft          Int?
+  //   bunkerOil      Int?
+  //   ballastTank    Int?
+  //   freshWaterTank Int?
+  //   bollbadPull    Int?
+  //   towingHook     Boolean?
+  //   tonnageGross   Int?
+  //   tonnageNet     Int?
+
+  // // motor and propeller
+  //   mainEngine      String?
+  //   secondaryEngine String?
+  //   gear            String?
+  //   waterJet        Boolean?
+  //   proppellers     Boolean?
+  //   bowThruster     Boolean?
+
+  @@index([typeId])
+  @@index([stationId])
+  @@index([classId])
+  @@index([stateId])
+}
+
+model VesselType {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  prefix      String   @default("RS")
+  description String?
+  vessels     Vessel[]
+}
+
+model VesselStateCategory {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  description String?
+  inUse       Boolean       @default(true)
+  states      VesselState[]
 }
 
 model VesselState {
-  id            Int              @id @default(autoincrement())
-  name          String           @unique
-  description   String?
-  legacyStateId Int?             @unique
-  inUse         Boolean          @default(true)
-  subStates     VesselSubState[]
-}
+  id              Int                 @id @default(autoincrement())
+  name            String              @unique
+  description     String?
+  inUse           Boolean             @default(true)
+  stateCategory   VesselStateCategory @relation(fields: [stateCategoryId], references: [id])
+  stateCategoryId Int
+  vessels         Vessel[]
 
-model VesselSubState {
-  id            Int         @id @default(autoincrement())
-  name          String      @unique
-  description   String?
-  legacyStateId Int?        @unique
-  inUse         Boolean     @default(true)
-  parentState   VesselState @relation(fields: [parentStateId], references: [id])
-  parentStateId Int
-  Vessels       Vessel[]
+  @@index([stateCategoryId])
 }
 
 model VesselCapability {
+  id                Int                @id @default(autoincrement())
+  name              String             @unique
+  description       String?
+  vessels           Vessel[]
+  stationAgreements StationAgreement[]
+}
+
+model VesselClass {
   id          Int      @id @default(autoincrement())
   name        String   @unique
   description String?
   vessels     Vessel[]
 }
 
-model VesselClass {
+model VesselCommunicationEquipment {
+  id            Int                              @id @default(autoincrement())
+  type          VesselCommunicationEquipmentType @relation(fields: [typeId], references: [id])
+  typeId        Int
+  description   String?
+  numberOfUnits Int
+  vessel        Vessel                           @relation(fields: [vesselId], references: [id])
+  vesselId      Int
+
+  @@index([typeId])
+  @@index([vesselId])
+}
+
+model VesselCommunicationEquipmentType {
+  id                     Int                            @id @default(autoincrement())
+  name                   String                         @unique
+  description            String?
+  communicationEquipment VesselCommunicationEquipment[]
+}
+
+model VesselInspector {
   id      Int      @id @default(autoincrement())
   name    String   @unique
-  range   Int
-  speed   Int
+  phone   String   @unique
+  email   String   @unique
   vessels Vessel[]
 }
 
+model VesselMaintenance {
+  id          Int    @id @default(autoincrement())
+  description String
+  progress    Int    @default(0)
+  responsible String // who is responsible for the maintenance
+
+  fromDate DateTime
+  toDate   DateTime
+
+  vessel       Vessel                    @relation(fields: [vesselId], references: [id])
+  vesselId     Int
+  approvedBy   VesselMaintenanceApprover @relation(fields: [approvedById], references: [id])
+  approvedById Int
+
+  @@index([vesselId])
+  @@index([approvedById])
+}
+
+model VesselMaintenanceApprover {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  email String
+  phone String
+
+  maintenances VesselMaintenance[]
+}
+
+model VesselCrew {
+  id       Int     @id @default(autoincrement())
+  name     String  @unique
+  title    String?
+  vesselId Int?
+  vessel   Vessel? @relation(fields: [vesselId], references: [id])
+
+  @@index([vesselId])
+}
+
 model Station {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
-  vessels Vessel[]
+  id             Int                   @id @default(autoincrement())
+  name           String                @unique
+  vessels        Vessel[]
+  tilFelt        String?
+  address        String
+  postalCode     String
+  postalLocation String
+  postalBox      Int?
+  postalDelivery String?
+  latitude       Float
+  longitude      Float
+  type           StationType           @relation(fields: [typeId], references: [id])
+  typeId         Int
+  agreements     StationAgreement[]
+  accommodation  StationAccommodation?
+  pier           StationPier?
+
+  @@index([typeId])
+}
+
+model StationType {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  stations    Station[]
+}
+
+model StationAccommodation {
+  id             Int                      @id @default(autoincrement())
+  type           StationAccommodationType @relation(fields: [typeId], references: [id])
+  typeId         Int
+  description    String?
+  address        String
+  postalCode     String
+  postalLocation String
+  postalBox      Int?
+  latitude       Float
+  longitude      Float
+  stationId      Int                      @unique
+  station        Station                  @relation(fields: [stationId], references: [id])
+
+  @@index([typeId])
+}
+
+model StationAccommodationType {
+  id             Int                    @id @default(autoincrement())
+  name           String                 @unique
+  description    String?
+  accommodations StationAccommodation[]
+}
+
+model StationPier {
+  id           Int                        @id @default(autoincrement())
+  length       Int
+  width        Int
+  minimumDepth Int
+  type         StationPierType?           @relation(fields: [typeId], references: [id])
+  typeId       Int?
+  floating     Boolean                    @default(false)
+  electricity  StationPierElictrityType[]
+  diesel       Boolean                    @default(false)
+  petrol       Boolean                    @default(false)
+  storageSpace Boolean                    @default(false)
+  coldWater    Boolean                    @default(false)
+  hotWater     Boolean                    @default(false)
+  stationId    Int                        @unique
+  station      Station                    @relation(fields: [stationId], references: [id])
+
+  @@index([typeId])
+}
+
+model StationPierType {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  description String?
+  stationPier StationPier[]
+}
+
+model StationPierElictrityType {
+  id            Int          @id @default(autoincrement())
+  name          String
+  description   String?
+  stationPier   StationPier? @relation(fields: [stationPierId], references: [id])
+  stationPierId Int?
+
+  @@index([stationPierId])
+}
+
+model StationAgreement {
+  id                     Int                      @id @default(autoincrement())
+  startDate              DateTime?
+  endDate                DateTime?
+  customer               StationAgreementCustomer @relation(fields: [customerId], references: [id])
+  customerId             Int
+  stations               Station[]
+  deliveryObligation     Boolean?                 @default(false)
+  callOutTimeRequirement Int?                     @default(0)
+  description            String?
+  capabilities           VesselCapability[]
+  type                   StationAgreementType     @relation(fields: [typeId], references: [id])
+  typeId                 Int
+
+  @@index([customerId])
+  @@index([typeId])
+}
+
+model StationAgreementCustomer {
+  id          Int                               @id @default(autoincrement())
+  name        String                            @unique
+  description String?
+  contacts    StationAgreementCustomerContact[]
+  agreements  StationAgreement[]
+}
+
+model StationAgreementType {
+  id          Int                @id @default(autoincrement())
+  name        String             @unique
+  description String?
+  agreements  StationAgreement[]
+
+  @@index([name])
+}
+
+model StationAgreementCustomerContact {
+  id         Int                       @id @default(autoincrement())
+  onCall     Boolean                   @default(false)
+  phone      String?                   @unique
+  email      String?                   @unique
+  customer   StationAgreementCustomer? @relation(fields: [customerId], references: [id])
+  customerId Int
+
+  @@index([customerId])
 }

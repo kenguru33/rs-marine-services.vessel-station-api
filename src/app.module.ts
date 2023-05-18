@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { VesselsModule } from './vessels/vessels.module';
-import { StationsModule } from './stations/stations.module';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
-import { VesselCapabilitiesModule } from './vessel-capabilities/vessel-capabilities.module';
-import { VesselClassesModule } from './vessel-classes/vessel-classes.module';
-import { VesselStatesModule } from './vessel-states/VesselStates.module';
+import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+import { VesselModule } from './modules/vessel/vessel.module';
+import { StationModule } from './modules/station/station.module';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
@@ -12,8 +11,13 @@ import { DatabaseModule } from './database/database.module';
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
     }),
-    VesselsModule,
-    StationsModule
+    VesselModule,
+    StationModule,
+    // GraphQLModule.forRoot<ApolloDriverConfig>({
+    //   driver: ApolloDriver,
+    //   playground: true,
+    //   autoSchemaFile: true,
+    // }),
   ],
   controllers: [],
   providers: [],
