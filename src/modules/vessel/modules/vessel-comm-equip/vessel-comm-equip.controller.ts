@@ -57,6 +57,7 @@ export class VesselCommEquipController {
     );
   }
 
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
   async updateVesselCommunicationEquipment(
     @Param('id', ParseIntPipe) id: number,

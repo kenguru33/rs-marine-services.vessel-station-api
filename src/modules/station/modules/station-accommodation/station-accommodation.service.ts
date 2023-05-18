@@ -1,9 +1,9 @@
-import { Injectable, Query } from '@nestjs/common';
-import { CreateStationAccommodationDto } from './dto/create-station-apartment.dto';
-import { UpdateStationAccommodationDto } from './dto/update-station-apartment.dto';
-import { PrismaService } from '../../../../database/prisma.service';
-import { QueryStationAccommodationDto } from './dto/query-station-accommodation.dto';
+import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from '../../../../database/prisma.service';
+import { CreateStationAccommodationDto } from './dto/create-station-accommodation.dto';
+import { QueryStationAccommodationDto } from './dto/query-station-accommodation.dto';
+import { UpdateStationAccommodationDto } from './dto/update-station-apartment.dto';
 
 @Injectable()
 export class StationAccommodationService {
@@ -22,6 +22,7 @@ export class StationAccommodationService {
       include: stationAccommodationInclude,
     });
   }
+
   async getStationAccommodations(query: QueryStationAccommodationDto) {
     const { include, ...filter } = query;
     const stationAccommodationInclude =
@@ -47,7 +48,25 @@ export class StationAccommodationService {
         query.include,
       );
     return this.prisma.stationAccommodation.create({
-      data: data,
+      data: {
+        type: {
+          connect: {
+            id: data.typeId,
+          },
+        },
+        station: {
+          connect: {
+            id: data.stationId,
+          },
+        },
+        address: data.address,
+        description: data.description,
+        postalLocation: data.postalLocation,
+        postalCode: data.postalCode,
+        postalBox: data.postalBox,
+        latitude: data.latitude,
+        longitude: data.longitude,
+      },
       include: stationAccommodationInclude,
     });
   }
@@ -73,7 +92,25 @@ export class StationAccommodationService {
       where: {
         id,
       },
-      data: data,
+      data: {
+        type: {
+          connect: {
+            id: data.typeId,
+          },
+        },
+        station: {
+          connect: {
+            id: data.stationId,
+          },
+        },
+        address: data.address,
+        description: data.description,
+        postalLocation: data.postalLocation,
+        postalCode: data.postalCode,
+        postalBox: data.postalBox,
+        latitude: data.latitude,
+        longitude: data.longitude,
+      },
       include: stationAccommodationInclude,
     });
   }

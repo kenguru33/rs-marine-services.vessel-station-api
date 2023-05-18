@@ -1,5 +1,5 @@
 import { StationAccommodationService } from './station-accommodation.service';
-import { CreateStationAccommodationDto } from './dto/create-station-apartment.dto';
+import { CreateStationAccommodationDto } from './dto/create-station-accommodation.dto';
 import {
   Body,
   Controller,
@@ -40,6 +40,7 @@ export class StationAccommodationController {
     return this.stationAccommodation.getStationAccommodation(id, query);
   }
 
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
   async createStationAccommodation(
     @Body() dto: CreateStationAccommodationDto,
@@ -48,6 +49,7 @@ export class StationAccommodationController {
     return this.stationAccommodation.createStationAccommodation(dto, query);
   }
 
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
   async updateStationAccommodation(
     @Body() dto: UpdateStationAccommodationDto,

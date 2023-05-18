@@ -8,12 +8,15 @@ import {
 } from 'class-validator';
 
 export class UpdateStationAccommodationDto {
+  @IsNumber()
+  @IsOptional()
+  typeId?: number;
+
   @IsOptional()
   @IsString()
   description?: string;
 
   @IsOptional()
-
   @IsString()
   address?: string;
 
