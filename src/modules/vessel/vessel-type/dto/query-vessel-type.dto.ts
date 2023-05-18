@@ -1,4 +1,5 @@
-import { IsOptional, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString } from 'class-validator';
 
 export class QueryVesselTypeDto {
   @IsOptional()
@@ -9,9 +10,8 @@ export class QueryVesselTypeDto {
   @IsString()
   name?: string;
 
+  
   @IsOptional()
   @IsString()
   prefix?: string;
-
-
 }

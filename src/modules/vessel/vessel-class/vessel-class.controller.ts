@@ -20,7 +20,9 @@ import { VesselClassTransformInterceptor } from './interceptors/vessel-class-tra
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { QueryParamsValidatorInterceptor } from '../../../shared/interceptors/query-params-validator.interceptor';
 import { QueryVesselClassDto } from './dto/query-vessel-class.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('vessel-class')
 @UseInterceptors(VesselClassTransformInterceptor)
 @Controller('vessel-class')
 export class VesselClassController {
@@ -43,8 +45,8 @@ export class VesselClassController {
     return this.vesselClassService.vesselClasses(query);
   }
 
-  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @UsePipes(new ValidationPipe({ transform: true }))
   createVesselClass(
     @Body() data: CreateVesselClassDto,
@@ -53,8 +55,8 @@ export class VesselClassController {
     return this.vesselClassService.createVesselClass(data, query);
   }
 
-  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @UsePipes(new ValidationPipe({ transform: true }))
   updateVesselClass(
     @Body() data: UpdateVesselClassDto,
