@@ -35,6 +35,9 @@ export class VesselTypeController {
   constructor(private vesselTypeService: VesselTypeService) {}
 
   @Get()
+  @UseInterceptors(
+    new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
+  )
   @ApiOperation({ summary: 'Get all vessel types' })
   @ApiQuery({
     name: 'include',
@@ -59,9 +62,6 @@ export class VesselTypeController {
     isArray: true,
     description: 'Array of vessel types',
   })
-  @UseInterceptors(
-    new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
-  )
   async getVesselTypes(@Query() query: QueryVesselTypeDto) {
     return this.vesselTypeService.getVesselTypes(query);
   }

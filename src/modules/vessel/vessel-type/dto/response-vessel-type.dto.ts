@@ -7,15 +7,15 @@ export class ResponseVesselTypeDto {
   @Expose()
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({example: 'FAST'})
   @Expose()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({example: 'RS'})
   @Expose()
   prefix: string;
 
-  @ApiProperty()
+  @ApiProperty({example: 'Fast bemannet redningsskøyte'})
   @Expose()
   description?: string;
 
