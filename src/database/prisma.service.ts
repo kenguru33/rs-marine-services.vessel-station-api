@@ -2,8 +2,8 @@ import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
 type IncludeObject<T> = {
-  [K in keyof T]?: boolean | IncludeObject<T[K]> ;
-} 
+  [K in keyof T]?: boolean | IncludeObject<T[K]>;
+};
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
@@ -23,8 +23,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
    * @returns Prisma.Include<T> | undefined
    */
   async parseInclude<T>(includes: string | undefined): Promise<T | undefined> {
-    
-    if (!includes) {
+    if (!includes || Object.keys(includes).length === 0) {
       return undefined; // no includes
     }
 
@@ -32,7 +31,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
 
     const includeObject: IncludeObject<T> = {};
     let currentInclude = includeObject; // root
-    
+
     for (const include of includeArray) {
       const relations = include.split('.');
       if (relations.length === 1) {
@@ -55,6 +54,6 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
         }
       }
     }
-    return includeObject as T
+    return includeObject as T;
   }
 }
