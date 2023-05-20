@@ -27,7 +27,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       return undefined; // no includes
     }
 
-    const includeArray = includes?.split(',').map((i) => i.trim());
+    console.log('includes', includes);
+
+    const includeArray = includes.split(',').map((i) => i.trim());
 
     const includeObject: IncludeObject<T> = {};
     let currentInclude = includeObject; // root

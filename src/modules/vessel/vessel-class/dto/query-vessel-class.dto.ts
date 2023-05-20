@@ -1,7 +1,8 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsString } from "class-validator";
 
 export class QueryVesselClassDto {
-  @IsOptional()
+  @ApiProperty({required: false, description: 'include relations. Valid values: vessels'})
   @IsString()
   include?: string;
 

@@ -10,4 +10,4 @@ export const ALLOWED_INCLUDES = [
   'maintenances',
   'maintenances.approvedBy',
 ];
-export const ALLOWED_FILTERS = ['name', 'rs', 'type', 'state', 'class'];
+export const ALLOWED_FILTERS = ['name', 'rs'];

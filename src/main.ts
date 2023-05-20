@@ -29,7 +29,7 @@ async function bootstrap() {
   const vesselDocument = SwaggerModule.createDocument(app, secondOptions, {
     include: [VesselModule, StationModule],
   });
-  SwaggerModule.setup('api', app, vesselDocument);
+  SwaggerModule.setup('api', app, vesselDocument, {});
   
 
   await app.listen(3000);

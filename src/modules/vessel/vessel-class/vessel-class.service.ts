@@ -19,10 +19,10 @@ export class VesselClassService {
 
   async vesselClass(
     id: number,
-    query: QueryVesselClassDto,
+    include: QueryVesselClassDto['include'],
   ): Promise<VesselClass> {
     const vesselcClassIncludes =
-      await this.prisma.parseInclude<Prisma.VesselClassInclude>(query.include);
+      await this.prisma.parseInclude<Prisma.VesselClassInclude>(include);
     return this.prisma.vesselClass.findUniqueOrThrow({
       where: { id },
       include: vesselcClassIncludes,

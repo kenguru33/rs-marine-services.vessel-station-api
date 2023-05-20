@@ -3,25 +3,31 @@ import {
   Controller,
   Delete,
   Get,
-  Inject,
   Param,
   ParseIntPipe,
   Post,
   Put,
   Query,
   UseInterceptors,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
-import { CreateVesselDto } from './dto/createVessel.dto';
-import { UpdateVesselDto } from './dto/updateVessel.dto';
-import { VesselResponseTransformInterceptor } from './interceptors/vessel-response-transform.interceptor';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+  PickType,
+} from '@nestjs/swagger';
 import { Vessel } from '@prisma/client';
-import { VesselService, VesselWithRelation } from './vessel.service';
-import { QueryVesselDto } from './dto/query-vessel.dto';
 import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
-import { ApiTags } from '@nestjs/swagger';
+import { CreateVesselDto } from './dto/createVessel.dto';
+import { QueryVesselDto } from './dto/query-vessel.dto';
+import { ResponseVesselDto } from './dto/response-vessel.dto';
+import { UpdateVesselDto } from './dto/updateVessel.dto';
+import { VesselResponseTransformInterceptor } from './interceptors/vessel-response-transform.interceptor';
+import { VesselService } from './vessel.service';
 
 @ApiTags('vessel')
 @UseInterceptors(VesselResponseTransformInterceptor)
@@ -29,44 +35,89 @@ import { ApiTags } from '@nestjs/swagger';
 export class VesselController {
   constructor(private vesselService: VesselService) {}
 
-  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
+  // Get vessel by id
   @Get(':id')
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
+  @ApiOperation({ summary: 'Get vessel by id' })
+  @ApiQuery({
+    name: 'include',
+    required: false,
+    description: 'Include relations',
+    example: ALLOWED_INCLUDES.join(', '),
+  })
+  @ApiResponse({ type: ResponseVesselDto, description: 'Vessel' })
   getVessel(
     @Param('id', ParseIntPipe) id: number,
-    @Query('include') include: string,
+    @Query('include') include: string | undefined,
   ): Promise<Vessel> {
     return this.vesselService.getVessel(id, include);
   }
 
+  // Get all vessels
+  @Get()
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
-  @Get()
-  getVessels(
-    @Query() query: QueryVesselDto,
-  ): Promise<Vessel[] | VesselWithRelation[]> {
+  @ApiOperation({ summary: 'Get all vessels' })
+  @ApiResponse({
+    type: ResponseVesselDto,
+    description: 'Vessel',
+    isArray: true,
+  })
+  @ApiQuery({ type: QueryVesselDto, required: false })
+  getVessels(@Query() query: QueryVesselDto) {
     return this.vesselService.getVessels(query);
   }
 
-  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
+  @ApiOperation({ summary: 'Create vessel' })
+  @ApiQuery({
+    name: 'include',
+    required: false,
+    description: 'Include relations',
+    example: ALLOWED_INCLUDES.join(', '),
+  })
+  @ApiResponse({ type: ResponseVesselDto, description: 'Vessel created.' })
   createVessel(
     @Body() data: CreateVesselDto,
-    @Query() query: QueryVesselDto,
+    @Query('include') include: string,
   ): Promise<Vessel> {
-    return this.vesselService.create(data, query);
+    return this.vesselService.create(data, include);
   }
 
-  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
+  @ApiOperation({ summary: 'Update vessel by id' })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'vessel id',
+    example: 1,
+  })
+  @ApiQuery({
+    name: 'include',
+    required: false,
+    description: 'Include relations',
+    example: ALLOWED_INCLUDES.join(', '),
+  })
+  @ApiResponse({ type: ResponseVesselDto, description: 'Vessel updated.' })
   updateVessel(
     @Body() data: UpdateVesselDto,
     @Param('id') id: number,
-    @Query() query: QueryVesselDto,
+    @Query('include') include: string,
   ): Promise<Vessel> {
-    return this.vesselService.update(id, data, query);
+    return this.vesselService.update(id, data, include);
   }
 
+  @ApiOperation({ summary: 'Delete vessel by id' })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'vessel id',
+    example: 1,
+  })
+  @ApiResponse({ type: ResponseVesselDto, description: 'Vessel deleted.' })
   @Delete(':id')
   deleteVessel(@Param('id', ParseIntPipe) id: number): Promise<Vessel> {
     return this.vesselService.delete(id);

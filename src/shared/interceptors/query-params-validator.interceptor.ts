@@ -5,7 +5,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class QueryParamsValidatorInterceptor<T> implements NestInterceptor {
