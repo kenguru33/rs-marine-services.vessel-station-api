@@ -17,6 +17,7 @@ import { VesselClassTransformInterceptor } from '../vessel-class/interceptors/ve
 import { QueryParamsValidatorInterceptor } from '../../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { QueryVesselTypeDto } from './dto/query-vessel-type.dto';
+import { QueryIncludeDto } from '../../../shared/dto/query-include.dto';
 
 @UseInterceptors(VesselClassTransformInterceptor)
 @Controller('vessel-type')
@@ -27,15 +28,18 @@ export class VesselTypeController {
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
   @Get()
-  async getVesselTypes(@Query() query: QueryVesselTypeDto) {
-    return this.vesselTypeService.getVesselTypes(query);
+  async getVesselTypes(
+    @Query() queryInclude: QueryIncludeDto,
+    @Query() queryFilter: QueryVesselTypeDto,
+  ) {
+    return this.vesselTypeService.getVesselTypes(queryInclude, queryFilter);
   }
 
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
   async getVesselType(
     @Param('id', ParseIntPipe) id: number,
-    @Query() query: QueryVesselTypeDto,
+    @Query() query: QueryIncludeDto,
   ) {
     return this.vesselTypeService.getVesselType(id, query);
   }
@@ -44,7 +48,7 @@ export class VesselTypeController {
   @Post()
   async createVesselType(
     @Body() dto: CreateVesselTypeDto,
-    @Query() query: QueryVesselTypeDto,
+    @Query() query: QueryIncludeDto,
   ) {
     return this.vesselTypeService.createVesselType(dto, query);
   }
@@ -54,7 +58,7 @@ export class VesselTypeController {
   async updateVesselType(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateVesselTypeDto,
-    @Query() query: QueryVesselTypeDto,
+    @Query() query: QueryIncludeDto,
   ) {
     return this.vesselTypeService.updateVesselType(id, dto, query);
   }

@@ -4,15 +4,16 @@ import { CreateVesselTypeDto } from './dto/create-vessel-type.dto';
 import { UpdateVesselTypeDto } from './dto/update-vessel-type.dto';
 import { QueryVesselTypeDto } from './dto/query-vessel-type.dto';
 import { Prisma } from '@prisma/client';
+import { QueryIncludeDto } from '../../../shared/dto/query-include.dto';
 
 @Injectable()
 export class VesselTypeService {
   constructor(private prisma: PrismaService) {}
 
-  async getVesselTypes(query: QueryVesselTypeDto) {
-    const { include, ...filter } = query;
+  async getVesselTypes(query: QueryIncludeDto, filter: QueryVesselTypeDto) {
+    
     const vesselTypesIncludes =
-      await this.prisma.parseInclude<Prisma.VesselTypeInclude>(include);
+      await this.prisma.parseInclude<Prisma.VesselTypeInclude>(query.include);
     return this.prisma.vesselType.findMany({
       where: {
         name: {
@@ -26,7 +27,7 @@ export class VesselTypeService {
     });
   }
 
-  async getVesselType(id: number, query: QueryVesselTypeDto) {
+  async getVesselType(id: number, query: QueryIncludeDto) {
     const vesselTypeIncludes =
       await this.prisma.parseInclude<Prisma.VesselTypeInclude>(query.include);
     return this.prisma.vesselType.findUniqueOrThrow({
@@ -35,7 +36,7 @@ export class VesselTypeService {
     });
   }
 
-  async createVesselType(data: CreateVesselTypeDto, query: QueryVesselTypeDto) {
+  async createVesselType(data: CreateVesselTypeDto, query: QueryIncludeDto) {
     const vesselTypeIncludes =
       await this.prisma.parseInclude<Prisma.VesselTypeInclude>(query.include);
     return this.prisma.vesselType.create({
@@ -51,7 +52,7 @@ export class VesselTypeService {
   async updateVesselType(
     id: number,
     data: UpdateVesselTypeDto,
-    query: QueryVesselTypeDto,
+    query: QueryIncludeDto,
   ) {
     const vesselTypeIncludes =
       await this.prisma.parseInclude<Prisma.VesselTypeInclude>(query.include);
