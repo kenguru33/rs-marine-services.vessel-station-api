@@ -14,14 +14,15 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateVesselDto } from './dto/createVessel.dto';
-import { UpdateVesselDto } from './dto/updateVessel.dto';
+import { UpdateVesselDto } from './dto/update-vessel.dto';
 import { VesselResponseTransformInterceptor } from './interceptors/vessel-response-transform.interceptor';
 import { Vessel } from '@prisma/client';
 import { VesselService, VesselWithRelation } from './vessel.service';
-import { QueryVesselDto } from './dto/query-vessel.dto';
+import { QueryVesselFilterDto } from './dto/query-vessel-filter.dto';
 import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { ApiTags } from '@nestjs/swagger';
+import { QueryIncludeDto } from '../../shared/dto/query-include.dto';
 
 @ApiTags('vessel')
 @UseInterceptors(VesselResponseTransformInterceptor)
@@ -33,7 +34,7 @@ export class VesselController {
   @Get(':id')
   getVessel(
     @Param('id', ParseIntPipe) id: number,
-    @Query('include') include: string,
+    @Query() include: QueryIncludeDto,
   ): Promise<Vessel> {
     return this.vesselService.getVessel(id, include);
   }
@@ -43,16 +44,17 @@ export class VesselController {
   )
   @Get()
   getVessels(
-    @Query() query: QueryVesselDto,
+    @Query() include: QueryIncludeDto,
+    @Query() filter: QueryVesselFilterDto,
   ): Promise<Vessel[] | VesselWithRelation[]> {
-    return this.vesselService.getVessels(query);
+    return this.vesselService.getVessels(include, filter);
   }
 
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
   createVessel(
     @Body() data: CreateVesselDto,
-    @Query() query: QueryVesselDto,
+    @Query() query: QueryVesselFilterDto,
   ): Promise<Vessel> {
     return this.vesselService.create(data, query);
   }
@@ -62,7 +64,7 @@ export class VesselController {
   updateVessel(
     @Body() data: UpdateVesselDto,
     @Param('id') id: number,
-    @Query() query: QueryVesselDto,
+    @Query() query: QueryVesselFilterDto,
   ): Promise<Vessel> {
     return this.vesselService.update(id, data, query);
   }

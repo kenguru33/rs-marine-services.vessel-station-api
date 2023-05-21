@@ -27,10 +27,7 @@ export class VesselCapabilityController {
   constructor(private capabilitiesService: VesselCapabilityService) {}
 
   @UseInterceptors(
-    new QueryParamsValidatorInterceptor<Prisma.VesselCapabilityInclude>(
-      ALLOWED_INCLUDES,
-      ALLOWED_FILTERS,
-    ),
+    new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
   @Get()
   async getCapabilities(
@@ -39,11 +36,7 @@ export class VesselCapabilityController {
     return this.capabilitiesService.getCapabilities(query);
   }
 
-  @UseInterceptors(
-    new QueryParamsValidatorInterceptor<Prisma.VesselCapabilityInclude>(
-      ALLOWED_INCLUDES,
-    ),
-  )
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
   async getCapability(
     @Param('id', ParseIntPipe) id: number,
@@ -52,11 +45,7 @@ export class VesselCapabilityController {
     return this.capabilitiesService.getCapability(id, query);
   }
 
-  @UseInterceptors(
-    new QueryParamsValidatorInterceptor<Prisma.VesselCapabilityInclude>(
-      ALLOWED_INCLUDES,
-    ),
-  )
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async createCapability(
@@ -66,11 +55,7 @@ export class VesselCapabilityController {
     return this.capabilitiesService.createCapability(dto, query);
   }
 
-  @UseInterceptors(
-    new QueryParamsValidatorInterceptor<Prisma.VesselCapabilityInclude>(
-      ALLOWED_INCLUDES,
-    ),
-  )
+  @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
   async updateCapability(

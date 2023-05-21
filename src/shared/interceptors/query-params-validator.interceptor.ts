@@ -8,7 +8,7 @@ import {
 import { Observable, map } from 'rxjs';
 
 @Injectable()
-export class QueryParamsValidatorInterceptor<T> implements NestInterceptor {
+export class QueryParamsValidatorInterceptor implements NestInterceptor {
   constructor(
     private allowedIncludes: string[],
     private allowedFilters?: string[],

@@ -1,11 +1,7 @@
 import { Transform } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class QueryVesselDto {
-  @IsOptional()
-  @IsString()
-  include?: string;
-
+export class QueryVesselFilterDto {
   @IsOptional()
   @IsString()
   name?: string;
@@ -14,12 +10,4 @@ export class QueryVesselDto {
   @IsNumber()
   @Transform(({ value }) => +value)
   rs?: number;
-
-  @IsOptional()
-  @IsNumber()
-  @Transform(({ value }) => +value)
-  typeId?: number;
-
-  
-
 }
