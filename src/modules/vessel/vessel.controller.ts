@@ -26,6 +26,7 @@ import { UpdateVesselDto } from './dto/update-vessel.dto';
 import { VesselResponseTransformInterceptor } from './interceptors/vessel-response-transform.interceptor';
 import { VesselService, VesselWithRelation } from './vessel.service';
 import { ResponseVesselDto } from './dto/response-vessel.dto';
+import { query } from 'express';
 
 @ApiTags('vessel')
 @UseInterceptors(VesselResponseTransformInterceptor)
@@ -79,9 +80,9 @@ export class VesselController {
   updateVessel(
     @Body() data: UpdateVesselDto,
     @Param('id') id: number,
-    @Query() query: QueryVesselFilterDto,
+    @Query() queryVesselInclude: QueryVesselIncludeDto,
   ): Promise<Vessel> {
-    return this.vesselService.update(id, data, query);
+    return this.vesselService.update(id, data, queryVesselInclude);
   }
 
   @ApiOperation({ summary: 'Delete vessel' })

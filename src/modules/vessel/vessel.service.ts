@@ -100,10 +100,10 @@ export class VesselService {
   async update(
     id: number,
     data: UpdateVesselDto,
-    query: QueryVesselFilterDto,
+    queryVesselInclude: QueryVesselIncludeDto,
   ): Promise<Vessel> {
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
-      '',
+      queryVesselInclude.include,
     );
     return this.prisma.vessel.update({
       where: { id },
@@ -112,7 +112,7 @@ export class VesselService {
         name: data.name,
         rs: data.rs,
         state: {
-          connect: { id: data.stateId },
+          connect: data.stateId ? { id: data.stateId } : undefined,
         },
         station: {
           connect: data.stationId ? { id: data.stationId } : undefined,
@@ -129,9 +129,7 @@ export class VesselService {
           connect: data.typeId ? { id: data.typeId } : undefined,
         },
         inspectors: {
-          connect: data.inspectorIds
-            ? data.inspectorIds.map((id) => ({ id }))
-            : [],
+          set: data.inspectorIds ? data.inspectorIds.map((id) => ({ id })) : [],
         },
       },
       include: vesselInclude,
