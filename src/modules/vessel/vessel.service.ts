@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Vessel } from '@prisma/client';
 import { PrismaService } from '../../database/prisma.service';
-import { CreateVesselDto } from './dto/createVessel.dto';
+import { CreateVesselDto } from './dto/create-vessel.dto';
 import { QueryVesselFilterDto } from './dto/query-vessel-filter.dto';
 import { UpdateVesselDto } from './dto/update-vessel.dto';
 import { QueryIncludeDto } from '../../shared/dto/query-include.dto';
+import { QueryVesselIncludeDto } from './dto/query-vessel-include.dto';
 
 export type VesselWithRelation = Prisma.VesselGetPayload<{
   include: {
@@ -29,7 +30,10 @@ export type VesselWithRelation = Prisma.VesselGetPayload<{
 export class VesselService {
   constructor(private prisma: PrismaService) {}
 
-  async getVessel(id: number, queryIncludeDto: QueryIncludeDto ): Promise<Vessel> {
+  async getVessel(
+    id: number,
+    queryIncludeDto: QueryIncludeDto,
+  ): Promise<Vessel> {
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
       queryIncludeDto.include,
     );
@@ -41,23 +45,24 @@ export class VesselService {
   }
 
   async getVessels(
-    queryIncludeDto: QueryIncludeDto,
+    queryVesselIncludeDto: QueryVesselIncludeDto,
     filter: QueryVesselFilterDto,
   ): Promise<Vessel[] | VesselWithRelation[]> {
-    
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
-      queryIncludeDto.include,
+      queryVesselIncludeDto.include,
     );
-    console.log('vesselInclude', vesselInclude);
     return this.prisma.vessel.findMany({
       where: { name: { contains: filter.name }, rs: filter.rs },
       include: vesselInclude,
     });
   }
 
-  async create(data: CreateVesselDto, query: QueryVesselFilterDto) {
+  async create(
+    data: CreateVesselDto,
+    queryVesselIncludeDto: QueryVesselIncludeDto,
+  ) {
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
-      '',
+      queryVesselIncludeDto.include,
     );
 
     return this.prisma.vessel.create({

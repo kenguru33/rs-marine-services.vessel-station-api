@@ -38,6 +38,7 @@ export class VesselTypeController {
     return this.vesselTypeService.getVesselTypes(queryInclude, queryFilter);
   }
 
+  @ApiOperation({ summary: 'Get all vessel types' })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
   async getVesselType(

@@ -7,20 +7,26 @@ import { ResponseStationDto } from '../../station/dto/response-station.dto';
 import { ResponseVesselInspectorDto } from '../modules/vessel-inspector/dto/response-vessel-inspector.dto';
 import { ResponseVesselCommEquipDto } from '../modules/vessel-comm-equip/dto/response-vessel-comm-equip.dts';
 import { ResponseVesselMaintenanceDto } from '../modules/vessel-maintenance/dto/response-vessel-maintenance.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ResponseVesselDto {
+  @ApiProperty({ example: 1})
   @Expose()
   id: number;
 
+  @ApiProperty({ example: 'Bernt Anker'})
   @Expose()
   name: string;
 
+  @ApiProperty({ example: '225'})
   @Expose()
   rs: number;
 
+  @ApiProperty({ example: '123456789'})
   @Expose()
   mmsi: number;
 
+  @ApiProperty({ example: 'RS'})
   @Expose()
   prefix: string;
 
