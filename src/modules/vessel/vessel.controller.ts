@@ -21,7 +21,7 @@ import { VesselService, VesselWithRelation } from './vessel.service';
 import { QueryVesselFilterDto } from './dto/query-vessel-filter.dto';
 import { QueryParamsValidatorInterceptor } from '../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { QueryIncludeDto } from '../../shared/dto/query-include.dto';
 
 @ApiTags('vessel')

@@ -18,12 +18,15 @@ import { QueryParamsValidatorInterceptor } from '../../../shared/interceptors/qu
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { QueryVesselTypeDto } from './dto/query-vessel-type.dto';
 import { QueryIncludeDto } from '../../../shared/dto/query-include.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('vessel-type')
 @UseInterceptors(VesselClassTransformInterceptor)
 @Controller('vessel-type')
 export class VesselTypeController {
   constructor(private vesselTypeService: VesselTypeService) {}
 
+  @ApiOperation({ summary: 'Get all vessel types' })
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )

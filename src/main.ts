@@ -19,29 +19,18 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
 
+  
   const options = new DocumentBuilder()
-    .setTitle('Stations')
-    .setDescription('The station API description')
+    .setTitle('Vessel Station API')
+    .setDescription('The Vessel Station API description')
     .setVersion('1.0')
-    .addTag('stations')
+    .addTag('vessels and stations')
     .build();
 
-  const stationDocument = SwaggerModule.createDocument(app, options, {
-    include: [StationModule],
+  const document = SwaggerModule.createDocument(app, options, {
+    include: [VesselModule, StationModule],
   });
-  SwaggerModule.setup('api/station', app, stationDocument);
-
-  const secondOptions = new DocumentBuilder()
-    .setTitle('Vessel')
-    .setDescription('The vessel API description')
-    .setVersion('1.0')
-    .addTag('vessels')
-    .build();
-
-  const vesselDocument = SwaggerModule.createDocument(app, secondOptions, {
-    include: [VesselModule],
-  });
-  SwaggerModule.setup('api/vessel', app, vesselDocument);
+  SwaggerModule.setup('api', app, document);
   
 
   await app.listen(3000);
