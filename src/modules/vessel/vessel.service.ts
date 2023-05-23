@@ -4,7 +4,6 @@ import { PrismaService } from '../../database/prisma.service';
 import { CreateVesselDto } from './dto/create-vessel.dto';
 import { QueryVesselFilterDto } from './dto/query-vessel-filter.dto';
 import { UpdateVesselDto } from './dto/update-vessel.dto';
-import { QueryIncludeDto } from '../../shared/dto/query-include.dto';
 import { QueryVesselIncludeDto } from './dto/query-vessel-include.dto';
 
 export type VesselWithRelation = Prisma.VesselGetPayload<{
@@ -32,10 +31,10 @@ export class VesselService {
 
   async getVessel(
     id: number,
-    queryIncludeDto: QueryIncludeDto,
+    queryVesselIncludeDto: QueryVesselIncludeDto,
   ): Promise<Vessel> {
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
-      queryIncludeDto.include,
+      queryVesselIncludeDto.include,
     );
     return this.prisma.vessel.findUniqueOrThrow({
       where: { id },

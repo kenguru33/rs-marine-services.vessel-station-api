@@ -1,11 +1,8 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class QueryVesselTypeDto {
+export class QueryVesselClassFilterDto {
+  
   @IsOptional()
   @IsString()
   name?: string;
-
-  @IsOptional()
-  @IsString()
-  prefix?: string;
 }

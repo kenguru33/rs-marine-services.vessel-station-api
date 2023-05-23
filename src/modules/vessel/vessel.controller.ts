@@ -22,11 +22,10 @@ import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { CreateVesselDto } from './dto/create-vessel.dto';
 import { QueryVesselFilterDto } from './dto/query-vessel-filter.dto';
 import { QueryVesselIncludeDto } from './dto/query-vessel-include.dto';
+import { ResponseVesselDto } from './dto/response-vessel.dto';
 import { UpdateVesselDto } from './dto/update-vessel.dto';
 import { VesselResponseTransformInterceptor } from './interceptors/vessel-response-transform.interceptor';
-import { VesselService, VesselWithRelation } from './vessel.service';
-import { ResponseVesselDto } from './dto/response-vessel.dto';
-import { query } from 'express';
+import { VesselService } from './vessel.service';
 
 @ApiTags('vessel')
 @UseInterceptors(VesselResponseTransformInterceptor)
@@ -43,7 +42,7 @@ export class VesselController {
   getVessels(
     @Query() include: QueryVesselIncludeDto,
     @Query() filter: QueryVesselFilterDto,
-  ): Promise<Vessel[] | VesselWithRelation[]> {
+  ) {
     return this.vesselService.getVessels(include, filter);
   }
 
@@ -54,7 +53,7 @@ export class VesselController {
   getVessel(
     @Param('id', ParseIntPipe) id: number,
     @Query() include: QueryVesselIncludeDto,
-  ): Promise<Vessel> {
+  ) {
     return this.vesselService.getVessel(id, include);
   }
 

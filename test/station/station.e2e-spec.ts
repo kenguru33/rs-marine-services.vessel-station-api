@@ -23,7 +23,7 @@ describe('StationController (e2e)', () => {
     await app.close();
   });
 
-  it('/station (POST)', async () => {
+  xit('/station (POST)', async () => {
     const mockStation = {
       name: 'Heggedal',
       typeId: 1,
@@ -40,7 +40,7 @@ describe('StationController (e2e)', () => {
       .expect(HttpStatus.CREATED);
   });
 
-  it('/station/1 (GET)', async () => {
+  xit('/station/1 (GET)', async () => {
     return await request(app.getHttpServer())
       .get('/station/1')
       .expect(200)

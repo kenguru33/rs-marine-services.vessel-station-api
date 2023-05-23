@@ -2,15 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
 export class CreateVesselTypeDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'Ambulanse' })
   @IsString()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'EYR' })
   @IsString()
   prefix: string;
 
-  @ApiProperty()
+  @ApiProperty({ example: 'Ambulansefartøy' })
   @IsString()
   @IsOptional()
   description?: string;
