@@ -44,7 +44,7 @@ describe('VesselTypeController (e2e)', () => {
   });
 
   it(`/vessel-type?name=${mockVesselType.name} (GET)`, async () => {
-    await request(app.getHttpServer())
+    return await request(app.getHttpServer())
       .get(`/vessel-type?name=${mockVesselType.name}`)
       .expect(200)
       .expect((res) => {

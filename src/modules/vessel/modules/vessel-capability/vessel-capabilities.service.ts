@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { VesselCapability, Prisma } from '@prisma/client';
-import { CreateVesselCapabilityDto } from './dto/createVesselCapability.dto';
-import { UpdateVesselCapabilityDto } from './dto/updateVesselCapability.dto';
+import { CreateVesselCapabilityDto } from './dto/create-vessel-capability.dto';
+import { UpdateVesselCapabilityDto } from './dto/update-vessel-capability.dto';
 import { PrismaService } from '../../../../database/prisma.service';
-import { QueryVesselCapabilityDto } from './dto/query-vessel-capability.dto';
+import { QueryVesselCapabilityIncludeDto } from './dto/query-vessel-capability-include.dto';
+import { QueryVesselCapabilityFilterDto } from './dto/query-vessel-capability-filter.dto';
 
 export type VesselCapabilityWithRelation = Prisma.VesselCapabilityGetPayload<{
   include: {
@@ -17,11 +18,11 @@ export class VesselCapabilityService {
 
   async getCapability(
     id: number,
-    query: QueryVesselCapabilityDto,
+    queryVesselCapabilityIncludeDto: QueryVesselCapabilityIncludeDto,
   ): Promise<VesselCapability> {
     const vesselCapabilityPrismaInclude =
       await this.prisma.parseInclude<Prisma.VesselCapabilityInclude>(
-        query.include,
+        queryVesselCapabilityIncludeDto.include,
       );
     return this.prisma.vesselCapability.findUniqueOrThrow({
       where: { id },
@@ -30,24 +31,26 @@ export class VesselCapabilityService {
   }
 
   async getCapabilities(
-    query: QueryVesselCapabilityDto,
+    queryVesselCapabilityIncludeDto: QueryVesselCapabilityIncludeDto,
+    queryVesselCapabilityFilterDto: QueryVesselCapabilityFilterDto,
   ): Promise<VesselCapability[]> {
-    const { include, ...where } = query;
     const vesselCapabilityPrismaInclude =
-      await this.prisma.parseInclude<Prisma.VesselCapabilityInclude>(include);
+      await this.prisma.parseInclude<Prisma.VesselCapabilityInclude>(
+        queryVesselCapabilityIncludeDto.include,
+      );
     return this.prisma.vesselCapability.findMany({
       include: vesselCapabilityPrismaInclude,
-      where,
+      where: { name: { equals: queryVesselCapabilityFilterDto.name } },
     });
   }
 
   async createCapability(
     data: CreateVesselCapabilityDto,
-    query: QueryVesselCapabilityDto,
+    queryVesselCapabilityIncludeDto: QueryVesselCapabilityIncludeDto,
   ): Promise<VesselCapability> {
     const vesselCapabilityPrismaInclude =
       await this.prisma.parseInclude<Prisma.VesselCapabilityInclude>(
-        query.include,
+        queryVesselCapabilityIncludeDto.include,
       );
     return this.prisma.vesselCapability.create({
       data,
@@ -58,11 +61,11 @@ export class VesselCapabilityService {
   async updateCapability(
     id: number,
     data: UpdateVesselCapabilityDto,
-    query: QueryVesselCapabilityDto,
+    queryVesselCapabilityIncludeDto: QueryVesselCapabilityIncludeDto,
   ): Promise<VesselCapability> {
     const vesselCapabilityPrismaInclude =
       await this.prisma.parseInclude<Prisma.VesselCapabilityInclude>(
-        query.include,
+        queryVesselCapabilityIncludeDto.include,
       );
     return this.prisma.vesselCapability.update({
       data,

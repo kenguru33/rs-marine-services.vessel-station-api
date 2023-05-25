@@ -12,7 +12,7 @@ export class VesselCommEquipTypeService {
   }
 
   async getVesselCommEquipType(id: number) {
-    return this.prisma.vesselCommunicationEquipmentType.findUnique({
+    return this.prisma.vesselCommunicationEquipmentType.findUniqueOrThrow({
       where: { id },
     });
   }

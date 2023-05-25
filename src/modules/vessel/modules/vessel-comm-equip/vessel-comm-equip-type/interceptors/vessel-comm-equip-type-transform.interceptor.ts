@@ -6,25 +6,26 @@ import {
 } from '@nestjs/common';
 import { Observable, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
-import { ResponseVesselCapabilityDto } from '../dto/response-vessel-capability.dto';
-import { ResponseVesselDto } from '../../../dto/response-vessel.dto';
+import { ResponseVesselCommEquipTypeDto } from '../dto/response-vessel-comm-equip-type';
 
 @Injectable()
-export class VesselCapabilityResponseTransformInterceptor
+export class VesselCommEquipTypeTransformInterceptor
   implements NestInterceptor
 {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Observable<ResponseVesselCapabilityDto | ResponseVesselCapabilityDto[]> {
+  ): Observable<
+    ResponseVesselCommEquipTypeDto | ResponseVesselCommEquipTypeDto[]
+  > {
     return next.handle().pipe(
       map((data) => {
         if (data instanceof Array) {
-          return plainToInstance(ResponseVesselCapabilityDto, data, {
+          return plainToInstance(ResponseVesselCommEquipTypeDto, data, {
             excludeExtraneousValues: true,
           });
         }
-        return plainToInstance(ResponseVesselCapabilityDto, data, {
+        return plainToInstance(ResponseVesselCommEquipTypeDto, data, {
           excludeExtraneousValues: true,
         });
       }),

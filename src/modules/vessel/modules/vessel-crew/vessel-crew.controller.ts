@@ -15,8 +15,9 @@ import { CreateVesselCrewDto } from './dto/create-vessel-crew.dto';
 import { UpdateVesselCrewDto } from './dto/update-vessel-crew.dto';
 import { QueryParamsValidatorInterceptor } from '../../../../shared/interceptors/query-params-validator.interceptor';
 import { ALLOWED_INCLUDES, ALLOWED_FILTERS } from './contstants';
-import { QueryVesselCrewDto } from './dto/query-vessel-crew.dto';
+import { QueryVesselCrewFilterDto } from './dto/query-vessel-crew-filter.dto';
 import { VesselCrewResponseTransformInterceptor } from './interceptors/vessel-crew-response-transform.interceptor';
+import { QueryVesselCrewIncludeDto } from './dto/query-vesel-cew-include.dto';
 
 @UseInterceptors(VesselCrewResponseTransformInterceptor)
 @Controller('vessel-crew')
@@ -27,26 +28,32 @@ export class VesselCrewController {
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
   @Get()
-  async getVesselCrews(@Query() query: QueryVesselCrewDto) {
-    return await this.vesselCrewService.getVesselCrews(query);
+  async getVesselCrews(
+    @Query() queryInclude: QueryVesselCrewIncludeDto,
+    @Query() queryFilter: QueryVesselCrewFilterDto,
+  ) {
+    return await this.vesselCrewService.getVesselCrews(
+      queryInclude,
+      queryFilter,
+    );
   }
 
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
   async getVesselCrew(
     @Param('id', ParseIntPipe) id: number,
-    @Query() query: QueryVesselCrewDto,
+    @Query() queryInclude: QueryVesselCrewIncludeDto,
   ) {
-    return await this.vesselCrewService.getVesselCrew(id, query);
+    return await this.vesselCrewService.getVesselCrew(id, queryInclude);
   }
 
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
   async createVesselCrew(
     @Body() data: CreateVesselCrewDto,
-    @Query() query: QueryVesselCrewDto,
+    @Query() queryInclude: QueryVesselCrewIncludeDto,
   ) {
-    return await this.vesselCrewService.createVesselCrew(data, query);
+    return await this.vesselCrewService.createVesselCrew(data, queryInclude);
   }
 
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
@@ -54,9 +61,13 @@ export class VesselCrewController {
   async updateVesselCrew(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: UpdateVesselCrewDto,
-    @Query() query: QueryVesselCrewDto,
+    @Query() queryInclude: QueryVesselCrewIncludeDto,
   ) {
-    return await this.vesselCrewService.updateVesselCrew(id, data, query);
+    return await this.vesselCrewService.updateVesselCrew(
+      id,
+      data,
+      queryInclude,
+    );
   }
 
   @Delete(':id')

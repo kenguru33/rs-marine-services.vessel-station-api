@@ -5,6 +5,8 @@ import { VesselModule } from '../../../src/modules/vessel/vessel.module';
 import { AppModule } from '../../../src/app.module';
 import { faker } from '@faker-js/faker';
 
+
+
 describe('VesselClassController (e2e)', () => {
   let app: INestApplication;
 
@@ -42,7 +44,7 @@ describe('VesselClassController (e2e)', () => {
   });
 
   xit(`/vessel-class?name=${mockVesselClass.name} (GET)`, async () => {
-    await request(app.getHttpServer())
+    return await request(app.getHttpServer())
       .get(`/vessel-class?name=${mockVesselClass.name}`)
       .expect(200)
       .expect((res) => {
