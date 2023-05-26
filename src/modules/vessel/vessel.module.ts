@@ -8,7 +8,7 @@ import { VesselClassService } from './vessel-class/vessel-class.service';
 import { VesselClassController } from './vessel-class/vessel-class.controller';
 import { VesselCapabilityModule } from './modules/vessel-capability/vessel-capability.module';
 import { VesselStateModule } from './modules/vessel-state/vessel-state.module';
-import { VesselCommEquipModule } from './modules/vessel-comm-equip/vessel-comm-equip.module';
+import { VesselCommunicationEquipmentModule } from './modules/vessel-communication-equipment/vessel-communication-equipment.module';
 import { VesselInspectorModule } from './modules/vessel-inspector/vessel-inspector.module';
 import { VesselMaintenanceModule } from './modules/vessel-maintenance/vessel-maintenance.module';
 import { VesselCrewModule } from './modules/vessel-crew/vessel-crew.module';
@@ -20,7 +20,7 @@ import { VesselCrewModule } from './modules/vessel-crew/vessel-crew.module';
     DatabaseModule,
     VesselCapabilityModule,
     VesselStateModule,
-    VesselCommEquipModule,
+    VesselCommunicationEquipmentModule,
     VesselInspectorModule,
     VesselMaintenanceModule,
     VesselCrewModule,

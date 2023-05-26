@@ -10,20 +10,20 @@ import {
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { VesselCommEquipService } from './vessel-comm-equip.service';
+import { VesselCommEquipService } from './vessel-communication-equipment.service';
 import { QueryParamsValidatorInterceptor } from '../../../../shared/interceptors/query-params-validator.interceptor';
-import { VesselCommEquipTransformInterceptor } from './interceptors/vessel-comm-equip.interceptor-transform';
+import { VesselCommunicationEquipmentTransformInterceptor } from './interceptors/vessel-communication-equipment.interceptor-transform';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
-import { CreateVesselCommEquipDto } from './dto/create-vessel-comm-equip.dto';
-import { UpdateVesselCommEquipDto } from './dto/update-vessel-comm-equip.dto';
-import { QueryVesselCommEquipIncludeDto } from './dto/query-vessel-comm-equip-include.dto';
+import { CreateVesselCommunicationEquipmentDto } from './dto/create-vessel-communication-equipment.dto';
+import { UpdateVesselCommunicationEquipmentDto } from './dto/update-vessel-comm-equip.dto';
+import { QueryVesselCommunicationEquipmentIncludeDto } from './dto/query-vessel-communication-equipment-include.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { QueryVesselCommEquipFilterDto } from './dto/query-vessel-comm-equip-filter.dto';
+import { QueryVesselCommunicationEquipmentFilterDto } from './dto/query-vessel-communication-equipment-filter.dto';
 
-@ApiTags('vessel-comm-equip')
-@UseInterceptors(VesselCommEquipTransformInterceptor)
-@Controller('vessel-comm-equip')
-export class VesselCommEquipController {
+@ApiTags('vessel-communication-equipment')
+@UseInterceptors(VesselCommunicationEquipmentTransformInterceptor)
+@Controller('vessel-communication-equipment')
+export class VesselCommunicationEquipmentController {
   constructor(private vesselBuildInfoService: VesselCommEquipService) {}
 
   @UseInterceptors(
@@ -31,8 +31,8 @@ export class VesselCommEquipController {
   )
   @Get()
   async getVesselCommunicationEquipments(
-    @Query() queryInclude: QueryVesselCommEquipIncludeDto,
-    @Query() queryFilter: QueryVesselCommEquipFilterDto,
+    @Query() queryInclude: QueryVesselCommunicationEquipmentIncludeDto,
+    @Query() queryFilter: QueryVesselCommunicationEquipmentFilterDto,
   ) {
     return this.vesselBuildInfoService.getVesselCommunicationEquipments(
       queryInclude,
@@ -44,7 +44,7 @@ export class VesselCommEquipController {
   @Get(':id')
   async getVesselCommunicationEquipment(
     @Param('id', ParseIntPipe) id: number,
-    @Query() query: QueryVesselCommEquipIncludeDto,
+    @Query() query: QueryVesselCommunicationEquipmentIncludeDto,
   ) {
     return this.vesselBuildInfoService.getVesselCommunicationEquipment(
       id,
@@ -55,8 +55,8 @@ export class VesselCommEquipController {
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
   async createVesselCommunicationEquipment(
-    @Body() dto: CreateVesselCommEquipDto,
-    @Query() query: QueryVesselCommEquipIncludeDto,
+    @Body() dto: CreateVesselCommunicationEquipmentDto,
+    @Query() query: QueryVesselCommunicationEquipmentIncludeDto,
   ) {
     return this.vesselBuildInfoService.createVesselCommunicationEquipment(
       dto,
@@ -68,8 +68,8 @@ export class VesselCommEquipController {
   @Put(':id')
   async updateVesselCommunicationEquipment(
     @Param('id', ParseIntPipe) id: number,
-    @Body() dto: UpdateVesselCommEquipDto,
-    @Query() query: QueryVesselCommEquipIncludeDto,
+    @Body() dto: UpdateVesselCommunicationEquipmentDto,
+    @Query() query: QueryVesselCommunicationEquipmentIncludeDto,
   ) {
     return this.vesselBuildInfoService.updateVesselCommunicationEquipment(
       id,

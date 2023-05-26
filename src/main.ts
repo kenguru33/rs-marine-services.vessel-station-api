@@ -6,7 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { StationModule } from './modules/station/station.module';
 import { VesselModule } from './modules/vessel/vessel.module';
 import { VesselCapabilityModule } from './modules/vessel/modules/vessel-capability/vessel-capability.module';
-import { VesselCommEquipModule } from './modules/vessel/modules/vessel-comm-equip/vessel-comm-equip.module';
+import { VesselCommunicationEquipmentModule } from './modules/vessel/modules/vessel-communication-equipment/vessel-communication-equipment.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { snapshot: true });
@@ -29,7 +29,12 @@ async function bootstrap() {
     .build();
 
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerOptions, {
-    include: [VesselModule, StationModule, VesselCapabilityModule, VesselCommEquipModule],
+    include: [
+      VesselModule,
+      StationModule,
+      VesselCapabilityModule,
+      VesselCommunicationEquipmentModule,
+    ],
   });
   SwaggerModule.setup('api', app, swaggerDocument, {});
 

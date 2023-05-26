@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 
-export class UpdateVesselCommEquipDto {
+export class UpdateVesselCommunicationEquipmentDto {
   @ApiProperty({ example: '1' })
   @IsNumber()
   typeId: number;

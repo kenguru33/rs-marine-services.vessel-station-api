@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CreateVesselCommEquipDto {
+export class CreateVesselCommunicationEquipmentDto {
   @ApiProperty({ example: '1' })
   @IsNumber()
   vesselId: number;

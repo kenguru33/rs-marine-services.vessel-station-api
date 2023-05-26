@@ -9,9 +9,9 @@ describe('VesselTypeController (e2e)', () => {
   let app: INestApplication;
 
   const mockVesselType = {
-    name: faker.vehicle.type(),
-    description: faker.lorem.words(5),
-    prefix: 'RS',
+    name: 'e2e-test-type',
+    description: 'Fartøytype',
+    prefix: 'E2E',
   };
 
   let id: number;

@@ -1,9 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { VesselModule } from '../../../src/modules/vessel/vessel.module';
 import { AppModule } from '../../../src/app.module';
-import { faker } from '@faker-js/faker';
+import { VesselModule } from '../../../src/modules/vessel/vessel.module';
 
 
 
@@ -11,8 +10,8 @@ describe('VesselClassController (e2e)', () => {
   let app: INestApplication;
 
   const mockVesselClass = {
-    name: faker.vehicle.type(),
-    description: faker.lorem.words(5),
+    name: "e2e-test klassen",
+    description: "Fartøysklasse",
   };
 
   let id: number;
@@ -43,7 +42,7 @@ describe('VesselClassController (e2e)', () => {
       });
   });
 
-  xit(`/vessel-class?name=${mockVesselClass.name} (GET)`, async () => {
+  it(`/vessel-class?name=${mockVesselClass.name} (GET)`, async () => {
     return await request(app.getHttpServer())
       .get(`/vessel-class?name=${mockVesselClass.name}`)
       .expect(200)
@@ -54,7 +53,7 @@ describe('VesselClassController (e2e)', () => {
       });
   });
 
-  xit('/vessel-class/ (GET)', async () => {
+  it('/vessel-class/ (GET)', async () => {
     return await request(app.getHttpServer())
       .get('/vessel-class/' + id)
       .expect(200)
@@ -65,7 +64,7 @@ describe('VesselClassController (e2e)', () => {
       });
   });
 
-  xit('/vessel-class (PUT)', async () => {
+  it('/vessel-class (PUT)', async () => {
     return await request(app.getHttpServer())
       .put('/vessel-class/' + id)
       .set('Accept', 'application/json')
@@ -83,7 +82,7 @@ describe('VesselClassController (e2e)', () => {
       });
   });
 
-  xit('/vessel-class/{:id} (DELETE)', async () => {
+  it('/vessel-class/{:id} (DELETE)', async () => {
     return await request(app.getHttpServer())
       .delete('/vessel-class/' + id)
       .expect(200)

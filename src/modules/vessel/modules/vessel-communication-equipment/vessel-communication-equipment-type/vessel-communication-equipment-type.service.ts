@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../../database/prisma.service';
-import { CreateVesselCommEquipTypeDto } from './dto/create-vessel-comm-equip-type';
-import { UpdateVesselCommEquipTypeDto } from './dto/update-vessel-comm-equip-type';
+import { CreateVesselCommunicationEquipmentTypeDto } from './dto/create-vessel-communication-equipment-type';
+import { UpdateVesselCommunicationEquipmentTypeDto } from './dto/update-vessel-communication-equipment-type';
 
 @Injectable()
-export class VesselCommEquipTypeService {
+export class VesselCommunicationEquipmentTypeService {
   constructor(private prisma: PrismaService) {}
 
   async getVesselCommEquipTypes() {
@@ -17,15 +17,20 @@ export class VesselCommEquipTypeService {
     });
   }
 
-  async createVesselCommEquipType(data: CreateVesselCommEquipTypeDto) {
+  async createVesselCommEquipType(
+    data: CreateVesselCommunicationEquipmentTypeDto,
+  ) {
     return this.prisma.vesselCommunicationEquipmentType.create({
-      data,
+      data: {
+        name: data.name,
+        description: data.description,
+      },
     });
   }
 
   async updateVesselCommEquipType(
     id: number,
-    data: UpdateVesselCommEquipTypeDto,
+    data: UpdateVesselCommunicationEquipmentTypeDto,
   ) {
     return this.prisma.vesselCommunicationEquipmentType.update({
       where: { id },

@@ -1,16 +1,16 @@
 import { Expose, Type } from 'class-transformer';
 import { ResponseVesselDto } from '../../../dto/response-vessel.dto';
-import { ResponseVesselCommEquipTypeDto } from '../vessel-comm-equip-type/dto/response-vessel-comm-equip-type';
+import { ResponseVesselCommunicationEquipmentTypeDto } from '../vessel-communication-equipment-type/dto/response-vessel-communication-equipment-type';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ResponseVesselCommEquipDto {
+export class ResponseVesselCommunicationEquipmentDto {
   @ApiProperty({ example: 1 })
   @Expose()
   id: number;
 
-  @Type(() => ResponseVesselCommEquipTypeDto)
+  @Type(() => ResponseVesselCommunicationEquipmentTypeDto)
   @Expose()
-  type: ResponseVesselCommEquipTypeDto;
+  type: ResponseVesselCommunicationEquipmentTypeDto;
 
   @ApiProperty({ example: 2 })
   @Expose()

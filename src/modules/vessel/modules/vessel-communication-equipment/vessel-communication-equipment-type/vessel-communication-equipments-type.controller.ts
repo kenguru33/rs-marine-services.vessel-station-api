@@ -9,9 +9,9 @@ import {
   Put,
   UseInterceptors,
 } from '@nestjs/common';
-import { VesselCommEquipTypeService } from './vessel-comm-equip-type.service';
-import { UpdateVesselCommEquipTypeDto } from './dto/update-vessel-comm-equip-type';
-import { CreateVesselCommEquipTypeDto } from './dto/create-vessel-comm-equip-type';
+import { VesselCommunicationEquipmentTypeService } from './vessel-communication-equipment-type.service';
+import { UpdateVesselCommunicationEquipmentTypeDto } from './dto/update-vessel-communication-equipment-type';
+import { CreateVesselCommunicationEquipmentTypeDto } from './dto/create-vessel-communication-equipment-type';
 import { ApiTags } from '@nestjs/swagger';
 import { VesselCommEquipTypeTransformInterceptor } from './interceptors/vessel-comm-equip-type-transform.interceptor';
 import { QueryParamsValidatorInterceptor } from '../../../../../shared/interceptors/query-params-validator.interceptor';
@@ -20,8 +20,10 @@ import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 @ApiTags('vessel-communication-equipment-type')
 @UseInterceptors(VesselCommEquipTypeTransformInterceptor)
 @Controller('vessel-communication-equipment-type')
-export class VesselCommEquipTypeController {
-  constructor(private vesselCommEquipTypeService: VesselCommEquipTypeService) {}
+export class VesselCommunicationEquipmentTypeController {
+  constructor(
+    private vesselCommEquipTypeService: VesselCommunicationEquipmentTypeService,
+  ) {}
 
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
@@ -39,7 +41,9 @@ export class VesselCommEquipTypeController {
 
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
-  async createVesselCommEquipType(@Body() data: CreateVesselCommEquipTypeDto) {
+  async createVesselCommEquipType(
+    @Body() data: CreateVesselCommunicationEquipmentTypeDto,
+  ) {
     console.log(data);
     return this.vesselCommEquipTypeService.createVesselCommEquipType(data);
   }
@@ -48,7 +52,7 @@ export class VesselCommEquipTypeController {
   @Put(':id')
   async updateVesselCommEquipType(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: UpdateVesselCommEquipTypeDto,
+    @Body() data: UpdateVesselCommunicationEquipmentTypeDto,
   ) {
     return this.vesselCommEquipTypeService.updateVesselCommEquipType(id, data);
   }
