@@ -27,7 +27,7 @@ import { ResponseVesselCrewDto } from './dto/response-vessel-crew.dto';
 export class VesselCrewController {
   constructor(private vesselCrewService: VesselCrewService) {}
 
-  @ApiOperation({ description: 'Get all vessel crews' })
+  @ApiOperation({ summary: 'Get all vessel crews' })
   @ApiResponse({ type: ResponseVesselCrewDto, isArray: true })
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
@@ -43,7 +43,7 @@ export class VesselCrewController {
     );
   }
 
-  @ApiOperation({ description: 'Get vessel crew by id' })
+  @ApiOperation({ summary: 'Get vessel crew by id' })
   @ApiResponse({ type: ResponseVesselCrewDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
@@ -54,7 +54,7 @@ export class VesselCrewController {
     return await this.vesselCrewService.getVesselCrew(id, queryInclude);
   }
 
-  @ApiOperation({ description: 'Create vessel crew' })
+  @ApiOperation({ summary: 'Create vessel crew' })
   @ApiResponse({ type: ResponseVesselCrewDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
@@ -65,7 +65,7 @@ export class VesselCrewController {
     return await this.vesselCrewService.createVesselCrew(data, queryInclude);
   }
 
-  @ApiOperation({ description: 'Update vessel crew' })
+  @ApiOperation({ summary: 'Update vessel crew' })
   @ApiResponse({ type: ResponseVesselCrewDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
@@ -81,7 +81,7 @@ export class VesselCrewController {
     );
   }
 
-  @ApiOperation({ description: 'Delete vessel crew' })
+  @ApiOperation({ summary: 'Delete vessel crew' })
   @ApiResponse({ type: ResponseVesselCrewDto })
   @Delete(':id')
   async deleteVesselCrew(@Param('id', ParseIntPipe) id: number) {

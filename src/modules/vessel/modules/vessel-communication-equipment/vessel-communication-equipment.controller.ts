@@ -27,7 +27,7 @@ import { ResponseVesselCommunicationEquipmentDto } from './dto/response-vessel-c
 export class VesselCommunicationEquipmentController {
   constructor(private vesselBuildInfoService: VesselCommEquipService) {}
 
-  @ApiOperation({ description: 'Get all vessel communication equipment' })
+  @ApiOperation({ summary: 'Get all vessel communication equipment' })
   @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto, isArray: true })
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
@@ -43,7 +43,7 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
-  @ApiOperation({ description: 'Get vessel communication equipment by id' })
+  @ApiOperation({ summary: 'Get vessel communication equipment by id' })
   @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
@@ -57,7 +57,7 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
-  @ApiOperation({ description: 'Create vessel communication equipment' })
+  @ApiOperation({ summary: 'Create vessel communication equipment' })
   @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
@@ -71,7 +71,7 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
-  @ApiOperation({ description: 'Update vessel communication equipment' })
+  @ApiOperation({ summary: 'Update vessel communication equipment' })
   @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
@@ -87,7 +87,7 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
-  @ApiOperation({ description: 'Delete vessel communication equipment' })
+  @ApiOperation({ summary: 'Delete vessel communication equipment' })
   @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @Delete(':id')
   async deleteVesselCommunicationEquipment(

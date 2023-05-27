@@ -12,7 +12,6 @@ export class ResponseVesselCrewDto {
   @Expose()
   title: string;
 
-  @ApiProperty({ example: 1 })
   @Type(() => ResponseVesselDto)
   @Expose()
   vessel: ResponseVesselDto;
