@@ -9,6 +9,7 @@ import { VesselCapabilityModule } from './modules/vessel/modules/vessel-capabili
 import { VesselCommunicationEquipmentModule } from './modules/vessel/modules/vessel-communication-equipment/vessel-communication-equipment.module';
 import { VesselCrewModule } from './modules/vessel/modules/vessel-crew/vessel-crew.module';
 import { VesselInspectorModule } from './modules/vessel/modules/vessel-inspector/vessel-inspector.module';
+import { VesselMaintenanceModule } from './modules/vessel/modules/vessel-maintenance/vessel-maintenance.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { snapshot: true });
@@ -38,6 +39,7 @@ async function bootstrap() {
       VesselCommunicationEquipmentModule,
       VesselCrewModule,
       VesselInspectorModule,
+      VesselMaintenanceModule,
     ],
   });
   SwaggerModule.setup('api', app, swaggerDocument, {});
