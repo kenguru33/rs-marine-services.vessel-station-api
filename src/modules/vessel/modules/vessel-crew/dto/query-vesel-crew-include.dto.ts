@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
-import { ALLOWED_INCLUDES } from '../constants';
+import { ALLOWED_INCLUDES } from '../contstants';
 
-export class QueryVesselCommunicationEquipmentIncludeDto {
+export class QueryVesselCrewIncludeDto {
   @ApiProperty({
     description: `Include relations. Valid values: ${ALLOWED_INCLUDES}`,
     required: false,
-    example: 'type, vessel',
+    example: 'vessel',
   })
   @IsOptional()
   @IsString()

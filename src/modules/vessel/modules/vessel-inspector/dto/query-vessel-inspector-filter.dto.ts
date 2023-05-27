@@ -1,11 +1,7 @@
 import { Transform } from 'class-transformer';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class QueryVesselInspectorDto {
-  @IsOptional()
-  @IsString()
-  include?: string;
-
+export class QueryVesselInspectorFilterDto {
   @IsOptional()
   @IsString()
   name?: string;

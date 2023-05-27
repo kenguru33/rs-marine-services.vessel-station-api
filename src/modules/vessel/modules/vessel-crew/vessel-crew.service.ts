@@ -4,7 +4,7 @@ import { UpdateVesselCrewDto } from './dto/update-vessel-crew.dto';
 import { CreateVesselCrewDto } from './dto/create-vessel-crew.dto';
 import { QueryVesselCrewFilterDto } from './dto/query-vessel-crew-filter.dto';
 import { Prisma } from '@prisma/client';
-import { QueryVesselCrewIncludeDto } from './dto/query-vesel-cew-include.dto';
+import { QueryVesselCrewIncludeDto } from './dto/query-vesel-crew-include.dto';
 
 @Injectable()
 export class VesselCrewService {

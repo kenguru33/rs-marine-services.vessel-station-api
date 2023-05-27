@@ -16,7 +16,7 @@ import { UpdateVesselInspectorDto } from './dto/update-vessel-inspector.dto';
 import { VesselInspectorTransformInterceptor } from './interceptor/vessel-inspector-transform.interceptor';
 import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { QueryParamsValidatorInterceptor } from '../../../../shared/interceptors/query-params-validator.interceptor';
-import { QueryVesselInspectorDto } from './dto/query-vessel-inspector.dto';
+import { QueryVesselInspectorFilterDto } from './dto/query-vessel-inspector-filter.dto';
 
 @UseInterceptors(VesselInspectorTransformInterceptor)
 @Controller('vessel-inspector')
@@ -33,7 +33,7 @@ export class VesselInspectorController {
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
   @Get()
-  async getVesselInspectors(@Query() query: QueryVesselInspectorDto) {
+  async getVesselInspectors(@Query() query: QueryVesselInspectorFilterDto) {
     return await this.vessselInspectorService.getVesselInspectors(query);
   }
 
@@ -41,7 +41,7 @@ export class VesselInspectorController {
   @Post()
   async createVesselInspector(
     @Body() data: CreateVesselInspectorDto,
-    @Query() query: QueryVesselInspectorDto,
+    @Query() query: QueryVesselInspectorFilterDto,
   ) {
     return await this.vessselInspectorService.createVesselInspector(
       data,
@@ -54,9 +54,13 @@ export class VesselInspectorController {
   async updateVesselInspector(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: UpdateVesselInspectorDto,
-    @Query() query: QueryVesselInspectorDto,
+    @Query() query: QueryVesselInspectorFilterDto,
   ) {
-    return await this.vessselInspectorService.updateVesselInspector(id, data, query);
+    return await this.vessselInspectorService.updateVesselInspector(
+      id,
+      data,
+      query,
+    );
   }
 
   @Delete(':id')

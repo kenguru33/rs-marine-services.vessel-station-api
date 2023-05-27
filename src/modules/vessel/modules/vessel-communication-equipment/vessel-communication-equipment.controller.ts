@@ -17,8 +17,9 @@ import { ALLOWED_FILTERS, ALLOWED_INCLUDES } from './constants';
 import { CreateVesselCommunicationEquipmentDto } from './dto/create-vessel-communication-equipment.dto';
 import { UpdateVesselCommunicationEquipmentDto } from './dto/update-vessel-comm-equip.dto';
 import { QueryVesselCommunicationEquipmentIncludeDto } from './dto/query-vessel-communication-equipment-include.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { QueryVesselCommunicationEquipmentFilterDto } from './dto/query-vessel-communication-equipment-filter.dto';
+import { ResponseVesselCommunicationEquipmentDto } from './dto/response-vessel-communication-equipment.dts';
 
 @ApiTags('vessel-communication-equipment')
 @UseInterceptors(VesselCommunicationEquipmentTransformInterceptor)
@@ -26,6 +27,8 @@ import { QueryVesselCommunicationEquipmentFilterDto } from './dto/query-vessel-c
 export class VesselCommunicationEquipmentController {
   constructor(private vesselBuildInfoService: VesselCommEquipService) {}
 
+  @ApiOperation({ description: 'Get all vessel communication equipment' })
+  @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto, isArray: true })
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
@@ -40,6 +43,8 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
+  @ApiOperation({ description: 'Get vessel communication equipment by id' })
+  @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
   async getVesselCommunicationEquipment(
@@ -52,6 +57,8 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
+  @ApiOperation({ description: 'Create vessel communication equipment' })
+  @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Post()
   async createVesselCommunicationEquipment(
@@ -64,6 +71,8 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
+  @ApiOperation({ description: 'Update vessel communication equipment' })
+  @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Put(':id')
   async updateVesselCommunicationEquipment(
@@ -78,6 +87,8 @@ export class VesselCommunicationEquipmentController {
     );
   }
 
+  @ApiOperation({ description: 'Delete vessel communication equipment' })
+  @ApiResponse({ type: ResponseVesselCommunicationEquipmentDto })
   @Delete(':id')
   async deleteVesselCommunicationEquipment(
     @Param('id', ParseIntPipe) id: number,

@@ -141,7 +141,7 @@ model VesselCommunicationEquipmentType {
   id                     Int                            @id @default(autoincrement())
   name                   String                         @unique
   description            String?
-  communicationEquipment VesselCommunicationEquipment[]
+  communicationEquipments VesselCommunicationEquipment[]
 }
 
 model VesselInspector {

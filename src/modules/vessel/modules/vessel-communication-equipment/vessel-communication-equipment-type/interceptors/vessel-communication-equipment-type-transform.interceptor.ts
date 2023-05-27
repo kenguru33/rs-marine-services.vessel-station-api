@@ -9,7 +9,7 @@ import { plainToInstance } from 'class-transformer';
 import { ResponseVesselCommunicationEquipmentTypeDto } from '../dto/response-vessel-communication-equipment-type';
 
 @Injectable()
-export class VesselCommEquipTypeTransformInterceptor
+export class VesselCommunicationEquipmentTypeTransformInterceptor
   implements NestInterceptor
 {
   intercept(

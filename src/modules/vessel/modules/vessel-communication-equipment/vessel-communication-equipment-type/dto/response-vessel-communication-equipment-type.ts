@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { ResponseVesselCommunicationEquipmentDto } from '../../dto/response-vessel-communication-equipment.dts';
 
 export class ResponseVesselCommunicationEquipmentTypeDto {
   @ApiProperty({ example: 1 })
@@ -13,4 +14,8 @@ export class ResponseVesselCommunicationEquipmentTypeDto {
   @ApiProperty({ example: 'VHF radio' })
   @Expose()
   description?: string;
+
+  @Expose()
+  @Type(() => ResponseVesselCommunicationEquipmentDto)
+  communicationEquipments: ResponseVesselCommunicationEquipmentDto[];
 }
