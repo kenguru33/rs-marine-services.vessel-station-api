@@ -14,14 +14,17 @@ export class StationTypeService {
     queryInclude: QueryStationTypeIncludeDto,
     queryFilter: QueryStationTypeFilterDto,
   ) {
-    
     const stationTypeIncludes =
       await this.prisma.parseInclude<Prisma.StationTypeInclude>(
         queryInclude.include,
       );
-    const types = await  this.prisma.stationType.findMany({
+    const types = await this.prisma.stationType.findMany({
       include: stationTypeIncludes,
-      where: queryFilter,
+      where: {
+        name: {
+          equals: queryFilter.name,
+        },
+      },
     });
     return types;
   }
