@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsLatitude,
   IsLongitude,
@@ -8,10 +9,12 @@ import {
 } from 'class-validator';
 
 export class UpdateStationAccommodationDto {
+  @ApiProperty({ example: 'Leilighet' })
   @IsNumber()
   @IsOptional()
   typeId?: number;
 
+  @ApiProperty({ example: 'Leilighet for mannskap' })
   @IsOptional()
   @IsString()
   description?: string;

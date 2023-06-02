@@ -6,6 +6,7 @@ export class CreateStationAccommodationTypeDto {
   @IsString()
   name: string;
 
+  @ApiProperty({ example: 'Type leilighet' })
   @IsString()
   @IsOptional()
   description?: string;

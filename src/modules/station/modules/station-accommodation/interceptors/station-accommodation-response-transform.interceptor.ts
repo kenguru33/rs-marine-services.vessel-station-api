@@ -10,7 +10,7 @@ import { plainToInstance } from 'class-transformer';
 import { ResponseAccommodationDto } from '../dto/response-station-accommodation.dto';
 
 @Injectable()
-export class StationAccommodatoionResponseTransformInterceptor
+export class StationAccommodationResponseTransformInterceptor
   implements NestInterceptor
 {
   intercept(
