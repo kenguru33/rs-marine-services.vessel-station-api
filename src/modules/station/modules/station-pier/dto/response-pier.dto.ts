@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { ResponsePierTypeDto } from '../station-pier-type/dto/response-pier-type.dto';
+import { ResponseStationPierTypeDto } from '../station-pier-type/dto/response-pier-type.dto';
 
 export class ResponsePierDto {
   @Expose()
@@ -16,9 +16,9 @@ export class ResponsePierDto {
 
   typeId: number;
 
-  @Type(() => ResponsePierTypeDto)
+  @Type(() => ResponseStationPierTypeDto)
   @Expose()
-  type: ResponsePierTypeDto;
+  type: ResponseStationPierTypeDto;
 
   @Expose()
   floating: boolean;

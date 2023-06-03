@@ -12,6 +12,7 @@ import { VesselInspectorModule } from './modules/vessel/modules/vessel-inspector
 import { VesselMaintenanceModule } from './modules/vessel/modules/vessel-maintenance/vessel-maintenance.module';
 import { VesselStateModule } from './modules/vessel/modules/vessel-state/vessel-state.module';
 import { StationAccommodationModule } from './modules/station/modules/station-accommodation/station.accommodation.module';
+import { StationPierModule } from './modules/station/modules/station-pier/station-pier.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { snapshot: true });
@@ -44,6 +45,7 @@ async function bootstrap() {
       VesselStateModule,
       StationModule,
       StationAccommodationModule,
+      StationPierModule,
     ],
   });
   SwaggerModule.setup('api', app, swaggerDocument, {});

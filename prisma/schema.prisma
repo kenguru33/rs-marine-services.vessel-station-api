@@ -265,7 +265,7 @@ model StationPierType {
   id          Int           @id @default(autoincrement())
   name        String        @unique
   description String?
-  stationPier StationPier[]
+  piers StationPier[]
 }
 
 model StationPierElictrityType {
