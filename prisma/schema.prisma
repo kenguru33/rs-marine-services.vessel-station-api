@@ -269,12 +269,12 @@ model StationPierType {
 }
 
 model StationPierElictricityType {
-  id           Int           @id @default(autoincrement())
-  name         String
-  description  String?
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String?
   // stationPier   StationPier? @relation(fields: [stationPierId], references: [id])
   // stationPierId Int?
-  stationPiers StationPier[]
+  piers       StationPier[]
 
   //@@index([stationPierId])
 }
