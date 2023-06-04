@@ -3,7 +3,7 @@ import { Expose, Type } from 'class-transformer';
 import { ResponseVesselDto } from '../../vessel/dto/response-vessel.dto';
 import { ResponseAccommodationDto } from '../modules/station-accommodation/dto/response-station-accommodation.dto';
 import { ResponseStationAgreementDto } from '../modules/station-agreement/dto/response-station-agreement.dto';
-import { ResponsePierDto } from '../modules/station-pier/dto/response-pier.dto';
+import { ResponseStationPierDto } from '../modules/station-pier/dto/response-station-pier.dto';
 import { ResponseStationTypeDto } from '../station-type/dto/response-station-type.dto';
 
 export class ResponseStationDto {
@@ -45,9 +45,9 @@ export class ResponseStationDto {
   @Expose()
   longitude: number;
 
-  @Type(() => ResponsePierDto)
+  @Type(() => ResponseStationPierDto)
   @Expose()
-  pier?: ResponsePierDto;
+  pier?: ResponseStationPierDto;
 
   @Expose()
   @Type(() => ResponseAccommodationDto)

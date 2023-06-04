@@ -1,6 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class UpdateStationPierDto {
+  @ApiProperty({ example: 10 })
   @IsOptional()
   @IsNumber()
   length?: number;
@@ -21,6 +23,7 @@ export class UpdateStationPierDto {
   @IsBoolean()
   floating?: boolean;
 
+  @ApiProperty({ example: false })  
   @IsOptional()
   @IsBoolean()
   diesel?: boolean;
