@@ -2,6 +2,7 @@ import { Expose, Type } from 'class-transformer';
 import { ResponseStationPierTypeDto } from '../station-pier-type/dto/response-pier-type.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { ResponseStationDto } from '../../../dto/response-station.dto';
+import { ResponseStationPierElectricityTypeDto } from '../station-pier-electricity-type/dto/response-station-pier-electricity-type.dto';
 
 export class ResponseStationPierDto {
   @ApiProperty({ example: 1 })
@@ -55,4 +56,8 @@ export class ResponseStationPierDto {
   @Expose()
   @Type(() => ResponseStationDto)
   station: ResponseStationDto;
+
+  @Expose()
+  @Type(() => ResponseStationPierElectricityTypeDto)
+  electricityTypes: ResponseStationPierElectricityTypeDto[];
 }

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsBoolean, IsNumber } from 'class-validator';
 
 export class CreateStationPierDto {
   @ApiProperty({ example: 5 })
@@ -45,4 +46,9 @@ export class CreateStationPierDto {
   @ApiProperty({ example: 1 })
   @IsNumber()
   stationId: number;
+
+  @ApiProperty({ example: 1 })
+  @IsArray()
+  @Type(() => Number)
+  electricityTypeIds: number[];
 }

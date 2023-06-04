@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class UpdateStationPierDto {
   @ApiProperty({ example: 10 })
@@ -23,7 +24,7 @@ export class UpdateStationPierDto {
   @IsBoolean()
   floating?: boolean;
 
-  @ApiProperty({ example: false })  
+  @ApiProperty({ example: false })
   @IsOptional()
   @IsBoolean()
   diesel?: boolean;
@@ -47,4 +48,9 @@ export class UpdateStationPierDto {
   @IsOptional()
   @IsNumber()
   stationId?: number;
+
+  @ApiProperty({ example: 1 })
+  @IsArray()
+  @Type(() => Number)
+  electricityTypeIds: number[];
 }

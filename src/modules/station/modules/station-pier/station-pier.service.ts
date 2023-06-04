@@ -30,10 +30,7 @@ export class StationPierService {
         queryInclude.include,
       );
     return this.prisma.stationPier.findMany({
-      //include: stationPierIncludes,
-      include: {
-        station: true,
-      },
+      include: stationPierIncludes,
       where: {
         type: {
           name: queryFilter.type ? queryFilter.type : undefined,
@@ -51,7 +48,30 @@ export class StationPierService {
         queryInclude.include,
       );
     return this.prisma.stationPier.create({
-      data: data,
+      data: {
+        length: data.length,
+        width: data.width,
+        type: {
+          connect: {
+            id: data.typeId,
+          },
+        },
+        station: {
+          connect: {
+            id: data.stationId,
+          },
+        },
+        minimumDepth: data.minimumDepth,
+        coldWater: data.coldWater,
+        hotWater: data.hotWater,
+        diesel: data.diesel,
+        floating: data.floating,
+        petrol: data.petrol,
+        storageSpace: data.storageSpace,
+        electricityTypes: {
+          connect: data.electricityTypeIds.map((id) => ({ id })),
+        },
+      },
       include: stationPierIncludes,
     });
   }
