@@ -1,6 +1,6 @@
 import { IsOptional, IsString } from "class-validator";
 
-export class QueryStationAgreementDto {
+export class QueryStationAgreementFilterDto {
   @IsOptional()
   @IsString()
   include?: string;

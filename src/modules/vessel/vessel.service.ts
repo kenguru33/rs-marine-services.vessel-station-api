@@ -6,24 +6,24 @@ import { QueryVesselFilterDto } from './dto/query-vessel-filter.dto';
 import { UpdateVesselDto } from './dto/update-vessel.dto';
 import { QueryVesselIncludeDto } from './dto/query-vessel-include.dto';
 
-export type VesselWithRelation = Prisma.VesselGetPayload<{
-  include: {
-    capabilities?: true;
-    class?: true;
-    station?: true;
-    state?: {
-      include: {
-        stateCategory?: true;
-      };
-    };
-    type?: true;
-    communicationEquipments?: {
-      include: {
-        type?: true;
-      };
-    };
-  };
-}>;
+// export type VesselWithRelation = Prisma.VesselGetPayload<{
+//   include: {
+//     capabilities?: true;
+//     class?: true;
+//     station?: true;
+//     state?: {
+//       include: {
+//         stateCategory?: true;
+//       };
+//     };
+//     type?: true;
+//     communicationEquipments?: {
+//       include: {
+//         type?: true;
+//       };
+//     };
+//   };
+// }>;
 
 @Injectable()
 export class VesselService {
@@ -40,13 +40,12 @@ export class VesselService {
       where: { id },
       include: vesselInclude,
     });
-    ('');
   }
 
   async getVessels(
     queryVesselIncludeDto: QueryVesselIncludeDto,
     filter: QueryVesselFilterDto,
-  ): Promise<Vessel[] | VesselWithRelation[]> {
+  ) {
     const vesselInclude = await this.prisma.parseInclude<Prisma.VesselInclude>(
       queryVesselIncludeDto.include,
     );
