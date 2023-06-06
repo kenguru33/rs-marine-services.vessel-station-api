@@ -18,7 +18,10 @@ import { QueryParamsValidatorInterceptor } from '../../../../../shared/intercept
 import { ALLOWED_INCLUDES, ALLOWED_FILTERS } from './constants';
 import { QueryStationAgreementCustomerIncludeDto } from './dto/query-station-agreement-customer-include.dto';
 import { QueryStationAgreementCustomerFilterDto } from './dto/query-station-agreement-customer-filter.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ResponseStationAgreementCustomerDto } from './dto/response-station-agreement-customer.dto';
 
+@ApiTags('station-agreement-customer')
 @UseInterceptors(StationAgreementCustomerResponseTransformInterceptor)
 @Controller('station-agreement-customer')
 export class StationAgreementCustomerController {
@@ -26,6 +29,8 @@ export class StationAgreementCustomerController {
     private stationAgreementCustomerService: StationAgreementCustomerService,
   ) {}
 
+  @ApiOperation({ summary: 'Get all station agreement customers' })
+  @ApiResponse({ type: ResponseStationAgreementCustomerDto, isArray: true })
   @UseInterceptors(
     new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES, ALLOWED_FILTERS),
   )
@@ -40,6 +45,8 @@ export class StationAgreementCustomerController {
     );
   }
 
+  @ApiOperation({ summary: 'Get a station agreement customer by id' })
+  @ApiResponse({ type: ResponseStationAgreementCustomerDto })
   @UseInterceptors(new QueryParamsValidatorInterceptor(ALLOWED_INCLUDES))
   @Get(':id')
   async getStationAgreementCustomer(
@@ -52,6 +59,8 @@ export class StationAgreementCustomerController {
     );
   }
 
+  @ApiOperation({ summary: 'Create a station agreement customer' })
+  @ApiResponse({ type: ResponseStationAgreementCustomerDto })
   @Post()
   async create(
     @Body() data: CreateStationAgreementCustomerDto,
@@ -60,6 +69,8 @@ export class StationAgreementCustomerController {
     return this.stationAgreementCustomerService.create(data, query);
   }
 
+  @ApiOperation({ summary: 'Update a station agreement customer' })
+  @ApiResponse({ type: ResponseStationAgreementCustomerDto })
   @Put(':id')
   async updateStationAgreementCustomer(
     @Param('id', ParseIntPipe) id: number,
@@ -73,6 +84,8 @@ export class StationAgreementCustomerController {
     );
   }
 
+  @ApiOperation({ summary: 'Delete a station agreement customer' })
+  @ApiResponse({ type: ResponseStationAgreementCustomerDto })
   @Delete(':id')
   async deleteStationAgreementCustomer(@Param('id', ParseIntPipe) id: number) {
     return this.stationAgreementCustomerService.deleteStationAgreementCustomer(
