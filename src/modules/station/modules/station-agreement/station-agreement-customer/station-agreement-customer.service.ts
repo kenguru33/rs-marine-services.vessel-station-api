@@ -2,33 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../../database/prisma.service';
 import { Prisma } from '@prisma/client';
 import { UpdateStationAgreementCustomerDto } from './dto/update-station-agreement-customer.dto';
-import { QueryStationAgreementCustomerDto } from './dto/query-station-agreement-customer.dto';
+import { QueryStationAgreementCustomerFilterDto } from './dto/query-station-agreement-customer-filter.dto';
+import { QueryStationAgreementCustomerIncludeDto } from './dto/query-station-agreement-customer-include.dto';
 
 @Injectable()
 export class StationAgreementCustomerService {
   constructor(private prisma: PrismaService) {}
 
-  async getStationAgreementCustomers(query: QueryStationAgreementCustomerDto) {
-    const { include, ...where } = query;
+  async getStationAgreementCustomers(
+    queryInclude: QueryStationAgreementCustomerIncludeDto,
+    queryFilter: QueryStationAgreementCustomerFilterDto,
+  ) {
     const stationAgreementCustomerIncludes =
       await this.prisma.parseInclude<Prisma.StationAgreementCustomerInclude>(
-        include,
+        queryInclude.include,
       );
 
     return this.prisma.stationAgreementCustomer.findMany({
       include: stationAgreementCustomerIncludes,
-      where,
+      where: queryFilter,
     });
   }
 
   async getStationAgreementCustomer(
     id: number,
-    query: QueryStationAgreementCustomerDto,
+    queryInclude: QueryStationAgreementCustomerIncludeDto,
   ) {
-    const { include, ...where } = query;
     const stationAgreementCustomerIncludes =
       await this.prisma.parseInclude<Prisma.StationAgreementCustomerInclude>(
-        query.include,
+        queryInclude.include,
       );
     return this.prisma.stationAgreementCustomer.findUniqueOrThrow({
       where: {
@@ -40,7 +42,7 @@ export class StationAgreementCustomerService {
 
   async create(
     data: Prisma.StationAgreementCustomerCreateInput,
-    query: QueryStationAgreementCustomerDto,
+    query: QueryStationAgreementCustomerIncludeDto,
   ) {
     const stationAgreementCustomerIncludes =
       await this.prisma.parseInclude<Prisma.StationAgreementCustomerInclude>(
@@ -63,11 +65,11 @@ export class StationAgreementCustomerService {
   async updateStationAgreementCustomer(
     id: number,
     data: UpdateStationAgreementCustomerDto,
-    query: QueryStationAgreementCustomerDto,
+    queryInclude: QueryStationAgreementCustomerIncludeDto,
   ) {
     const stationAgreementCustomerIncludes =
       await this.prisma.parseInclude<Prisma.StationAgreementCustomerInclude>(
-        query.include,
+        queryInclude.include,
       );
     return this.prisma.stationAgreementCustomer.update({
       where: {

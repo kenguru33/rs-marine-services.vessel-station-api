@@ -31,7 +31,7 @@ export class StationAgreementService {
       );
     return this.prisma.stationAgreement.findMany({
       include: stationAgreementIncludes,
-      where: {},
+      where: {}, // TODO: add filter
     });
   }
 
