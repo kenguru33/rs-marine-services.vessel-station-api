@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { VesselModule } from './modules/vessel/vessel.module';
 import { StationModule } from './modules/station/station.module';
 import { DatabaseModule } from './database/database.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { DatabaseModule } from './database/database.module';
     //   autoSchemaFile: true,
     // }),
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

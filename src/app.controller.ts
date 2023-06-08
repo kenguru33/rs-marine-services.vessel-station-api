@@ -5,6 +5,6 @@ export class AppController {
   @Get()
   redirect(@Res() res: any) {
     
-    return 'Hello World!'
+    return res.redirect('/api');
   }
 }
