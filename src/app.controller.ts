@@ -1,9 +1,10 @@
 import { Controller, Get, Res } from '@nestjs/common';
 
-@Controller()
+@Controller('/')
 export class AppController {
   @Get()
   redirect(@Res() res: any) {
-    return res.redirect('/api');
+    
+    return 'Hello World!'
   }
 }
