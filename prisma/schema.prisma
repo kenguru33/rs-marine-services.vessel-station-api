@@ -41,39 +41,39 @@ model Vessel {
 
   maintenances VesselMaintenance[]
 
-  VesselCrew VesselCrew[]
+  VesselCrew        VesselCrew[]
   // // buildinfo
-  //   buildYear         Int?
-  //   inOperationFrom   DateTime?
-  //   inOperationTo     DateTime?
-  //   constrctor        String?
-  //   salesOrganization String?
-  //   buildingMaterial  String?
-  //   financedBy        String?
-  //   dnvClass          String?
+  buildYear         Int?
+  inOperationFrom   DateTime?
+  inOperationTo     DateTime?
+  constrctor        String?
+  salesOrganization String?
+  buildingMaterial  String?
+  financedBy        String?
+  dnvClass          String?
 
-  // // dimensions
-  //   maxSpeed       Int?
-  //   cruisingSpeed  Int?
-  //   range          Int?
-  //   length         Int?
-  //   beam           Int?
-  //   draft          Int?
-  //   bunkerOil      Int?
-  //   ballastTank    Int?
-  //   freshWaterTank Int?
-  //   bollbadPull    Int?
-  //   towingHook     Boolean?
-  //   tonnageGross   Int?
-  //   tonnageNet     Int?
+  // dimensions
+  maxSpeed       Int?
+  cruisingSpeed  Int?
+  range          Int?
+  length         Int?
+  beam           Int?
+  draft          Int?
+  bunkerOil      Int?
+  ballastTank    Int?
+  freshWaterTank Int?
+  bollbadPull    Int?
+  towingHook     Boolean?
+  tonnageGross   Int?
+  tonnageNet     Int?
 
-  // // motor and propeller
-  //   mainEngine      String?
-  //   secondaryEngine String?
-  //   gear            String?
-  //   waterJet        Boolean?
-  //   proppellers     Boolean?
-  //   bowThruster     Boolean?
+  // motor and propeller
+  mainEngine      String?
+  secondaryEngine String?
+  gear            String?
+  waterJet        Boolean?
+  proppellers     Boolean?
+  bowThruster     Boolean?
 
   @@index([typeId])
   @@index([stationId])
