@@ -5,6 +5,15 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { StationModule } from './modules/station/station.module';
 import { VesselModule } from './modules/vessel/vessel.module';
+import { VesselCapabilityModule } from './modules/vessel/modules/vessel-capability/vessel-capability.module';
+import { VesselCommunicationEquipmentModule } from './modules/vessel/modules/vessel-communication-equipment/vessel-communication-equipment.module';
+import { VesselCrewModule } from './modules/vessel/modules/vessel-crew/vessel-crew.module';
+import { VesselInspectorModule } from './modules/vessel/modules/vessel-inspector/vessel-inspector.module';
+import { VesselMaintenanceModule } from './modules/vessel/modules/vessel-maintenance/vessel-maintenance.module';
+import { VesselStateModule } from './modules/vessel/modules/vessel-state/vessel-state.module';
+import { StationAccommodationModule } from './modules/station/modules/station-accommodation/station.accommodation.module';
+import { StationPierModule } from './modules/station/modules/station-pier/station-pier.module';
+import { StationAgreementModule } from './modules/station/modules/station-agreement/station-agreement.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { snapshot: true });
@@ -19,31 +28,30 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
 
-  const options = new DocumentBuilder()
-    .setTitle('Stations')
-    .setDescription('The station API description')
+  const swaggerOptions = new DocumentBuilder()
+    .setTitle('Vessels and Stations API')
+    .setDescription('The vessel and station API description')
     .setVersion('1.0')
-    .addTag('stations')
+    .addTag('vessels and stations')
     .build();
 
-  const stationDocument = SwaggerModule.createDocument(app, options, {
-    include: [StationModule],
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerOptions, {
+    include: [
+      VesselModule,
+      VesselCapabilityModule,
+      VesselCommunicationEquipmentModule,
+      VesselCrewModule,
+      VesselInspectorModule,
+      VesselMaintenanceModule,
+      VesselStateModule,
+      StationModule,
+      StationAccommodationModule,
+      StationPierModule,
+      StationAgreementModule,
+    ],
   });
-  SwaggerModule.setup('api/station', app, stationDocument);
+  SwaggerModule.setup('api', app, swaggerDocument, {});
 
-  const secondOptions = new DocumentBuilder()
-    .setTitle('Vessel')
-    .setDescription('The vessel API description')
-    .setVersion('1.0')
-    .addTag('vessels')
-    .build();
-
-  const vesselDocument = SwaggerModule.createDocument(app, secondOptions, {
-    include: [VesselModule],
-  });
-  SwaggerModule.setup('api/vessel', app, vesselDocument);
-  
-
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

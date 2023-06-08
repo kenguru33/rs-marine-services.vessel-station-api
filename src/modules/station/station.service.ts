@@ -3,7 +3,9 @@ import { PrismaService } from '../../database/prisma.service';
 import { Prisma, Station } from '@prisma/client';
 import { CreateStationDto } from './dto/create-station.dto';
 import { UpdateStationDto } from './dto/update-station.dto';
-import { QueryStationDto } from './dto/query-station.dto';
+import { QueryStationFilterDto } from './dto/query-station-filter.dto';
+import { QueryStationIncludeDto } from './dto/query-station-include.dto';
+import { connect } from 'http2';
 
 type stationWithRelation = Prisma.StationGetPayload<{
   include: {
@@ -33,49 +35,101 @@ type stationWithRelation = Prisma.StationGetPayload<{
 export class StationService {
   constructor(private prisma: PrismaService) {}
 
-  async getStation(id: number): Promise<Station> {
+  async getStation(id: number, queryInclude: QueryStationIncludeDto) {
+    const stationIncludes =
+      await this.prisma.parseInclude<Prisma.StationInclude>(
+        queryInclude.include,
+      );
     const station = await this.prisma.station.findUniqueOrThrow({
       where: { id },
+      include: stationIncludes,
     });
 
     return station;
   }
-  async getStations(query: QueryStationDto): Promise<Station[]> {
-    const { include, ...where } = query;
-    const stationPrismaInclude =
-      await this.prisma.parseInclude<Prisma.StationInclude>(include);
+  async getStations(
+    queryInclude: QueryStationIncludeDto,
+    queryFilter: QueryStationFilterDto,
+  ): Promise<Station[]> {
+    const stationIncludes =
+      await this.prisma.parseInclude<Prisma.StationInclude>(
+        queryInclude.include,
+      );
 
     return this.prisma.station.findMany({
       where: {
-        name: where.name ? { contains: where.name } : undefined,
+        name: queryFilter.name ? { contains: queryFilter.name } : undefined,
         type: {
-          name: where.type
+          name: queryFilter.type
             ? {
-                contains: where.type,
+                contains: queryFilter.type,
               }
             : undefined,
         },
       },
-      include: stationPrismaInclude,
+      include: stationIncludes,
     });
   }
 
-  async createStation(data: CreateStationDto): Promise<Station> {
+  async createStation(
+    data: CreateStationDto,
+    queryInclude: QueryStationIncludeDto,
+  ) {
+    const stationIncludes =
+      await this.prisma.parseInclude<Prisma.StationInclude>(
+        queryInclude.include,
+      );
     return this.prisma.station.create({
-      data: data,
+      data: {
+        name: data.name,
+        type: {
+          connect: {
+            id: data.typeId,
+          },
+        },
+        address: data.address,
+        postalCode: data.postalCode,
+        postalLocation: data.postalLocation,
+        postalBox: data.postalBox,
+        postalDelivery: data.postalDelivery,
+        latitude: data.latitude,
+        longitude: data.longitude,
+      },
+      include: stationIncludes,
+    });
+  }
+
+  async updateStation(
+    id: number,
+    data: UpdateStationDto,
+    queryInclude: QueryStationIncludeDto,
+  ) {
+    const stationIncludes =
+      await this.prisma.parseInclude<Prisma.StationInclude>(
+        queryInclude.include,
+      );
+    return this.prisma.station.update({
+      where: { id },
+      data: {
+        name: data.name,
+        type: {
+          connect: data.typeId ? { id: data.typeId } : undefined,
+        },
+        address: data.address,
+        postalCode: data.postalCode,
+        postalLocation: data.postalLocation,
+        postalBox: data.postalBox,
+        postalDelivery: data.postalDelivery,
+        latitude: data.latitude,
+        longitude: data.longitude,
+      },
+      include: stationIncludes,
     });
   }
 
   async deleteStation(id: number): Promise<Station> {
     return this.prisma.station.delete({
       where: { id },
-    });
-  }
-
-  async updateStation(id: number, data: UpdateStationDto): Promise<Station> {
-    return this.prisma.station.update({
-      where: { id },
-      data,
     });
   }
 }

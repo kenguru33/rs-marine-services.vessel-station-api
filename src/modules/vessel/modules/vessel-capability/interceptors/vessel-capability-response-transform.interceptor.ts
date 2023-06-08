@@ -20,11 +20,11 @@ export class VesselCapabilityResponseTransformInterceptor
     return next.handle().pipe(
       map((data) => {
         if (data instanceof Array) {
-          return plainToInstance(ResponseVesselDto, data, {
+          return plainToInstance(ResponseVesselCapabilityDto, data, {
             excludeExtraneousValues: true,
           });
         }
-        return plainToInstance(ResponseVesselDto, data, {
+        return plainToInstance(ResponseVesselCapabilityDto, data, {
           excludeExtraneousValues: true,
         });
       }),

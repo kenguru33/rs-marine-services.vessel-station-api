@@ -41,39 +41,39 @@ model Vessel {
 
   maintenances VesselMaintenance[]
 
-  VesselCrew VesselCrew[]
+  VesselCrew        VesselCrew[]
   // // buildinfo
-  //   buildYear         Int?
-  //   inOperationFrom   DateTime?
-  //   inOperationTo     DateTime?
-  //   constrctor        String?
-  //   salesOrganization String?
-  //   buildingMaterial  String?
-  //   financedBy        String?
-  //   dnvClass          String?
+  buildYear         Int?
+  inOperationFrom   DateTime?
+  inOperationTo     DateTime?
+  constrctor        String?
+  salesOrganization String?
+  buildingMaterial  String?
+  financedBy        String?
+  dnvClass          String?
 
-  // // dimensions
-  //   maxSpeed       Int?
-  //   cruisingSpeed  Int?
-  //   range          Int?
-  //   length         Int?
-  //   beam           Int?
-  //   draft          Int?
-  //   bunkerOil      Int?
-  //   ballastTank    Int?
-  //   freshWaterTank Int?
-  //   bollbadPull    Int?
-  //   towingHook     Boolean?
-  //   tonnageGross   Int?
-  //   tonnageNet     Int?
+  // dimensions
+  maxSpeed       Int?
+  cruisingSpeed  Int?
+  range          Int?
+  length         Int?
+  beam           Int?
+  draft          Int?
+  bunkerOil      Int?
+  ballastTank    Int?
+  freshWaterTank Int?
+  bollbadPull    Int?
+  towingHook     Boolean?
+  tonnageGross   Int?
+  tonnageNet     Int?
 
-  // // motor and propeller
-  //   mainEngine      String?
-  //   secondaryEngine String?
-  //   gear            String?
-  //   waterJet        Boolean?
-  //   proppellers     Boolean?
-  //   bowThruster     Boolean?
+  // motor and propeller
+  mainEngine      String?
+  secondaryEngine String?
+  gear            String?
+  waterJet        Boolean?
+  proppellers     Boolean?
+  bowThruster     Boolean?
 
   @@index([typeId])
   @@index([stationId])
@@ -138,10 +138,10 @@ model VesselCommunicationEquipment {
 }
 
 model VesselCommunicationEquipmentType {
-  id                     Int                            @id @default(autoincrement())
-  name                   String                         @unique
-  description            String?
-  communicationEquipment VesselCommunicationEquipment[]
+  id                      Int                            @id @default(autoincrement())
+  name                    String                         @unique
+  description             String?
+  communicationEquipments VesselCommunicationEquipment[]
 }
 
 model VesselInspector {
@@ -242,21 +242,21 @@ model StationAccommodationType {
 }
 
 model StationPier {
-  id           Int                        @id @default(autoincrement())
-  length       Int
-  width        Int
-  minimumDepth Int
-  type         StationPierType?           @relation(fields: [typeId], references: [id])
-  typeId       Int?
-  floating     Boolean                    @default(false)
-  electricity  StationPierElictrityType[]
-  diesel       Boolean                    @default(false)
-  petrol       Boolean                    @default(false)
-  storageSpace Boolean                    @default(false)
-  coldWater    Boolean                    @default(false)
-  hotWater     Boolean                    @default(false)
-  stationId    Int                        @unique
-  station      Station                    @relation(fields: [stationId], references: [id])
+  id               Int                          @id @default(autoincrement())
+  length           Int
+  width            Int
+  minimumDepth     Int
+  type             StationPierType?             @relation(fields: [typeId], references: [id])
+  typeId           Int?
+  floating         Boolean                      @default(false)
+  electricityTypes StationPierElictricityType[]
+  diesel           Boolean                      @default(false)
+  petrol           Boolean                      @default(false)
+  storageSpace     Boolean                      @default(false)
+  coldWater        Boolean                      @default(false)
+  hotWater         Boolean                      @default(false)
+  stationId        Int                          @unique
+  station          Station                      @relation(fields: [stationId], references: [id])
 
   @@index([typeId])
 }
@@ -265,17 +265,18 @@ model StationPierType {
   id          Int           @id @default(autoincrement())
   name        String        @unique
   description String?
-  stationPier StationPier[]
+  piers       StationPier[]
 }
 
-model StationPierElictrityType {
-  id            Int          @id @default(autoincrement())
-  name          String
-  description   String?
-  stationPier   StationPier? @relation(fields: [stationPierId], references: [id])
-  stationPierId Int?
+model StationPierElictricityType {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String?
+  // stationPier   StationPier? @relation(fields: [stationPierId], references: [id])
+  // stationPierId Int?
+  piers       StationPier[]
 
-  @@index([stationPierId])
+  //@@index([stationPierId])
 }
 
 model StationAgreement {

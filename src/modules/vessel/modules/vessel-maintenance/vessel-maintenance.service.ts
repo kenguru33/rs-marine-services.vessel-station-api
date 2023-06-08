@@ -2,15 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../database/prisma.service';
 import { UpdateVesselMaintenanceDto } from './dto/update-vessel-maintenance.dto';
 import { CreateVesselMaintenanceDto } from './dto/create-vessel-maintenance.dto';
-import { QueryVesselMaintenancepDto } from './dto/query-vessel-maintenance.dto';
+import { QueryVesselMaintenanceIncludeDto } from './dto/query-vessel-maintenance-include.dto';
 import { Prisma } from '@prisma/client';
 import { query } from 'express';
+import { QueryVesselMaintenanceFilterDto } from './dto/query-vessel-maintenance-filter.dto';
 
 @Injectable()
 export class VesselMaintenanceService {
   constructor(private prisma: PrismaService) {}
 
-  async getVesselMaintenance(id: number, query: QueryVesselMaintenancepDto) {
+  async getVesselMaintenance(
+    id: number,
+    query: QueryVesselMaintenanceIncludeDto,
+  ) {
     const vesselMaintenanceInclude =
       await this.prisma.parseInclude<Prisma.VesselMaintenanceInclude>(
         query.include,
@@ -21,25 +25,28 @@ export class VesselMaintenanceService {
     });
   }
 
-  async getVesselMaintenances(query: QueryVesselMaintenancepDto) {
-    const { include, ...where } = query;
-
+  async getVesselMaintenances(
+    queryInclude: QueryVesselMaintenanceIncludeDto,
+    queryFilter: QueryVesselMaintenanceFilterDto,
+  ) {
     const vesselMaintenanceInclude =
-      await this.prisma.parseInclude<Prisma.VesselMaintenanceInclude>(include);
+      await this.prisma.parseInclude<Prisma.VesselMaintenanceInclude>(
+        queryInclude.include,
+      );
 
     return await this.prisma.vesselMaintenance.findMany({
       include: vesselMaintenanceInclude,
       where: {
-        fromDate: { gte: where.after },
-        toDate: { lte: where.before },
-        vessel: { name: { contains: where.vessel } },
+        fromDate: { gte: queryFilter.after },
+        toDate: { lte: queryFilter.before },
+        vessel: { name: { contains: queryFilter.vessel } },
       },
     });
   }
 
   async createVesselMaintenance(
     data: CreateVesselMaintenanceDto,
-    query: QueryVesselMaintenancepDto,
+    query: QueryVesselMaintenanceIncludeDto,
   ) {
     const vesselMaintenanceInclude =
       await this.prisma.parseInclude<Prisma.VesselMaintenanceInclude>(
@@ -62,7 +69,7 @@ export class VesselMaintenanceService {
   async updateVesselMaintenance(
     id: number,
     data: UpdateVesselMaintenanceDto,
-    query: QueryVesselMaintenancepDto,
+    query: QueryVesselMaintenanceIncludeDto,
   ) {
     const vesselMaintenanceInclude =
       await this.prisma.parseInclude<Prisma.VesselMaintenanceInclude>(

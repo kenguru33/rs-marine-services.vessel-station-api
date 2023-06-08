@@ -2,27 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../database/prisma.service';
 import { UpdateVesselInspectorDto } from './dto/update-vessel-inspector.dto';
 import { CreateVesselInspectorDto } from './dto/create-vessel-inspector.dto';
-import { QueryVesselInspectorDto } from './dto/query-vessel-inspector.dto';
+import { QueryVesselInspectorFilterDto } from './dto/query-vessel-inspector-filter.dto';
 import { Prisma } from '@prisma/client';
+import { QueryVesselInspectorIncludeDto } from './dto/query-vessel-inspector-include.dto';
+import { query } from 'express';
 
 @Injectable()
 export class VesselInspectorService {
   constructor(private prisma: PrismaService) {}
 
-  async getVesselInspector(id: number) {
+  async getVesselInspector(id: number, query: QueryVesselInspectorIncludeDto) {
+    const vesselInspectorInlcudes =
+      await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(
+        query.include,
+      );
     return await this.prisma.vesselInspector.findUnique({
       where: { id },
+      include: vesselInspectorInlcudes,
     });
   }
 
-  async getVesselInspectors(query: QueryVesselInspectorDto) {
-    const { include, ...filter } = query;
+  async getVesselInspectors(
+    queryInclude: QueryVesselInspectorIncludeDto,
+    queryFilter: QueryVesselInspectorFilterDto,
+  ) {
     const vesselInspectorInlcudes =
-      await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(include);
+      await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(
+        queryInclude.include,
+      );
     return await this.prisma.vesselInspector.findMany({
       where: {
         name: {
-          contains: filter.name,
+          contains: queryFilter.name,
         },
       },
       include: vesselInspectorInlcudes,
@@ -31,7 +42,7 @@ export class VesselInspectorService {
 
   async createVesselInspector(
     data: CreateVesselInspectorDto,
-    query: QueryVesselInspectorDto,
+    query: QueryVesselInspectorIncludeDto,
   ) {
     const vesselInspectorInlcudes =
       await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(
@@ -54,7 +65,7 @@ export class VesselInspectorService {
   async updateVesselInspector(
     id: number,
     data: UpdateVesselInspectorDto,
-    query: QueryVesselInspectorDto,
+    query: QueryVesselInspectorIncludeDto,
   ) {
     const vesselInspectorInlcudes =
       await this.prisma.parseInclude<Prisma.VesselInspectorInclude>(

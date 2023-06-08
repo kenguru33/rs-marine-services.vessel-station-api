@@ -3,7 +3,8 @@ import { CreateVesselStateDto } from './dto/createVesselState.dto';
 import { UpdateVesselStateDto } from './dto/updateVesselState.dto';
 import { Prisma, VesselState, VesselStateCategory } from '@prisma/client';
 import { PrismaService } from '../../../../database/prisma.service';
-import { QueryVesselStateDto } from './dto/query-vessel-state.dto';
+import { QueryVesselStateIncludeDto } from './dto/query-vessel-state-include.dto';
+import { QueryVesselStateFilterDto } from './dto/query-vessel-state-filter.dto';
 
 export type VesselStateWithStateCategory = Partial<VesselStateCategory> & {
   stateCategory?: Partial<VesselStateCategory>;
@@ -13,28 +14,41 @@ export type VesselStateWithStateCategory = Partial<VesselStateCategory> & {
 export class VesselStateService {
   constructor(private prisma: PrismaService) {}
 
-  async getState(id: number, query: QueryVesselStateDto): Promise<VesselState> {
+  async getState(
+    id: number,
+    queryInclude: QueryVesselStateIncludeDto,
+  ): Promise<VesselState> {
     const vesselStateInclude =
-      await this.prisma.parseInclude<Prisma.VesselStateInclude>(query.include);
+      await this.prisma.parseInclude<Prisma.VesselStateInclude>(
+        queryInclude.include,
+      );
     return this.prisma.vesselState.findUniqueOrThrow({
       where: { id },
       include: vesselStateInclude,
     });
   }
 
-  async getStates(query: QueryVesselStateDto): Promise<VesselState[]> {
-    const { include, ...where } = query;
+  async getStates(
+    queryInclude: QueryVesselStateIncludeDto,
+    queryFilter: QueryVesselStateFilterDto,
+  ): Promise<VesselState[]> {
     const vesselStatePrismaInclude =
-      await this.prisma.parseInclude<Prisma.VesselStateInclude>(include);
+      await this.prisma.parseInclude<Prisma.VesselStateInclude>(
+        queryInclude.include,
+      );
     return this.prisma.vesselState.findMany({
       include: vesselStatePrismaInclude,
-      where,
+      where: {
+        name: {
+          contains: queryFilter.name ? queryFilter.name : undefined,
+        },
+      },
     });
   }
 
   async createSubState(
     data: CreateVesselStateDto,
-    query: QueryVesselStateDto,
+    query: QueryVesselStateIncludeDto,
   ): Promise<VesselState> {
     const vesselStateInclude =
       await this.prisma.parseInclude<Prisma.VesselStateInclude>(query.include);
@@ -52,7 +66,7 @@ export class VesselStateService {
   async updateSubState(
     id: number,
     data: UpdateVesselStateDto,
-    query: QueryVesselStateDto,
+    query: QueryVesselStateIncludeDto,
   ): Promise<VesselState> {
     const vesselStateInclude =
       await this.prisma.parseInclude<Prisma.VesselStateInclude>(query.include);

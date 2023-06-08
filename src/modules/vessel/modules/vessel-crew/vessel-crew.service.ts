@@ -2,26 +2,31 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../database/prisma.service';
 import { UpdateVesselCrewDto } from './dto/update-vessel-crew.dto';
 import { CreateVesselCrewDto } from './dto/create-vessel-crew.dto';
-import { QueryVesselCrewDto } from './dto/query-vessel-crew.dto';
+import { QueryVesselCrewFilterDto } from './dto/query-vessel-crew-filter.dto';
 import { Prisma } from '@prisma/client';
+import { QueryVesselCrewIncludeDto } from './dto/query-vesel-crew-include.dto';
 
 @Injectable()
 export class VesselCrewService {
   constructor(private prisma: PrismaService) {}
 
-  async getVesselCrews(query: QueryVesselCrewDto) {
-    const { include, ...filter } = query;
+  async getVesselCrews(
+    queryInclude: QueryVesselCrewIncludeDto,
+    queryFilter: QueryVesselCrewFilterDto,
+  ) {
     const vesselCrewInclude =
-      await this.prisma.parseInclude<Prisma.VesselCrewInclude>(include);
+      await this.prisma.parseInclude<Prisma.VesselCrewInclude>(
+        queryInclude.include,
+      );
     return await this.prisma.vesselCrew.findMany({
       include: vesselCrewInclude,
       where: {
-        name: { contains: filter.name },
+        name: { contains: queryFilter.name },
       },
     });
   }
 
-  async getVesselCrew(id: number, query: QueryVesselCrewDto) {
+  async getVesselCrew(id: number, query: QueryVesselCrewIncludeDto) {
     const vesselCrewInclude =
       await this.prisma.parseInclude<Prisma.VesselCrewInclude>(query.include);
     return await this.prisma.vesselCrew.findUnique({
@@ -30,8 +35,12 @@ export class VesselCrewService {
     });
   }
 
-  async createVesselCrew(data: CreateVesselCrewDto, query: QueryVesselCrewDto) {
-    const vesselCrewInclude = await this.prisma.parseInclude<Prisma.VesselCrewInclude>(query.include)
+  async createVesselCrew(
+    data: CreateVesselCrewDto,
+    query: QueryVesselCrewIncludeDto,
+  ) {
+    const vesselCrewInclude =
+      await this.prisma.parseInclude<Prisma.VesselCrewInclude>(query.include);
     return await this.prisma.vesselCrew.create({
       data: {
         name: data.name,
@@ -44,7 +53,11 @@ export class VesselCrewService {
     });
   }
 
-  async updateVesselCrew(id: number, data: UpdateVesselCrewDto, query: QueryVesselCrewDto) {
+  async updateVesselCrew(
+    id: number,
+    data: UpdateVesselCrewDto,
+    query: QueryVesselCrewIncludeDto,
+  ) {
     return await this.prisma.vesselCrew.update({
       where: { id },
       data: {

@@ -1,23 +1,32 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+} from 'class-validator';
 
 export class UpdateStationAgreementCustomerContactDto {
-  
+  @ApiProperty({ example: '1' })
   @IsNumber()
   @IsOptional()
   customerId?: number;
 
-  @IsString()
-  @IsNotEmpty()
+  @ApiProperty({ example: '67577777' })
+  @IsPhoneNumber('NO')
   @IsOptional()
   phone?: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @ApiProperty({ example: 'post@horten-kommune.no' })
+  @IsEmail()
   @IsOptional()
   email?: string;
 
+  @ApiProperty({ example: true })
   @IsBoolean()
   @IsOptional()
   onCall?: boolean;
-
 }

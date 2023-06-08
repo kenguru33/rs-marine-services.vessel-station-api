@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDateString,
   IsNotEmpty,
@@ -8,12 +9,15 @@ import {
   Min,
 } from 'class-validator';
 
+
 export class UpdateVesselMaintenanceDto {
+
   @IsString()
   @IsNotEmpty()
   @IsOptional()
   description?: string;
 
+  @ApiProperty({ example: '50' })
   @Max(100)
   @Min(0)
   @IsOptional()

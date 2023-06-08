@@ -1,5 +1,6 @@
-export const ALLOWED_INCLUDES = ['station', 'type'];
+export const ALLOWED_INCLUDES = ['station', 'type', 'electricityTypes'];
 export const ALLOWED_FILTERS = [
+  // TODO: FILTER ON THESE
   // 'width',
   // 'minimumDepth',
   // 'floating',

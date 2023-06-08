@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
   IsNotEmpty,
@@ -7,10 +8,12 @@ import {
 } from 'class-validator';
 
 export class UpdateVesselStateDto {
+  @ApiProperty({ example: 'Operativ' })
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty({ example: 'Operativ status' })
   @IsOptional()
   @IsString()
   description?: string;

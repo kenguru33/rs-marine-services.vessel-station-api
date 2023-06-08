@@ -1,16 +1,15 @@
 import {
-  BadRequestException,
   CallHandler,
   ExecutionContext,
   Injectable,
-  NestInterceptor,
+  NestInterceptor
 } from '@nestjs/common';
-import { Observable, map } from 'rxjs';
 import { plainToInstance } from 'class-transformer';
+import { Observable, map } from 'rxjs';
 import { ResponseAccommodationDto } from '../dto/response-station-accommodation.dto';
 
 @Injectable()
-export class StationAccommodatoionResponseTransformInterceptor
+export class StationAccommodationResponseTransformInterceptor
   implements NestInterceptor
 {
   intercept(
