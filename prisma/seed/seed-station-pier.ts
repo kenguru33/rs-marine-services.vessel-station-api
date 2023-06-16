@@ -3,6 +3,12 @@ const prisma = new PrismaClient();
 
 export const seedStationPier = async function () {
 
+  const randomElectricyTypeId = async () => {
+    const numberofElectricyTypes = await prisma.stationPierElictricityType.count();
+    const randomElectricyType = Math.floor(Math.random() * numberofElectricyTypes) + 1;
+    return randomElectricyType;
+  }
+
   const randomStationId = async () => {
     const numberofStations = await prisma.station.count();
     const randomStation = Math.floor(Math.random() * numberofStations) + 1;
@@ -34,6 +40,11 @@ export const seedStationPier = async function () {
         storageSpace: false,
         coldWater: false,
         hotWater: false,
+       electricityTypes: {
+          connect: {
+            id: await randomElectricyTypeId(),
+          }
+       }
       },
     }
       

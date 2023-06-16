@@ -146,7 +146,7 @@ model VesselCommunicationEquipmentType {
 
 model VesselInspector {
   id      Int      @id @default(autoincrement())
-  name    String   @unique
+  name    String
   phone   String   @unique
   email   String   @unique
   vessels Vessel[]
@@ -172,17 +172,19 @@ model VesselMaintenance {
 
 model VesselMaintenanceApprover {
   id    Int    @id @default(autoincrement())
-  name  String @unique
-  email String
-  phone String
+  name  String
+  email String @unique
+  phone String @unique
 
   maintenances VesselMaintenance[]
 }
 
 model VesselCrew {
   id       Int     @id @default(autoincrement())
-  name     String  @unique
+  name     String
   title    String?
+  phone    String? @unique
+  email    String? @unique
   vesselId Int?
   vessel   Vessel? @relation(fields: [vesselId], references: [id])
 
@@ -270,13 +272,9 @@ model StationPierType {
 
 model StationPierElictricityType {
   id          Int           @id @default(autoincrement())
-  name        String
+  name        String        @unique
   description String?
-  // stationPier   StationPier? @relation(fields: [stationPierId], references: [id])
-  // stationPierId Int?
   piers       StationPier[]
-
-  //@@index([stationPierId])
 }
 
 model StationAgreement {

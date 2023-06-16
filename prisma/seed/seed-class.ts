@@ -4,75 +4,61 @@ const prisma = new PrismaClient();
 const vesselClasses = [
   {
     name: 'Skomvær',
-    range: 417,
-    speed: 25,
+    description: 'Farøysklasse',
   },
   {
     name: 'Von Koss',
-    range: 800,
-    speed: 24
+    description: 'Farøysklasse',
   },
   {
     name: 'Emmy Dyvi',
-    range: 600,
-    speed: 24
+    description: 'Farøysklasse',
   },
   {
-      name: 'Simrad',
-      range: 200,
-      speed: 30
+    name: 'Simrad',
+    description: 'Farøysklasse',
   },
   {
-      name: 'Fosen',
-      range: 600,
-      speed: 29,
+    name: 'Fosen',
+    description: 'Farøysklasse',
   },
   {
-      name: 'Petter C. G. Sundt',
-      range: 350,
-      speed: 39,
+    name: 'Petter C. G. Sundt',
+    description: 'Farøysklasse',
   },
   {
-      name: 'Bergesen',
-      range: 200,
-      speed: 38,
+    name: 'Bergesen',
+    description: 'Farøysklasse',
   },
   {
-      name: 'Andre SRK fartøy',
-      range: 0,
-      speed: 45
+    name: 'Andre SRK fartøy',
+    description: 'Farøysklasse',
   },
   {
-      name: 'Ambulansebåt',
-      range: 300,
-      speed: 40
+    name: 'Ambulansebåt',
+    description: 'Farøysklasse',
   },
   {
-      name: 'Ulstein',
-      range: 400,
-      speed: 38
+    name: 'Ulstein',
+    description: 'Farøysklasse',
   },
   {
     name: 'Staff',
-    range: 0,
-    speed: 42,
+    description: 'Farøysklasse',
   },
   {
     name: 'Støttefartøy',
-    range: 150,
-    speed: 35,
+    description: 'Farøysklasse',
   },
   {
     name: 'Hovercraft',
-    range: 0,
-    speed: 35,
+    description: 'Farøysklasse',
   },
   {
     name: 'Pioner Multi',
-    range: 0,
-    speed: 0,
+    description: 'Farøysklasse',
   },
-]
+];
 export const seedVesselClasses = async function () {
   const vesselClassModels: Array<VesselClass> = [];
 
@@ -86,5 +72,5 @@ export const seedVesselClasses = async function () {
     });
     vesselClassModels.push(vesselClassModel);
   }
-  return vesselClassModels
+  return vesselClassModels;
 };
